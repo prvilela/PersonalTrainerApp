@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
-
+//codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -35,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.deepOrange,
       body: Container(   
+        width: double.infinity,
+        height: double.infinity,
         child: Column(  
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     )                  
                   ),
                 ),                     
-                padding: EdgeInsets.fromLTRB(10, 10, 45, 10),
+                padding: EdgeInsets.fromLTRB(10, 170, 45, 10),
             ),
           
             Padding(
@@ -99,28 +101,30 @@ class _MyHomePageState extends State<MyHomePage> {
               child:
               Text("Esqueci minha senha", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
               
-              padding: EdgeInsets.only(top: 10)
+              padding: EdgeInsets.only(top: 10),
             ),
 
+          Align(
+            child:
               Padding(
+              child:
+              RaisedButton(
                 child:
-                Row(children: <Widget>[
-                // Align(alignment: CrossAxisAlignment.end,), 
-                  Text("Criar Conta"),     
-                ],),   
-                padding: EdgeInsets.all(10),
-              )
+                Text("Cadastrar Conta", style: TextStyle(color: Colors.white),),
+                color: Colors.green,
+                onPressed: (){},
+              ),
+              
+              padding: EdgeInsets.only(top: 150),
+            ),
 
+            alignment: Alignment.bottomCenter,
+          )
           ],
-
-          
-          
-           
         ),
+  
+      )   
 
-        
-
-      )
     );
   }
 }
