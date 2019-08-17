@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 
@@ -32,35 +33,47 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      backgroundColor: Colors.deepOrange[800],
-      body: Container(
-        child: Column(    
+      backgroundColor: Colors.deepOrange,
+      body: Container(   
+        child: Column(  
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[        
             Padding(
               child:
                 TextField(
+                  style: TextStyle(color: Colors.white, fontSize: 18), 
                   decoration: InputDecoration(
-                  labelText: "Digite seu email"           
+                    icon: Icon(Icons.person, color: Colors.white),
+                    hintText: "Email",
+                    hintStyle: TextStyle(color: Colors.white),
+                    enabledBorder: UnderlineInputBorder(      
+                      borderSide: BorderSide(color: Colors.white),                     
+                    )                  
                   ),
                 ),                     
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.fromLTRB(10, 10, 45, 10),
             ),
           
             Padding(
               child:
               TextField(
-                style: TextStyle(color: Colors.white), 
+                style: TextStyle(color: Colors.white, fontSize: 18), 
                 decoration: InputDecoration(
-                  labelText: "Digite sua senha",
-                     
+                  icon: Icon(Icons.lock, color: Colors.white),
+                  hintText: "Senha", 
+                  hintStyle: TextStyle(color: Colors.white), 
+                  enabledBorder: UnderlineInputBorder(      
+                    borderSide: BorderSide(color: Colors.white),   
+                  )                             
                 ),
+                obscureText: true,
               ),
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+              padding: EdgeInsets.fromLTRB(10, 5, 45, 20),
             ), 
 
             RaisedButton(
+              
               onPressed: (){
                 Navigator.push(
                   context, 
@@ -72,18 +85,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 );
               },
-              child: Text("Login"),            
+              child: Text("Sign-in", 
+                style: TextStyle(color: Colors.deepOrange,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                )
+              ),
+              padding: EdgeInsets.fromLTRB(45, 5, 45, 5),
+                         
             ),
 
-            Text("Esqueci minha senha"),
+            Padding(
+              child:
+              Text("Esqueci minha senha", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
+              
+              padding: EdgeInsets.only(top: 10)
+            ),
 
-           
-            Text("Fazer Cadastro"),
-            
+              Padding(
+                child:
+                Row(children: <Widget>[
+                // Align(alignment: CrossAxisAlignment.end,), 
+                  Text("Criar Conta"),     
+                ],),   
+                padding: EdgeInsets.all(10),
+              )
+
           ],
 
-
+          
+          
+           
         ),
+
+        
+
       )
     );
   }
