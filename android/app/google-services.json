@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "288908960392",
+    "firebase_url": "https://personal-trainer-bd5fe.firebaseio.com",
+    "project_id": "personal-trainer-bd5fe",
+    "storage_bucket": "personal-trainer-bd5fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288908960392:android:b9dc39033d5f8b80",
+        "android_client_info": {
+          "package_name": "com.example.personal_trainer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288908960392-9adeqch18eblootq91a41a3po3ncchj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.personal_trainer",
+            "certificate_hash": "1e7106ac4c1effc60f52e07015903c538480db79"
+          }
+        },
+        {
+          "client_id": "288908960392-ldiqijqdcicmg2e4v7shr57qnoflb22d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy_hAu3TRxS6RrZRTOQL4fz_6VaCKsiT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288908960392-ldiqijqdcicmg2e4v7shr57qnoflb22d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

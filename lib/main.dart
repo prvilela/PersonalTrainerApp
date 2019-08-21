@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 //teste
-void main() => runApp(MyApp());
+void main() {
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
 
@@ -110,16 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],),   
                 padding: EdgeInsets.all(10),
               )
-
           ],
-
-          
-          
-           
         ),
-
-        
-
       )
     );
   }
