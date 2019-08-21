@@ -33,9 +33,14 @@ class _telaPrincipalState extends State<telaPrincipal> {
             title: Text("Alunos"),
             backgroundColor: Colors.orange,
             centerTitle: true,
+            actions: <Widget>[
+              IconButton(icon: Icon(Icons.remove),onPressed: (){},),
+              IconButton(icon: Icon(Icons.save),onPressed: (){},)
+            ],
           ),
           drawer: CustomDrawer(_pageController),
           body: StudentTab(),
+
         )
       ],
     );
