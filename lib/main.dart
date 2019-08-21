@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(
                     builder: (context){
                     //telaSecundaria("asghduifasdfasdfbabsd");
-                    return telaPrincipal("teste");               
+                    return telaPrincipal();
                     }
                   )
                 );
