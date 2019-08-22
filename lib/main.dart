@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
+
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
+
+//teste
+
 
 class MyApp extends StatelessWidget {
 
@@ -82,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(
                     builder: (context){
                     //telaSecundaria("asghduifasdfasdfbabsd");
-                    return telaPrincipal("teste");               
+                    return telaPrincipal();
                     }
                   )
                 );
@@ -110,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child:
               RaisedButton(
                 child:
+
                 Text("Cadastrar Conta", style: TextStyle(color: Colors.white),),
                 color: Colors.green,
                 onPressed: (){},
