@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
     Widget _buildDrawerBack() => Container(
               decoration: BoxDecoration(
                 gradient:LinearGradient(
-                    colors: [Colors.orangeAccent, Colors.white],
+                    colors: [Colors.deepOrange, Colors.orange, Colors.orange[300]],
                     begin:Alignment.topCenter,
                     end: Alignment.bottomCenter
                 )
@@ -25,9 +25,11 @@ class CustomDrawer extends StatelessWidget {
           ListView(
             padding: EdgeInsets.only(top:100 ,left: 32, right: 16),
             children: <Widget>[
-              DrawerTile(Icons.home,"Início",pageController,0),
+              DrawerTile(Icons.home,"Início",pageController,0) , 
               DrawerTile(Icons.person,"Alunos",pageController,1),
+              
             ],
+            
           )
         ],
       ),

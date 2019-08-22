@@ -18,7 +18,13 @@ class _StudentTabState extends State<StudentTab> {
     InputDecoration _buildDecoratiom(String label){
       return InputDecoration(
         labelText:label,
-        labelStyle: TextStyle(color: Colors.deepOrange)
+        labelStyle: TextStyle(color: Colors.deepOrange),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
       );
     }
 

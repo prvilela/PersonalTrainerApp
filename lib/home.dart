@@ -22,7 +22,7 @@ class _telaPrincipalState extends State<telaPrincipal> {
         Scaffold(
           appBar: AppBar(
             title: Text("Home"),
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.deepOrange,
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),

@@ -79,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ), 
 
             RaisedButton(
-              
               onPressed: (){
                 Navigator.push(
                   context, 
@@ -108,23 +107,51 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 10),
             ),
 
-          Align(
-            child:
-              Padding(
+            Padding(
               child:
-              RaisedButton(
-                child:
-
-                Text("Cadastrar Conta", style: TextStyle(color: Colors.white),),
-                color: Colors.green,
-                onPressed: (){},
-              ),
+              Text("Fazer login com:", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
               
-              padding: EdgeInsets.only(top: 150),
+              padding: EdgeInsets.only(top: 50),
             ),
 
-            alignment: Alignment.bottomCenter,
-          )
+            Container(
+              margin: EdgeInsets.fromLTRB(50, 10, 50, 0),
+              child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+                  children: <Widget>[
+    
+                    RaisedButton(
+                      //child: 
+                        //Image.asset('images/facebook_icon.png'),
+                      onPressed: (){},
+                      
+                    ),
+
+                    RaisedButton(
+                      onPressed: (){},
+                      //child: 
+                        //Image.asset(''),
+                    ) 
+    
+                  ],
+                ),
+            ),
+
+            Align(
+              child:
+                Padding(
+                  child:
+                  RaisedButton(
+                    child:           
+                      Text("Cadastrar Conta", style: TextStyle(color: Colors.white),),
+                      color: Colors.green,
+                      onPressed: (){},                 
+                  ),       
+                  padding: EdgeInsets.only(top: 60),
+                ),
+                alignment: Alignment.bottomCenter,
+            )
           ],
         ),
   
