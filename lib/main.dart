@@ -1,3 +1,5 @@
+import 'dart:ui' as prefix0;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -121,19 +123,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                   children: <Widget>[
     
-                    RaisedButton(
-                      //child: 
-                        //Image.asset('images/facebook_icon.png'),
-                      onPressed: (){},
-                      
+                    GestureDetector(
+                      child:                    
+                       Container(
+                        width: 120,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: DecorationImage(
+                          image:AssetImage('assets/facebook_icon.png'), 
+                          fit:BoxFit.fitWidth
+                          ),  
+                        )
+                      ),onTap:(){}                 
                     ),
 
-                    RaisedButton(
-                      onPressed: (){},
-                      //child: 
-                        //Image.asset(''),
-                    ) 
+                    GestureDetector(
+                      child:                    
+                       Container(
+                        width: 120,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: DecorationImage(
+                          image:AssetImage('assets/google_icon.png'), 
+                          fit:BoxFit.fitWidth
+                          ),            
+                        )
+                      ),onTap:(){}                                 
+                    ),
     
+
                   ],
                 ),
             ),
