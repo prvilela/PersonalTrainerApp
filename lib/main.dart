@@ -46,7 +46,20 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(  
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[        
+          children: <Widget>[ 
+
+            //logotipo da tela de login
+            Padding(
+              child:
+              SizedBox(
+                child:
+                Image.asset('assets/logotipo.png'),
+                width: double.infinity,
+                height: 120,    
+              ),
+              padding: EdgeInsets.fromLTRB(0, 35, 0, 20),
+            ),
+
             Padding(
               child:
                 TextField(
@@ -60,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     )                  
                   ),
                 ),                     
-                padding: EdgeInsets.fromLTRB(10, 170, 45, 10),
+                padding: EdgeInsets.fromLTRB(10, 40, 45, 10),
             ),
           
             Padding(
@@ -79,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               padding: EdgeInsets.fromLTRB(10, 5, 45, 20),
             ), 
-
+            //Botão Sign-in
             RaisedButton(
               onPressed: (){
                 Navigator.push(
@@ -102,12 +115,36 @@ class _MyHomePageState extends State<MyHomePage> {
                          
             ),
 
+            //Esqueci minha senha
             Padding(
               child:
               Text("Esqueci minha senha", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
               
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 5),
             ),
+
+            //botão Cadastrar nova conta
+            Align(
+              child:
+                Padding(
+                  child:
+                  RaisedButton(
+                    child:           
+                      Text("Cadastrar Conta", 
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      color: Colors.green,
+                      onPressed: (){},                 
+                  ),       
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 30),
+                ),
+                alignment: Alignment.bottomCenter,
+            ),
+
 
             Padding(
               child:
@@ -116,8 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 50),
             ),
 
+            //2 botões: login facebook ou google
             Container(
-              margin: EdgeInsets.fromLTRB(50, 10, 50, 0),
+              margin: EdgeInsets.fromLTRB(50, 10, 50, 10),
               child:
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
@@ -126,8 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     GestureDetector(
                       child:                    
                        Container(
-                        width: 120,
-                        height: 40,
+                        width: 100,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Colors.black,
                           image: DecorationImage(
@@ -141,8 +179,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     GestureDetector(
                       child:                    
                        Container(
-                        width: 120,
-                        height: 40,
+                        width: 100,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Colors.black,
                           image: DecorationImage(
@@ -152,26 +190,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         )
                       ),onTap:(){}                                 
                     ),
-    
-
                   ],
                 ),
             ),
-
-            Align(
-              child:
-                Padding(
-                  child:
-                  RaisedButton(
-                    child:           
-                      Text("Cadastrar Conta", style: TextStyle(color: Colors.white),),
-                      color: Colors.green,
-                      onPressed: (){},                 
-                  ),       
-                  padding: EdgeInsets.only(top: 60),
-                ),
-                alignment: Alignment.bottomCenter,
-            )
+         
           ],
         ),
   
