@@ -50,7 +50,7 @@ class _StudentScreenState extends State<StudentScreen> {
             return Text(snapshot.data ? "Editar Aluno":"Cadastrar Aluno");
           }
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.deepOrange,
         centerTitle: true,
         actions: <Widget>[
          StreamBuilder<bool>(

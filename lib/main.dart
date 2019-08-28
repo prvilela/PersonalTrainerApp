@@ -1,14 +1,10 @@
-//import 'dart:ui' as prefix0;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_trainer/telaCadastrarPT.dart';
 import 'home.dart';
 
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
-
-//teste
-
 
 class MyApp extends StatelessWidget {
 
@@ -104,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     }
                   )
                 );
-
               },
               child: Text("Sign-in", 
                 style: TextStyle(color: Colors.deepOrange,
@@ -139,7 +134,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       color: Colors.green,
-                      onPressed: (){},                 
+                      onPressed: (){
+                        Navigator.push(
+                          context, MaterialPageRoute(
+                            builder: (context){
+                              return telaCadastrarPt();
+                            }
+                          )
+                        );
+                      },                 
                   ),       
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 30),
                 ),
