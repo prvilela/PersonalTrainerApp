@@ -1,8 +1,9 @@
-/*import 'dart:async';
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_firebase_login/authentication_bloc/bloc.dart';
-import 'package:flutter_firebase_login/user_repository.dart';
+import 'package:personal_trainer/blocs/bloc.dart';
+import 'package:personal_trainer/user_repository.dart';
+
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -50,4 +51,4 @@ class AuthenticationBloc
     yield Unauthenticated();
     _userRepository.signOut();
   }
-} */
+} 

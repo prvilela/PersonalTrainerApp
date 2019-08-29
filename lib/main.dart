@@ -4,6 +4,10 @@ import 'package:personal_trainer/screens/personal_screen.dart';
 import 'package:personal_trainer/blocs/personal_bloc.dart';
 import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer/blocs/bloc.dart';
+import 'package:personal_trainer/user_repository.dart';
 
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
@@ -36,10 +40,23 @@ class _MyHomePageState extends State<MyHomePage> {
     final myControllerEmail = TextEditingController();
     final myControllerPassword = TextEditingController();
 
-     final FirebaseAuth _firebaseAuth;
+    final FirebaseAuth _firebaseAuth;
+    final GoogleSignIn _googleSignIn;
 
-      _MyHomePageState({FirebaseAuth firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+    _MyHomePageState({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+      _googleSignIn = googleSignin ?? GoogleSignIn();
+      
+    final UserRepository _userRepository = UserRepository();
+    AuthenticationBloc _authenticationBloc;
+
+    @override
+    void initState() {
+      super.initState();
+      _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
+      _authenticationBloc.dispatch(AppStarted());
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,17 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               onPressed: (){            
                 
-                Future<void> signInWithCredentials(String email, String password) {
-                  return _firebaseAuth.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                }
+                //sing in do user_repository
 
-                //Future<String> getUser() async {
-                  //return (await _firebaseAuth.currentUser()).email;
-                //}
-            
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
@@ -218,7 +226,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           fit:BoxFit.fitWidth
                           ),            
                         )
-                      ),onTap:(){}                                 
+                      ),onTap:(){
+
+                        //fUTURO LOGIN COM GOOGLE......
+                        
+                      }                                 
                     ),
                   ],
                 ),
@@ -230,5 +242,12 @@ class _MyHomePageState extends State<MyHomePage> {
       )   
 
     );
+
+    @override
+    void dispose() {
+      _authenticationBloc.dispose();
+      super.dispose();
+    }
+
   }
 }
