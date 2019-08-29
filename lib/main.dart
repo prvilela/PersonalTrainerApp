@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_trainer/telaCadastrarPT.dart';
+import 'package:personal_trainer/screens/personal_screen.dart';
+import 'package:personal_trainer/blocs/personal_bloc.dart';
 import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
@@ -25,12 +27,20 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
-  
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    final myControllerEmail = TextEditingController();
+    final myControllerPassword = TextEditingController();
+
+     final FirebaseAuth _firebaseAuth;
+
+      _MyHomePageState({FirebaseAuth firebaseAuth})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     
@@ -59,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               child:
                 TextField(
+                  controller: myControllerEmail,
                   style: TextStyle(color: Colors.white, fontSize: 18), 
                   decoration: InputDecoration(
                     icon: Icon(Icons.person, color: Colors.white),
@@ -68,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderSide: BorderSide(color: Colors.white),                     
                     )                  
                   ),
+                                  
                 ),                     
                 padding: EdgeInsets.fromLTRB(10, 40, 45, 10),
             ),
@@ -75,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               child:
               TextField(
+                controller: myControllerPassword,
                 style: TextStyle(color: Colors.white, fontSize: 18), 
                 decoration: InputDecoration(
                   icon: Icon(Icons.lock, color: Colors.white),
@@ -90,7 +103,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ), 
             //Botão Sign-in
             RaisedButton(
-              onPressed: (){
+              onPressed: (){            
+                
+                Future<void> signInWithCredentials(String email, String password) {
+                  return _firebaseAuth.signInWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                }
+
+                //Future<String> getUser() async {
+                  //return (await _firebaseAuth.currentUser()).email;
+                //}
+            
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
@@ -100,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     }
                   )
                 );
+                
               },
               child: Text("Sign-in", 
                 style: TextStyle(color: Colors.deepOrange,
@@ -138,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context, MaterialPageRoute(
                             builder: (context){
-                              return telaCadastrarPt();
+                              return PersonalScreen();
                             }
                           )
                         );
