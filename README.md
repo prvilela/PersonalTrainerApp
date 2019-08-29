@@ -1,6 +1,8 @@
 # personal_trainer
 
 A new Flutter project.
+//link do site de criar login (email e google sign-in)
+https://medium.com/flutter-community/firebase-login-with-flutter-bloc-47455e6047b0
 
 ## Getting Started
 
