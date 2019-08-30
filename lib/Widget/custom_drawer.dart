@@ -27,6 +27,7 @@ class CustomDrawer extends StatelessWidget {
             children: <Widget>[
               DrawerTile(Icons.home,"Início",pageController,0) , 
               DrawerTile(Icons.person,"Alunos",pageController,1),
+              DrawerTile(Icons.exit_to_app,"Sign out",pageController,2),
               
             ],
             

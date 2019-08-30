@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/personal_bloc.dart';
 
 class PersonalScreen extends StatefulWidget {

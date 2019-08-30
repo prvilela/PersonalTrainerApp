@@ -4,14 +4,17 @@ import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer/blocs/bloc.dart';
+import 'package:personal_trainer/blocs/authentication_bloc.dart';
 
-class telaPrincipal extends StatefulWidget {
+class TelaPrincipal extends StatefulWidget {
 
   @override
-  _telaPrincipalState createState() => _telaPrincipalState();
+  _TelaPrincipalState createState() => _TelaPrincipalState();
 }
 
-class _telaPrincipalState extends State<telaPrincipal> {
+class _TelaPrincipalState extends State<TelaPrincipal> {
 
   final _pageController= PageController();
 
@@ -55,7 +58,27 @@ class _telaPrincipalState extends State<telaPrincipal> {
               )
             ],
           ),
-        )
+        ),
+
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Home"),
+            backgroundColor: Colors.deepOrange,
+            centerTitle: true,
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: Container(
+            child: 
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                BlocProvider.of<AuthenticationBloc>(context).dispatch(
+                  LoggedOut(),
+                );
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
