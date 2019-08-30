@@ -227,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return BlocProvider(
         bloc: _authenticationBloc,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: BlocBuilder(
             bloc: _authenticationBloc,
             builder: (BuildContext context, AuthenticationState state) {
@@ -237,14 +238,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 return LoginScreen(userRepository: _userRepository);
               }
               if (state is Authenticated) {
-                //return TelaPrincipal();
-                Navigator.push(
+                return TelaPrincipal();
+                /*Navigator.push(
                   context, MaterialPageRoute(
                     builder: (context){
                       return TelaPrincipal();
                     }
                   )
-                );
+                );*/
+
               }
             },
           ),
