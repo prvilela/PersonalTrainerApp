@@ -8,6 +8,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/user_repository.dart';
+import 'bloc_provider.dart';
+import 'package:personal_trainer/user_repository.dart';
+import 'package:personal_trainer/login_bloc/login_bloc.dart';
+import 'login_bloc/login_form.dart';
 
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
@@ -21,16 +25,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(     
         primaryColor: Colors.deepOrange
       ),
-      home: MyHomePage(title: 'Tela Login'),
+      home: MyHomePage(userRepository: new UserRepository()),
       debugShowCheckedModeBanner: false,
-      
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  //final String title;
+  final UserRepository _userRepository;
+
+   //MyHomePage({Key key, this.title}) : super(key: key);
+
+   MyHomePage({Key key, @required UserRepository userRepository})
+      : assert(userRepository != null),
+        _userRepository = userRepository,
+        super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -43,21 +53,24 @@ class _MyHomePageState extends State<MyHomePage> {
     final FirebaseAuth _firebaseAuth;
     final GoogleSignIn _googleSignIn;
 
+    LoginBloc _loginBloc;
+    UserRepository get _userRepository => widget._userRepository;
+
     _MyHomePageState({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
     : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
       _googleSignIn = googleSignin ?? GoogleSignIn();
       
-    final UserRepository _userRepository = UserRepository();
+    //final UserRepository _userRepository = UserRepository();
     AuthenticationBloc _authenticationBloc;
 
-    @override
+     @override
     void initState() {
       super.initState();
-      _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
-      _authenticationBloc.dispatch(AppStarted());
+      _loginBloc = LoginBloc(
+        userRepository: _userRepository,
+      );
     }
-
-
+    
   @override
   Widget build(BuildContext context) {
     
@@ -70,6 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[ 
+
+            //campos de login, n descomentar ainda se n da merdaaaaaaaaaa
+            /*BlocProvider<LoginBloc>(
+              bloc: _loginBloc,
+              child: LoginForm(userRepository: _userRepository),
+            ),*/
 
             //logotipo da tela de login
             Padding(
@@ -120,29 +139,24 @@ class _MyHomePageState extends State<MyHomePage> {
             ), 
             //Botão Sign-in
             RaisedButton(
-              onPressed: (){            
-                
-                //sing in do user_repository
-
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context){
-                    //telaSecundaria("asghduifasdfasdfbabsd");
-                    return telaPrincipal();
-                    }
-                  )
-                );
-                
-              },
-              child: Text("Sign-in", 
+               child: Text("Sign-in", 
                 style: TextStyle(color: Colors.deepOrange,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 )
               ),
               padding: EdgeInsets.fromLTRB(45, 5, 45, 5),
-                         
+
+              //sing in from user_repository  
+              onPressed: (){                                                 
+                Navigator.push(
+                  context, MaterialPageRoute(
+                    builder: (context){
+                      return App();
+                    }
+                  )
+                );            
+              },                    
             ),
 
             //Esqueci minha senha
@@ -246,6 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
     @override
     void dispose() {
       _authenticationBloc.dispose();
+      _loginBloc.dispose();
       super.dispose();
     }
 

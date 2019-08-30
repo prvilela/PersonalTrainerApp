@@ -4,6 +4,8 @@ import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer/blocs/bloc.dart';
 
 class telaPrincipal extends StatefulWidget {
 
@@ -55,7 +57,17 @@ class _telaPrincipalState extends State<telaPrincipal> {
               )
             ],
           ),
-        )
+        ),
+
+        IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              BlocProvider.of<AuthenticationBloc>(context).dispatch(
+                LoggedOut(),
+              );
+            },
+          ),
+
       ],
     );
   }
