@@ -9,7 +9,6 @@ import 'package:personal_trainer/login_bloc/login_screen.dart';
 import 'package:personal_trainer/blocs/simple_bloc_delegate.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 
-
 //codigo do github Personal Trainer Plinio
 
 void main() { 
@@ -18,6 +17,8 @@ void main() {
   }
 
 class MyHomePage extends StatefulWidget {
+
+   final UserRepository _userRepository= UserRepository();
   _MyHomePageState createState() => _MyHomePageState();
 }
 
@@ -57,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.all(10),
             ),*/
       
+
             //logotipo da tela de login
             Padding(
               child:

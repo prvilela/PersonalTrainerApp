@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer/user_repository.dart';
 import 'package:personal_trainer/register/register_screen.dart';
 
+//import 'package:personal_trainer/register/register.dart';
+
+
 class CreateAccountButton extends StatelessWidget {
   final UserRepository _userRepository;
 
@@ -20,6 +23,7 @@ class CreateAccountButton extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) {
             return RegisterScreen(userRepository: _userRepository);
+
           }),
         );
       },

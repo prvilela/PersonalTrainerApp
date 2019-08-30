@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 
+
 class TelaPrincipal extends StatefulWidget {
 
   @override

@@ -19,7 +19,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> d3d49359a449d554d96665c4f3e54e57e4345d88
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -36,8 +40,14 @@ dependencies:
   flutter_bloc: ^0.11.0
   flutter_speed_dial: ^1.2.1
   validators: ^2.0.0
+<<<<<<< HEAD
   font_awesome_flutter: ^8.4.0
   
+=======
+  font_awesome_flutter: 8.4.0
+  
+
+>>>>>>> d3d49359a449d554d96665c4f3e54e57e4345d88
 dev_dependencies:
   brasil_fields: ^0.0.7+2
   flutter_test:
@@ -49,6 +59,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+<<<<<<< HEAD
+=======
+  fonts:
+    - family: FontAwesome # Do not change!
+      #fonts:
+        #- asset: fontawesome.woff
+  
+
+>>>>>>> d3d49359a449d554d96665c4f3e54e57e4345d88
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
