@@ -122,11 +122,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "8.5.0"
-=======
-    version: "8.4.0"
->>>>>>> d3d49359a449d554d96665c4f3e54e57e4345d88
   get_it:
     dependency: "direct main"
     description:
