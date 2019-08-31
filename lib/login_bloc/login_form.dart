@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [Text('Login Failure'), Icon(Icons.error)],
                 ),
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.black,
               ),
             );
         }

@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Crie sua conta'),
-        backgroundColor: Colors.deepOrange),
+        backgroundColor: Colors.deepOrange),        
       body: Center(
         child: BlocProvider<RegisterBloc>(
           bloc: _registerBloc,

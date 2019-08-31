@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
+import 'package:personal_trainer/screens/gym_screen.dart';
 import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
+import 'package:personal_trainer/tabs/gym_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,6 +65,33 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
         Scaffold(
           appBar: AppBar(
+            title: Text("Academias"),
+            backgroundColor: Colors.deepOrange,
+            centerTitle: true,
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: GymTab(),
+          floatingActionButton: SpeedDial(
+            child: Icon(Icons.view_list),
+            backgroundColor: Colors.orange,
+            children:[
+              SpeedDialChild(
+                child: Icon(Icons.add),
+                backgroundColor: Colors.orange,
+                label:"Adicionar uma academia",
+                labelStyle: TextStyle(fontSize: 14),
+                onTap: (){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>GymScreen())
+                  );
+                }
+              )
+            ],
+          ),
+        ),
+
+        Scaffold(
+          appBar: AppBar(
             title: Text("Exit"),
             backgroundColor: Colors.deepOrange,
             centerTitle: true,
@@ -80,6 +109,8 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             ),
           ),
         ),
+
+        
       ],
     );
   }

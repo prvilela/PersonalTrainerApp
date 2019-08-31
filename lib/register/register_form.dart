@@ -69,7 +69,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     Icon(Icons.error),
                   ],
                 ),
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.black,
               ),
             );
         }
@@ -115,11 +115,16 @@ class _RegisterFormState extends State<RegisterForm> {
                       return !state.isPasswordValid ? 'Invalid Password' : null;
                     },
                   ),
-                  RegisterButton(
-                    onPressed: isRegisterButtonEnabled(state)
+                  Padding(
+                    child:
+                      RegisterButton(
+                        onPressed: isRegisterButtonEnabled(state)
                         ? _onFormSubmitted
                         : null,
+                      ),
+                    padding: EdgeInsets.only(top:15),
                   ),
+                  
                 ],
               ),
             ),

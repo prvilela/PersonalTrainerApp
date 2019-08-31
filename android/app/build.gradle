@@ -6,6 +6,7 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -38,7 +39,7 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
 
@@ -56,9 +57,18 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.1.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.1.0'
+    //implementation 'com.google.firebase:firebase-auth:18.1.0'
+    //implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    //dependency for using firebase database
+    implementation 'com.google.firebase:firebase-database:16.0.6'
+    //dependency for email and password authentication
+    implementation 'com.google.firebase:firebase-auth:16.2.0'
+    //dependency for cloud storage
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'com.google.firebase:firebase-firestore:18.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
