@@ -34,7 +34,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     return super.transform(nonDebounceStream.mergeWith([debounceStream]), next);
   }
 
-  @override
+  @override 
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
