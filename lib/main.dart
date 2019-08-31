@@ -236,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
               }
               if (state is Unauthenticated) {
                 return LoginScreen(userRepository: _userRepository);
+                //return TelaPrincipal();
               }
               if (state is Authenticated) {
                 return TelaPrincipal();

@@ -77,6 +77,7 @@ class _LoginFormState extends State<LoginForm> {
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedIn());
+          ////return MyHomePage();
         }
       },
       child: BlocBuilder(
@@ -127,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                         ),
                         GoogleLoginButton(),
-                        CreateAccountButton(userRepository: _userRepository),
+                        CreateAccountButton(userRepository: _userRepository),            
                       ],
                     ),
                   ),

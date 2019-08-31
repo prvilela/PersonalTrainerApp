@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_event.dart';
+import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/register/register_bloc.dart';
 import 'package:personal_trainer/register/register_event.dart';
 import 'package:personal_trainer/register/register_state.dart';

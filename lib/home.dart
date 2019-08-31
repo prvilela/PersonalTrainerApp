@@ -63,7 +63,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
         Scaffold(
           appBar: AppBar(
-            title: Text("Home"),
+            title: Text("Exit"),
             backgroundColor: Colors.deepOrange,
             centerTitle: true,
           ),
