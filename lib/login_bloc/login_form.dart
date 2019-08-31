@@ -77,7 +77,6 @@ class _LoginFormState extends State<LoginForm> {
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedIn());
-          ////return MyHomePage();
         }
       },
       child: BlocBuilder(
@@ -90,13 +89,18 @@ class _LoginFormState extends State<LoginForm> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    //child: Image.asset('assets/flutter_logo.png', height: 200),
+                    child: Image.asset('assets/logotipo.png', height: 100),
                   ),
                   TextFormField(
                     controller: _emailController,
+                    style: TextStyle(color: Colors.white, fontSize: 18), 
                     decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
+                      icon: Icon(Icons.email, color: Colors.white),
+                      hintText: 'Email',
+                      hintStyle: TextStyle(color: Colors.white), 
+                      enabledBorder: UnderlineInputBorder(      
+                        borderSide: BorderSide(color: Colors.white),   
+                      )
                     ),
                     autovalidate: true,
                     autocorrect: false,
@@ -106,9 +110,14 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   TextFormField(
                     controller: _passwordController,
+                    style: TextStyle(color: Colors.white, fontSize: 18), 
                     decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Password',
+                      icon: Icon(Icons.lock,color: Colors.white),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(color: Colors.white), 
+                      enabledBorder: UnderlineInputBorder(      
+                        borderSide: BorderSide(color: Colors.white),   
+                      )
                     ),
                     obscureText: true,
                     autovalidate: true,

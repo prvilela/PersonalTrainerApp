@@ -14,7 +14,8 @@ class RegisterButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       onPressed: _onPressed,
-      child: Text('Register'),
+      child: Text('Register', style: TextStyle(color: Colors.white)),
+      disabledColor: Colors.orangeAccent[200],
     );
   }
 }

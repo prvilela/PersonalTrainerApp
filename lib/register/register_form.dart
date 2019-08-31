@@ -85,8 +85,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
+                      icon: Icon(Icons.email, color: Colors.deepOrange),
+                      hintText: 'Email',
+                      hintStyle: TextStyle(color: Colors.deepOrange),
+                      enabledBorder: UnderlineInputBorder(      
+                        borderSide: BorderSide(color: Colors.deepOrange),   
+                      )
                     ),
                     autocorrect: false,
                     autovalidate: true,
@@ -97,8 +101,12 @@ class _RegisterFormState extends State<RegisterForm> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Password',
+                      icon: Icon(Icons.lock, color: Colors.deepOrange),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(color: Colors.deepOrange),
+                      enabledBorder: UnderlineInputBorder(      
+                        borderSide: BorderSide(color: Colors.deepOrange),   
+                      )
                     ),
                     obscureText: true,
                     autocorrect: false,

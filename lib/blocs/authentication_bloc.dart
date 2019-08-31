@@ -6,7 +6,7 @@ import 'package:personal_trainer/user_repository.dart';
 
 
 class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+  extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
 
   AuthenticationBloc({@required UserRepository userRepository})
