@@ -9,7 +9,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
-
+import 'package:personal_trainer/Widget/custom_drawer.dart';
+import 'package:personal_trainer/user_repository.dart';
 
 class TelaPrincipal extends StatefulWidget {
 
@@ -19,8 +20,8 @@ class TelaPrincipal extends StatefulWidget {
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
 
-  final _pageController= PageController();
-
+   PageController _pageController= PageController();
+  
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -32,6 +33,26 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             title: Text("Home"),
             backgroundColor: Colors.deepOrange,
             centerTitle: true,
+            actions: <Widget>[
+              Container(
+                child:
+                  FlatButton(
+                    child:
+                      Padding(
+                        child:
+                          Icon(Icons.account_circle, color: Colors.white),
+                          padding: EdgeInsets.fromLTRB(25, 0, 0, 0),  
+                      ),
+                    onPressed: (){
+                      botaoSignOut(context);
+                    },
+
+                  ),
+
+                  
+                                                                      
+              ),
+            ]
           ),
           drawer: CustomDrawer(_pageController),
           body: HomeTab(),
@@ -114,4 +135,47 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       ],
     );
   }
+
+
+  void botaoSignOut(BuildContext context){
+    var alert = AlertDialog(
+      title: Text("Nome do usuario"),
+      content: new Container(
+        width: 300,
+        height: 100,
+        child: Column(children: <Widget>[        
+          FlatButton(
+            child: Text("Sign out"),
+            onPressed: (){
+              BlocProvider.of<AuthenticationBloc>(context).dispatch(
+              LoggedOut()); 
+              Navigator.pop(context);  
+            },
+          ),
+
+          FlatButton(
+            child: Text("Voltar"),
+            onPressed: (){Navigator.pop(context);},
+
+          )
+
+          
+        ],)
+               
+      ),
+      
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+      )
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return alert;
+      }
+    );
+ 
+  }
+
 }
