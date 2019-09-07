@@ -6,7 +6,7 @@ class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
-  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin, name})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _googleSignIn = googleSignin ?? GoogleSignIn();
 
@@ -51,11 +51,12 @@ class UserRepository {
     final currentUser = await _firebaseAuth.currentUser();
     return currentUser != null;
   }
+  
 
-  Future<String> getUser() async {
+  Future<String>  get getUser async {
     return (await _firebaseAuth.currentUser()).email;
+    
   }
-
 
 }
 

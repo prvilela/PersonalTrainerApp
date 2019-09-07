@@ -40,6 +40,7 @@ class StudentTile extends StatelessWidget {
                     _buildRow("Objetivo: ", student.data["goal"]),
                     SizedBox(height: 4,),
                     _buildRow("Restrições: ", student.data["restrictions"]),
+                    
                     Container(
                       child: FlatButton(
                         onPressed: (){

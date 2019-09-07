@@ -9,19 +9,15 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
-import 'package:personal_trainer/Widget/custom_drawer.dart';
-import 'package:personal_trainer/user_repository.dart';
 
 class TelaPrincipal extends StatefulWidget {
-
   @override
   _TelaPrincipalState createState() => _TelaPrincipalState();
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
+  PageController _pageController= PageController();
 
-   PageController _pageController= PageController();
-  
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -130,16 +126,16 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             ),
           ),
         ),
-
         
       ],
     );
   }
 
-
+ 
   void botaoSignOut(BuildContext context){
+
     var alert = AlertDialog(
-      title: Text("Nome do usuario"),
+      title: Text("name"),
       content: new Container(
         width: 300,
         height: 100,

@@ -1,25 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
 
 class StudentScreen extends StatefulWidget {
-
   final DocumentSnapshot student;
 
   StudentScreen({this.student});
-
   @override
   _StudentScreenState createState() => _StudentScreenState(student);
 }
 
 class _StudentScreenState extends State<StudentScreen> {
-
   final StudentBloc _studentBloc;
-
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  
 
   _StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
@@ -162,6 +160,18 @@ class _StudentScreenState extends State<StudentScreen> {
                     onSaved: _studentBloc.saveRestrictions,
                     validator: (t){},
                   ),
+
+                  FutureBuilder(
+                    future: FirebaseAuth.instance.currentUser(),
+                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                        if (snapshot.hasData) {         
+                        _studentBloc.saveId(snapshot.data.uid);       
+                        return Text("");                     
+                        }                                          
+                    }
+                    
+                  ),
+                 
                 ],
               );
             }
@@ -172,7 +182,8 @@ class _StudentScreenState extends State<StudentScreen> {
   }
 
   void saveStudent() async{
-    _formKey.currentState.save();
+    
+     _formKey.currentState.save();
 
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(

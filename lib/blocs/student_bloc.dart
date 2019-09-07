@@ -57,6 +57,10 @@ class StudentBloc extends BlocBase{
   void saveRestrictions(String text){
     unsavedData["restrictions"] = text;
   }
+  void saveId(String text){
+    unsavedData["id"] = text;
+  }
+
 
   Future<bool> saveStudent() async{
     _loadingController.add(true);
