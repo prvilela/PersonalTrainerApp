@@ -11,6 +11,8 @@ class StudentScreen extends StatefulWidget {
   StudentScreen({this.student});
   @override
   _StudentScreenState createState() => _StudentScreenState(student);
+
+  static pegarId() {}
 }
 
 class _StudentScreenState extends State<StudentScreen> {

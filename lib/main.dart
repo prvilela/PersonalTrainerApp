@@ -8,6 +8,12 @@ import 'package:personal_trainer/screens/splash_screen.dart';
 import 'package:personal_trainer/login_bloc/login_screen.dart';
 import 'package:personal_trainer/blocs/simple_bloc_delegate.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
+//import 'package:personal_trainer/flutter_facebook_login.dart';
+
+
+//facebook
+//import com.facebook.FacebookSdk;
+//import com.facebook.appevents.AppEventsLogger;
 //codigo do github Personal Trainer Plinio
 
 void main() { 
@@ -62,4 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _authenticationBloc.dispose();
       super.dispose();
     }
+
+    
 }

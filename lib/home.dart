@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
+import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
+import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
 import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
@@ -131,7 +134,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     );
   }
 
- 
+ //deslogar do Gmail na tela home
   void botaoSignOut(BuildContext context){
 
     var alert = AlertDialog(
@@ -144,8 +147,9 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             child: Text("Sign out"),
             onPressed: (){
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
-              LoggedOut()); 
-              Navigator.pop(context);  
+              LoggedOut());
+              logout();
+              
             },
           ),
 
@@ -174,4 +178,17 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
  
   }
 
+// deslogar do facebook
+  var facebookLogin = FacebookLogin();
+
+    logout() async {
+    await facebookLogin.logOut();
+    print("Logged out");
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyHomePage()),
+    );
+  }
+  
 }

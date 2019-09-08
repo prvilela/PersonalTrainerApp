@@ -11,20 +11,11 @@ class StudentTab extends StatefulWidget {
 class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-
     super.build(context);
-    var uid;
 
-    FutureBuilder(
-        future: FirebaseAuth.instance.currentUser(),
-            builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-               uid = (snapshot.data.uid);       
-               //return Text("");                                                                             
-            }                
-           );
 
     return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("student").where("id", isEqualTo: uid).getDocuments(),//colocar pra selecionar apenas o da conta em login ......
+      future: Firestore.instance.collection("student").where("id", isEqualTo: catchId()).getDocuments(),
       builder: (context,snapshot){
         if(!snapshot.hasData)
           return Center(
@@ -42,6 +33,21 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
       },
     );
   }
+       
+        catchId(){
+                  FutureBuilder(
+                    future: FirebaseAuth.instance.currentUser(),
+                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                        if (snapshot.hasData) {          
+                        String id = (snapshot.data.uid);
+                        print(id); 
+                        return Text("$id");                     
+                        }                                          
+                    }      
+                  );
+                  
+                  }
+                  
 
   @override
 

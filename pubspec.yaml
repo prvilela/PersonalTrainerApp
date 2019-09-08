@@ -41,6 +41,7 @@ dependencies:
   google_maps_flutter: ^0.5.18
   flutter_google_places: ^0.2.1
   location: ^2.3.4
+  flutter_facebook_login: ^2.0.1
   
 dev_dependencies:
   brasil_fields: ^0.0.7+2

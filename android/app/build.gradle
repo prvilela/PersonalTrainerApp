@@ -26,7 +26,7 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 28
 
     lintOptions {
         disable 'InvalidPackage'
@@ -57,8 +57,8 @@ flutter {
 }
 
 dependencies {
-    androidTestImplementation 'com.android.support.test:runner:1.1.0'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'com.android.support.test:runner:1.1.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.1.1'
     //implementation 'com.google.firebase:firebase-auth:18.1.0'
     //implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.8'
@@ -69,6 +69,8 @@ dependencies {
     //dependency for cloud storage
     implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.google.firebase:firebase-firestore:18.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }
 
 apply plugin: 'com.google.gms.google-services'

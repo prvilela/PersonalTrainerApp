@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
+import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
 import 'package:personal_trainer/user_repository.dart';
 import 'package:personal_trainer/login_bloc/bloc.dart';
 import 'package:personal_trainer/login_bloc/login_bloc.dart';
@@ -137,6 +138,11 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                         ),
                         GoogleLoginButton(),
+
+                        FacebookLoginButton(),
+                                            
+
+
                         CreateAccountButton(userRepository: _userRepository),            
                       ],
                     ),
