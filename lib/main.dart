@@ -24,7 +24,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
     final UserRepository _userRepository = UserRepository();
     AuthenticationBloc _authenticationBloc;
-       
     @override
     void initState() {
       super.initState();
