@@ -13,7 +13,7 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
-
+//Kauan é aqui q ta o b.o man, de exibir na tela apenas os alunos que o atual id logado bate com o id cadastrado, dessa linha pra frente é vc e Deus irmão
     return FutureBuilder<QuerySnapshot>(
       future: Firestore.instance.collection("student").where("id", isEqualTo: catchId()).getDocuments(),
       builder: (context,snapshot){
