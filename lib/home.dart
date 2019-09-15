@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
@@ -20,6 +21,8 @@ class TelaPrincipal extends StatefulWidget {
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
   PageController _pageController= PageController();
+  FirebaseAuth _firebaseAuth;
+  final facebookLogin = FacebookLogin();
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +144,18 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       title: Text("name"),
       content: new Container(
         width: 300,
+        
         height: 100,
         child: Column(children: <Widget>[        
           FlatButton(
             child: Text("Sign out"),
-            onPressed: (){
+            onPressed: (){              
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
               LoggedOut());
-              logout();
-              
+              //facebookLogin.logOut();       
+     
+              Navigator.pop(context);    
+                              
             },
           ),
 
@@ -178,17 +184,5 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
  
   }
 
-// deslogar do facebook
-  var facebookLogin = FacebookLogin();
-
-    logout() async {
-    await facebookLogin.logOut();
-    print("Logged out");
-    Navigator.pop(context);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MyHomePage()),
-    );
-  }
   
 }

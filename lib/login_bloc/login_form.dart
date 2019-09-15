@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
@@ -23,6 +24,9 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  
+  UserRepository u1 = new UserRepository();
+  String textoTf;
 
   LoginBloc _loginBloc;
 
@@ -118,7 +122,14 @@ class _LoginFormState extends State<LoginForm> {
                       hintStyle: TextStyle(color: Colors.white), 
                       enabledBorder: UnderlineInputBorder(      
                         borderSide: BorderSide(color: Colors.white),   
-                      )
+                      ),
+                      suffixIcon: IconButton(
+                      icon: Icon(Icons.help, color: Colors.white),
+                      //passar email que foi esquecido a senha (para tela UserRepository)
+                      onPressed: () {
+                        textoTf = _emailController.text;
+                        u1.resetPassword(textoTf);
+                      })
                     ),
                     obscureText: true,
                     autovalidate: true,
@@ -183,4 +194,5 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+  
 }
