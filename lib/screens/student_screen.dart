@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
+import 'package:personal_trainer/validators/student_validators.dart';
 
 class StudentScreen extends StatefulWidget {
   final DocumentSnapshot student;
@@ -15,7 +16,7 @@ class StudentScreen extends StatefulWidget {
   static pegarId() {}
 }
 
-class _StudentScreenState extends State<StudentScreen> {
+class _StudentScreenState extends State<StudentScreen> with StudentValidator{
   final StudentBloc _studentBloc;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -97,6 +98,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
                     onSaved: _studentBloc.saveName,
+                    validator: validateName,
                   ),
                   SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields
                   TextFormField(
@@ -109,7 +111,7 @@ class _StudentScreenState extends State<StudentScreen> {
                       DataInputFormatter(),
                     ],
                     onSaved: _studentBloc.saveBirthday,
-                    validator: (t){},
+                    validator: validateBirthday,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -122,7 +124,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     ],
                     decoration: _buildDecoratiom("CPF"),
                     onSaved: _studentBloc.saveCpf,
-                    validator: (t){},
+                    validator: validateCpf,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -130,7 +132,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     initialValue: snapshot.data["email"],
                     decoration: _buildDecoratiom("E-mail"),
                     onSaved: _studentBloc.saveEmail,
-                    validator: (t){},
+                    validator: validateEmail,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -143,7 +145,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     ],
                     decoration: _buildDecoratiom("Telefone"),
                     onSaved: _studentBloc.savePhone,
-                    validator: (t){},
+                    validator: validatePhone,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -151,7 +153,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
                     onSaved: _studentBloc.saveGoal,
-                    validator: (t){},
+                    validator: validateGoal,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -160,15 +162,15 @@ class _StudentScreenState extends State<StudentScreen> {
                     decoration: _buildDecoratiom("Restrições"),
                     maxLines: 4,
                     onSaved: _studentBloc.saveRestrictions,
-                    validator: (t){},
+                    validator: validateRestrictions,
                   ),
 
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
                       builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-                        if (snapshot.hasData) {         
-                        _studentBloc.saveId(snapshot.data.uid);       
-                        return Text("");                     
+                        if (snapshot.hasData) {
+                        _studentBloc.saveId(snapshot.data.uid);
+                        return Text("");
                         }                                          
                     }
                     
@@ -183,30 +185,31 @@ class _StudentScreenState extends State<StudentScreen> {
 
   }
 
-  void saveStudent() async{
-    
-     _formKey.currentState.save();
+  void saveStudent() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
 
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-          content: Text("Salvando aluno...",
-            style: TextStyle(color: Colors.white),
-          ),
-        duration: Duration(minutes: 1),
-        backgroundColor: Colors.deepOrange,
-      )
-    );
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text("Salvando aluno...",
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: Duration(minutes: 1),
+            backgroundColor: Colors.deepOrange,
+          )
+      );
 
-    bool success = await _studentBloc.saveStudent();
+      bool success = await _studentBloc.saveStudent();
 
-    _scaffoldKey.currentState.removeCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-          content: Text(success ? "Aluno salvo":"Erro ao salvar",
-            style: TextStyle(color: Colors.white),
-          ),
-        backgroundColor: Colors.deepOrange,
-      )
-    );
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text(success ? "Aluno salvo" : "Erro ao salvar",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.deepOrange,
+          )
+      );
+    }
   }
 }

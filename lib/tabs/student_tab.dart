@@ -14,23 +14,37 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
     super.build(context);
 
 //Kauan é aqui q ta o b.o man, de exibir na tela apenas os alunos que o atual id logado bate com o id cadastrado, dessa linha pra frente é vc e Deus irmão
-    return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("student").where("id", isEqualTo: catchId()).getDocuments(),
-      builder: (context,snapshot){
-        if(!snapshot.hasData)
+    return FutureBuilder(
+      future: FirebaseAuth.instance.currentUser(),
+      builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
+        if(!snapshot1.hasData){
           return Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
             ),
           );
-        else
-          return ListView.builder(
-            itemCount: snapshot.data.documents.length,
-            itemBuilder: (context,index){
-              return StudentTile(snapshot.data.documents[index]);
-            }
+        }else {
+          return FutureBuilder<QuerySnapshot>(
+            future: Firestore.instance.collection("student").where(
+                "id", isEqualTo: snapshot1.data.uid).getDocuments(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+                  ),
+                );
+              else
+                return ListView.builder(
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) {
+                      return StudentTile(snapshot.data.documents[index]);
+                    }
+                );
+            },
           );
-      },
+        }
+      }
     );
   }
        
