@@ -141,30 +141,40 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   void botaoSignOut(BuildContext context){
 
     var alert = AlertDialog(
-      title: Text("name"),
+      title: Text("Conta", style: TextStyle(color: Colors.deepOrange)),
+      contentPadding: EdgeInsets.all(0),
       content: new Container(
         width: 300,
         
         height: 100,
-        child: Column(children: <Widget>[        
+        child: Column(children: <Widget>[    
+
+        Container(
+          width: double.infinity,
+          color: Colors.deepOrange, 
+          child:     
           FlatButton(
-            child: Text("Sign out"),
+            child:
+              Text("Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
             onPressed: (){              
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
               LoggedOut());
               //facebookLogin.logOut();       
      
               Navigator.pop(context);    
-                              
+                         
             },
           ),
+        ),  
 
-          FlatButton(
-            child: Text("Voltar"),
-            onPressed: (){Navigator.pop(context);},
-
-          )
-
+        Container(
+          width: double.infinity,
+          child:
+            FlatButton(
+              child: Text("Voltar", style: TextStyle(color: Colors.deepOrange, fontSize: 16)),
+              onPressed: (){Navigator.pop(context);},
+            )
+        )  
           
         ],)
                

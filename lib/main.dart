@@ -23,6 +23,7 @@ void main() {
 class MyHomePage extends StatefulWidget {
    final UserRepository _userRepository= UserRepository();
   _MyHomePageState createState() => _MyHomePageState();
+
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -65,6 +66,5 @@ class _MyHomePageState extends State<MyHomePage> {
       _authenticationBloc.dispose();
       super.dispose();
     }
-
-    
+  
 }

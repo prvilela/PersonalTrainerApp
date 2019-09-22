@@ -15,7 +15,7 @@ class RegisterButton extends StatelessWidget {
       ),
       onPressed: _onPressed,
       child: Text('Register', style: TextStyle(color: Colors.white)),
-      disabledColor: Colors.orangeAccent[200],
+      disabledColor: Colors.black,
       color: Colors.deepOrange,
     );
   }

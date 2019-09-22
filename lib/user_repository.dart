@@ -32,10 +32,18 @@ class UserRepository {
 
   //create account
   Future<void> signUp({String email, String password}) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+    FirebaseUser user = (await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
-    );
+    )) as FirebaseUser;
+    confirmarEmail(user); 
+    return user;  
+  }
+
+  void confirmarEmail(user){
+    user.sendEmailVerification(); 
+    print("aeeeeeeeeeeeeeeeeeeeeeee keaioooooooooooooooooooooooo");
+    print(user);
   }
 
   //logout
@@ -59,7 +67,7 @@ class UserRepository {
   }
 
   Future<void> resetPassword(String email) async {
-    await _firebaseAuth.sendPasswordResetEmail(email: email);
+    return await _firebaseAuth.sendPasswordResetEmail(email: email);
 }
 
 }

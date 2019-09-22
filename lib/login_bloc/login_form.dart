@@ -127,8 +127,31 @@ class _LoginFormState extends State<LoginForm> {
                       icon: Icon(Icons.help, color: Colors.white),
                       //passar email que foi esquecido a senha (para tela UserRepository)
                       onPressed: () {
-                        textoTf = _emailController.text;
-                        u1.resetPassword(textoTf);
+                        if(_emailController.text.isEmpty){
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [Text('Digite seu email!'),],
+                              ),
+                            ),
+                          );
+                        }
+                        //if(u1.resetPassword(textoTf) == null){
+                          //print("Email não cadastrado!");
+                        //}
+                        else{
+                          textoTf = _emailController.text;
+                          u1.resetPassword(textoTf);
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [Text('Email enviado para: '+"$textoTf"),],
+                              ),
+                            ),
+                          );                          
+                        }
                       })
                     ),
                     obscureText: true,
@@ -151,9 +174,7 @@ class _LoginFormState extends State<LoginForm> {
                         GoogleLoginButton(),
 
                         FacebookLoginButton(),
-                                            
-
-
+                    
                         CreateAccountButton(userRepository: _userRepository),            
                       ],
                     ),
