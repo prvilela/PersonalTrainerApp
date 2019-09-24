@@ -13,6 +13,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
+import 'package:personal_trainer/tiles/bottomNavigation.dart';
 
 class TelaPrincipal extends StatefulWidget {
   @override
@@ -23,6 +24,8 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   PageController _pageController= PageController();
   FirebaseAuth _firebaseAuth;
   final facebookLogin = FacebookLogin();
+
+  BottomNavigationClass bn = new BottomNavigationClass();
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +51,19 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                     onPressed: (){
                       botaoSignOut(context);
                     },
-
                   ),
-
-                  
-                                                                      
+                                                      
               ),
             ]
           ),
           drawer: CustomDrawer(_pageController),
           body: HomeTab(),
+          bottomNavigationBar: bn,
         ),
+
+
+
+
         Scaffold(
           appBar: AppBar(
             title: Text("Alunos"),
@@ -136,6 +141,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       ],
     );
   }
+
 
  //deslogar do Gmail na tela home
   void botaoSignOut(BuildContext context){

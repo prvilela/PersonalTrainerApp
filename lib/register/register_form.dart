@@ -1,15 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_event.dart';
-import 'package:personal_trainer/home.dart';
-import 'package:personal_trainer/login_bloc/login_screen.dart';
 import 'package:personal_trainer/register/register_bloc.dart';
 import 'package:personal_trainer/register/register_event.dart';
 import 'package:personal_trainer/register/register_state.dart';
 import 'package:personal_trainer/register/register_button.dart';
-
-import '../main.dart';
 
 class RegisterForm extends StatefulWidget {
   State<RegisterForm> createState() => _RegisterFormState();
@@ -18,6 +16,11 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  FirebaseAuth _firebaseAuth;
+  _RegisterFormState({FirebaseAuth firebaseAuth})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+
 
   RegisterBloc _registerBloc;
 
@@ -163,10 +166,14 @@ class _RegisterFormState extends State<RegisterForm> {
         password: _passwordController.text,
       ),
     );
-    //colocar resto do confirmar email no codigo
-    
-
+    //confirmarEmail();
     Navigator.pop(context); 
+  }
 
+  void confirmarEmail() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    print(user);
+    user.sendEmailVerification(); 
+    print("aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee keaioooooooooooooooooooooooo");
   }
 }
