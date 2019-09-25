@@ -67,14 +67,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         Scaffold(
           appBar: AppBar(
             title: Text("Alunos"),
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.deepOrange,
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
           body: StudentTab(),
           floatingActionButton: SpeedDial(
             child: Icon(Icons.view_list),
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.deepOrange,
             children:[
               SpeedDialChild(
                 child: Icon(Icons.add),

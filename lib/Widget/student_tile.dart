@@ -11,7 +11,7 @@ class StudentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 20);
+    final _fieldStale = TextStyle(color: Colors.deepOrange, fontSize: 20);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -19,7 +19,7 @@ class StudentTile extends StatelessWidget {
         onTap: (){},
         child: Card(
           child: ExpansionTile(
-            leading: Icon(Icons.person, color: Colors.orange,),
+            leading: Icon(Icons.person, color: Colors.deepOrange,),
             title:  Text(student.data["name"],
               style: _fieldStale
             ),
@@ -65,7 +65,7 @@ class StudentTile extends StatelessWidget {
     );
   }
   Widget _buildRow(String text,String data){
-    final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 16);
+    final _fieldStale = TextStyle(color: Colors.deepOrange, fontSize: 16);
     return Row(
       children: <Widget>[
         Text(text, style: _fieldStale,),
