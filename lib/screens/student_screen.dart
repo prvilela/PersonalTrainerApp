@@ -195,7 +195,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
               style: TextStyle(color: Colors.white),
             ),
             duration: Duration(minutes: 1),
-            backgroundColor: Colors.deepOrange,
+            backgroundColor: Colors.black,
           )
       );
 
@@ -207,7 +207,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
             content: Text(success ? "Aluno salvo" : "Erro ao salvar",
               style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.deepOrange,
+            backgroundColor: Colors.black,
           )
       );
     }
