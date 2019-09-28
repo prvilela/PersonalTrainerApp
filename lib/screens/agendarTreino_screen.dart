@@ -118,8 +118,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         labelText: label,
         suffixIcon: IconButton(
           icon: Icon(Icons.access_time),
-          onPressed: () async =>      
-          controllerTime.text = (await t1.selectTime(context)) as String
+          onPressed: () =>   
+          controllerTime.text = t1.selectTime(context).toString()
         ),
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         enabledBorder: OutlineInputBorder(

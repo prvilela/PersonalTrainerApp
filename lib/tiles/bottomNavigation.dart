@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/home.dart';
 
 class BottomNavigationClass extends StatelessWidget{
@@ -40,7 +41,7 @@ class BottomNavigationClass extends StatelessWidget{
 
           if(_currentIndex == 1){
             Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>TelaPrincipal())
+                    MaterialPageRoute(builder: (context)=>Calendar()) 
                   );
           }
 
