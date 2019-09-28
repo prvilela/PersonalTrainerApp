@@ -74,11 +74,12 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
 
           ],
         ),
+        
       ),
+      
     );
+    
   }
-
-
 
   InputDecoration _buildDecoration(String label) {
       return InputDecoration(
@@ -117,8 +118,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         labelText: label,
         suffixIcon: IconButton(
           icon: Icon(Icons.access_time),
-          onPressed: () =>
-          setState((){ controllerTime.text = t1.selectTime(context) as Str ing;})
+          onPressed: () async =>      
+          controllerTime.text = (await t1.selectTime(context)) as String
         ),
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         enabledBorder: OutlineInputBorder(
