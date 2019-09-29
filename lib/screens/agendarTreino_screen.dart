@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
   _AgendarTreinoScreenState(DocumentSnapshot agendar);
 
   TimeState t1 = new TimeState();
+  final controllerCpf = TextEditingController();
   final controllerDate = TextEditingController();
   final controllerTime = TextEditingController();
 
@@ -43,7 +45,9 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         child: ListView(
           children: <Widget>[
             TextFormField(
-              decoration: _buildDecoration("CPF:"),
+              controller: controllerCpf,
+              decoration: _buildDecoration("CPF:"), 
+              onEditingComplete:(){ consultarCpf(context);}         
             ),
             SizedBox(height: 8.0),
 
@@ -56,7 +60,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
                 DataInputFormatter(),
               ],
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: 8.0), 
 
             TextFormField(
               controller: controllerTime,
@@ -94,6 +98,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       );
     }
 
+//tanto esse input quanto o de baixo funcionam porém não retoram o valor para dentro do textField :(
     InputDecoration _buildDecorationDate(String label) {
       return InputDecoration(
         labelText: label,
@@ -131,8 +136,20 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       );
     }
 
+// quando o PT colocar o cpf do aluno, o app vai exibir os dados desse cpf para o PT ver se é o aluno correto
+//porém só ta exibindo Instance of 'QuerySnapshot' ao invés dos dados :(
+    consultarCpf(BuildContext context) async{
+      FirebaseAuth.instance.currentUser();
+      QuerySnapshot snapshot = await Firestore.instance.collection("student").where(
+      "cpf", isEqualTo: controllerCpf.text).getDocuments();
+      var channelName = snapshot;
+      print(channelName);
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooooooooooooooooooo");
+      
+    }
+
   @override
   bool get wantKeepAlive => true;
-
+ 
 }
 
