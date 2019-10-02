@@ -66,8 +66,11 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
               controller: controllerTime,
               decoration: _buildDecorationTime("Horario:"),
               keyboardType: TextInputType.numberWithOptions(),
+  
+                              
               inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
+                WhitelistingTextInputFormatter.digitsOnly, 
+                LengthLimitingTextInputFormatter(4)                                                    
               ],
             ),
             SizedBox(height: 8.0),
@@ -104,7 +107,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         labelText: label,
         suffixIcon: IconButton(
           icon: Icon(Icons.calendar_today),
-          onPressed: () => 
+          onPressed: () =>
           controllerDate.text = t1.selectDate(context) as String,        
                    
         ),
@@ -121,6 +124,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
     InputDecoration _buildDecorationTime(String label) {
       return InputDecoration(
         labelText: label,
+        counterText: null,
         suffixIcon: IconButton(
           icon: Icon(Icons.access_time),
           onPressed: () =>   

@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                       icon: Icon(Icons.email, color: Colors.white),
                       hintText: 'Email',
                       hintStyle: TextStyle(color: Colors.white), 
-                      enabledBorder: UnderlineInputBorder(      
+                      enabledBorder: UnderlineInputBorder( 
                         borderSide: BorderSide(color: Colors.white),   
                       )
                     ),
