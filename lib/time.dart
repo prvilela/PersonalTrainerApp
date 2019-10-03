@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import "dart:async";
 
+import 'package:intl/intl.dart';
+
 class Time extends StatefulWidget
 {
   @override
@@ -15,9 +17,9 @@ class TimeState extends State<Time>
 
   Future<void> selectDate(BuildContext context) async
   {
-    final DateTime picked = await showDatePicker(
+    DateTime picked = await showDatePicker(
         context: context,
-        initialDate: new DateTime(2019),
+        initialDate: date,
         firstDate: new DateTime(2018),
         lastDate: new DateTime(2030)
     );
@@ -25,14 +27,15 @@ class TimeState extends State<Time>
     {
       print("Date Selected = ${picked.toString()}");
         date = picked;
-        print(date);
-        return date;
+        var data_formatada = DateFormat("dd-MM-yyyy").format(date); 
+        return data_formatada.toString();
     }
   }
+  
 
   Future<void>selectTime(BuildContext context) async
   {
-    final TimeOfDay picked = await showTimePicker(
+    TimeOfDay picked = await showTimePicker(
         context: context,
         initialTime: time
     );
@@ -40,9 +43,16 @@ class TimeState extends State<Time>
     {
       print("Time Selected = ${picked.toString()}");
         time = picked;
-        print(time);
-        return time;
+        var timeF = time.toString();
+        var retorno = filtrarReturn(timeF);
+        return retorno;
     }
+  }
+
+  filtrarReturn(String time){
+    var resposta;
+    resposta = time.replaceAll(new RegExp(r'[a-zA-Z()]'), '');
+    return resposta;
   }
 
   @override

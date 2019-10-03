@@ -11,12 +11,12 @@ class MapBoxExample extends StatefulWidget {
 class _MapBoxExampleState extends State<MapBoxExample> {
   MapBoxStaticImage staticImage = MapBoxStaticImage(
       apiKey:
-          "pk.eyJ1IjoicGFya2luZ3N5c3RlbSIsImEiOiJjanpqbW9oZ2owYW5zM2dwZWlyd3RuaHRwIn0.kTF1XSrSe23_N-72xCRV4w");
+          "sk.eyJ1IjoiZmFiaW9wcmFkbyIsImEiOiJjazE5ZWF6YXcwNXN3M21wY3B5bmFqNjhsIn0.R8bd5J7h0V9WwQixvXsYIw");
 
   Future<List<MapBoxPlace>> getPlaces() async {
     ReverseGeoCoding reverseGeoCoding = ReverseGeoCoding(
       apiKey:
-          'pk.eyJ1IjoicGFya2luZ3N5c3RlbSIsImEiOiJjanpqbW9oZ2owYW5zM2dwZWlyd3RuaHRwIn0.kTF1XSrSe23_N-72xCRV4w',
+          'sk.eyJ1IjoiZmFiaW9wcmFkbyIsImEiOiJjazE5ZWF6YXcwNXN3M21wY3B5bmFqNjhsIn0.R8bd5J7h0V9WwQixvXsYIw',
       limit: 5,
     );
     return await reverseGeoCoding.getAddress(
@@ -152,7 +152,7 @@ class SearchPage extends StatelessWidget {
         bottom: false,
         child: MapBoxPlaceSearchWidget(
           popOnSelect: true,
-          apiKey: "API KEY",
+          apiKey: "sk.eyJ1IjoiZmFiaW9wcmFkbyIsImEiOiJjazE5ZWF6YXcwNXN3M21wY3B5bmFqNjhsIn0.R8bd5J7h0V9WwQixvXsYIw",
           limit: 10,
           onSelected: (place) {},
           context: context,

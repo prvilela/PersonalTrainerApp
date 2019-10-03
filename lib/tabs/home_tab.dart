@@ -98,7 +98,7 @@ class _HomeTabState extends State<HomeTab> {
 
       Container(
         width: double.infinity,
-        height: 420,
+        height: 433,
         child:
           ListView(
             children: <Widget>[
@@ -118,8 +118,11 @@ class _HomeTabState extends State<HomeTab> {
               decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.orange), 
                 top: BorderSide(color: Colors.orange),
-                left: BorderSide(color: Colors.orange),)
+                left: BorderSide(color: Colors.orange),
+                right: BorderSide.none ), 
+                                        
               ),
+              
               child: FlatButton(
                 child:
                   Icon(Icons.arrow_back, size: 40, color: Colors.orange),
@@ -132,7 +135,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
 
             Container(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsets.only(top: 15),
               width: 152,
               height: 50,
               decoration: BoxDecoration(

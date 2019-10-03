@@ -46,12 +46,13 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
           children: <Widget>[
             TextFormField(
               controller: controllerCpf,
-              decoration: _buildDecoration("CPF:"), 
+              decoration: _buildDecoration("CPF:"),
+              keyboardType: TextInputType.numberWithOptions(),
               onEditingComplete:(){ consultarCpf(context);}         
             ),
             SizedBox(height: 8.0),
 
-            TextFormField(
+            TextFormField(  
               controller: controllerDate,
               decoration: _buildDecorationDate("Data:"),
               keyboardType: TextInputType.numberWithOptions(),
@@ -65,9 +66,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
             TextFormField(
               controller: controllerTime,
               decoration: _buildDecorationTime("Horario:"),
-              keyboardType: TextInputType.numberWithOptions(),
-  
-                              
+              keyboardType: TextInputType.numberWithOptions(),                            
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly, 
                 LengthLimitingTextInputFormatter(4)                                                    
@@ -107,8 +106,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         labelText: label,
         suffixIcon: IconButton(
           icon: Icon(Icons.calendar_today),
-          onPressed: () =>
-          controllerDate.text = t1.selectDate(context) as String,        
+          onPressed: () async => 
+          controllerDate.text = await t1.selectDate(context) as String,        
                    
         ),
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
@@ -121,14 +120,15 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       );
     }
 
-    InputDecoration _buildDecorationTime(String label) {
-      return InputDecoration(
-        labelText: label,
-        counterText: null,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.access_time),
-          onPressed: () =>   
-          controllerTime.text = t1.selectTime(context).toString()
+    InputDecoration _buildDecorationTime(String label){
+            return InputDecoration(
+              labelText: label,
+              counterText: null,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.access_time),
+                onPressed: () async =>
+                controllerTime.text = await t1.selectTime(context) as String,
+              
         ),
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         enabledBorder: OutlineInputBorder(
