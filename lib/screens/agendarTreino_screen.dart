@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/time.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AgendarTreinoScreen extends StatefulWidget{
   final DocumentSnapshot agendar;
@@ -51,13 +52,11 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
                 WhitelistingTextInputFormatter.digitsOnly,
                 CpfInputFormatter(),
               ],
-              onEditingComplete:(){ 
-                consultarCpf(context);
-              }         
+
             ),
             SizedBox(height: 8.0),
 
-            TextFormField(  
+            TextFormField(
               controller: controllerDate,
               decoration: _buildDecorationDate("Data:"),
               keyboardType: TextInputType.numberWithOptions(),
@@ -98,7 +97,9 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
-          onPressed: (){}
+          onPressed: (){
+            consultarCpf(context);
+          }
                           
         ),
         enabledBorder: OutlineInputBorder(
@@ -161,15 +162,44 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         var teste2 = list.documents.map((doc) => doc.data['name']);
         var teste3 = list.documents.map((doc) => doc.data['email']);
         var teste4 = list.documents.map((doc) => doc.data['phone']);
-        print(teste1); 
-        print(teste2); 
-        print(teste3);
-        print(teste4);   
-     
-      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooooooooooooooooooo");
+        var concatenar = "$teste1 \n" + "$teste2 \n" + "$teste3 \n" + "$teste4 \n";  
+        print(concatenar);
+        exibirDialogAluno(concatenar);     
+    }
+
+    exibirDialogAluno(String concatenar){
+      Alert(
+      context: context,
+      //type: AlertType.warning,
+      title: "Dados do Aluno",
+      desc: concatenar,
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Cancelar",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () { 
+            Navigator.pop(context);
+            controllerCpf.text = "";
+          },
+          color: Color.fromRGBO(189, 13, 13, 1.0),
+        ),
+        DialogButton(
+          child: Text(
+            "Confirmar",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+            color: Color.fromRGBO(132, 191, 116, 1.0)
+        )
+      ],
+    ).show();
+      
     }
 
   @override
   bool get wantKeepAlive => true;
 }
+
 
