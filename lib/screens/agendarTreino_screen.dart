@@ -47,8 +47,13 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
             TextFormField(
               controller: controllerCpf,
               decoration: _buildDecoration("CPF:"),
-              keyboardType: TextInputType.numberWithOptions(),
-              onEditingComplete:(){ consultarCpf(context);}         
+              inputFormatters:[
+                WhitelistingTextInputFormatter.digitsOnly,
+                CpfInputFormatter(),
+              ],
+              onEditingComplete:(){ 
+                consultarCpf(context);
+              }         
             ),
             SizedBox(height: 8.0),
 
@@ -91,6 +96,11 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){}
+                          
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
         ),
@@ -100,7 +110,6 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       );
     }
 
-//tanto esse input quanto o de baixo funcionam porém não retoram o valor para dentro do textField :(
     InputDecoration _buildDecorationDate(String label) {
       return InputDecoration(
         labelText: label,
@@ -144,16 +153,23 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
 //porém só ta exibindo Instance of 'QuerySnapshot' ao invés dos dados :(
     consultarCpf(BuildContext context) async{
       FirebaseAuth.instance.currentUser();
-      QuerySnapshot snapshot = await Firestore.instance.collection("student").where(
+
+      QuerySnapshot list = await Firestore.instance.collection("student").where(
       "cpf", isEqualTo: controllerCpf.text).getDocuments();
-      var channelName = snapshot;
-      print(channelName);
+     
+        var teste1 = list.documents.map((doc) => doc.data['cpf']);
+        var teste2 = list.documents.map((doc) => doc.data['name']);
+        var teste3 = list.documents.map((doc) => doc.data['email']);
+        var teste4 = list.documents.map((doc) => doc.data['phone']);
+        print(teste1); 
+        print(teste2); 
+        print(teste3);
+        print(teste4);   
+     
       print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaoooooooooooooooooooooooooooooooooooooooooooo");
-      
     }
 
   @override
   bool get wantKeepAlive => true;
- 
 }
 
