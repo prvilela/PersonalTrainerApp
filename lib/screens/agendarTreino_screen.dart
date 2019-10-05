@@ -150,8 +150,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       );
     }
 
-// quando o PT colocar o cpf do aluno, o app vai exibir os dados desse cpf para o PT ver se é o aluno correto
-//porém só ta exibindo Instance of 'QuerySnapshot' ao invés dos dados :(
+//man dps tem q add aquele codigo q tu fez de pegar só os alunos do email logado no momento aqui.
     consultarCpf(BuildContext context) async{
       FirebaseAuth.instance.currentUser();
 
@@ -162,17 +161,20 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
         var teste2 = list.documents.map((doc) => doc.data['name']);
         var teste3 = list.documents.map((doc) => doc.data['email']);
         var teste4 = list.documents.map((doc) => doc.data['phone']);
-        var concatenar = "$teste1 \n" + "$teste2 \n" + "$teste3 \n" + "$teste4 \n";  
-        print(concatenar);
-        exibirDialogAluno(concatenar);     
+        var concatenar = "CPF: $teste1 \n" + "Nome: $teste2 \n" + "Email: $teste3 \n" + "Telefone: $teste4 \n"; 
+        var concatenar2 = concatenar.replaceAll('(','');
+        var concatenar3 = concatenar2.replaceAll(')','');
+        exibirDialogAluno(concatenar3);     
     }
 
     exibirDialogAluno(String concatenar){
       Alert(
       context: context,
-      //type: AlertType.warning,
       title: "Dados do Aluno",
-      desc: concatenar,
+      content: Container(
+        child:
+      Text(concatenar),
+      ),
       buttons: [
         DialogButton(
           child: Text(
@@ -184,14 +186,14 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
             controllerCpf.text = "";
           },
           color: Color.fromRGBO(189, 13, 13, 1.0),
-        ),
+        ), 
         DialogButton(
           child: Text(
             "Confirmar",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () => Navigator.pop(context),
-            color: Color.fromRGBO(132, 191, 116, 1.0)
+            color: Color.fromRGBO(30, 200, 30, 1.0)
         )
       ],
     ).show();
