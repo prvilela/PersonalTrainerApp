@@ -1,13 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_event.dart';
+import 'package:personal_trainer/login_bloc/login_form.dart';
+import 'package:personal_trainer/login_bloc/login_screen.dart';
 import 'package:personal_trainer/register/register_bloc.dart';
 import 'package:personal_trainer/register/register_event.dart';
 import 'package:personal_trainer/register/register_state.dart';
 import 'package:personal_trainer/register/register_button.dart';
+import 'package:personal_trainer/user_repository.dart';
+
+import '../home.dart';
+import '../main.dart';
 
 class RegisterForm extends StatefulWidget {
   State<RegisterForm> createState() => _RegisterFormState();
@@ -16,6 +21,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  UserRepository ur = new UserRepository();
 
   FirebaseAuth _firebaseAuth;
   _RegisterFormState({FirebaseAuth firebaseAuth})
@@ -62,6 +68,17 @@ class _RegisterFormState extends State<RegisterForm> {
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedIn());
           Navigator.of(context).pop();
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context)=>TelaPrincipal())
+          );
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text('Confirme seu email!'),],
+              ),
+            ),
+          );
         }
         if (state.isFailure) {
           Scaffold.of(context)
@@ -166,14 +183,6 @@ class _RegisterFormState extends State<RegisterForm> {
         password: _passwordController.text,
       ),
     );
-    //confirmarEmail();
-    Navigator.pop(context); 
   }
 
-  void confirmarEmail() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    print(user);
-    user.sendEmailVerification(); 
-    print("aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee keaioooooooooooooooooooooooo");
-  }
 }

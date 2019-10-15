@@ -27,7 +27,7 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
       ),
-      icon: Icon(FontAwesomeIcons.google, color: Colors.white),
+      icon: Icon(FontAwesomeIcons.facebookF, color: Colors.white),
       onPressed: () {
         initiateFacebookLogin(); 
       },

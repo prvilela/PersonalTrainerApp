@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/bloc.dart';
@@ -18,10 +19,10 @@ class LoginForm extends StatefulWidget {
         _userRepository = userRepository,
         super(key: key);
 
-  State<LoginForm> createState() => _LoginFormState();
+  State<LoginForm> createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   
@@ -87,11 +88,7 @@ class _LoginFormState extends State<LoginForm> {
       child: BlocBuilder(
         bloc: _loginBloc,
         builder: (BuildContext context, LoginState state) {
-          return Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              child: ListView(
-                children: <Widget>[
+          var children2 = <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Image.asset('assets/logotipo.png', height: 100),
@@ -132,7 +129,7 @@ class _LoginFormState extends State<LoginForm> {
                             SnackBar(
                               content: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [Text('Digite seu email!'),],
+                                children: [Text("Digite seu email!"),],                             
                               ),
                             ),
                           );
@@ -175,18 +172,29 @@ class _LoginFormState extends State<LoginForm> {
 
                         FacebookLoginButton(),
                     
-                        CreateAccountButton(userRepository: _userRepository),            
+                        CreateAccountButton(userRepository: _userRepository), 
+                         
+                                  
                       ],
                     ),
-                  ),
-                ],
+                  ),             
+                  
+                ];
+          return Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Form(
+              child: ListView(
+                children: children2,
               ),
             ),
           );
         },
-      ),
-    );
+      ),   
+    );    
+   
   }
+
+ 
 
   @override
   void dispose() {
@@ -215,5 +223,6 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
-  
+
+   
 }

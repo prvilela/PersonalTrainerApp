@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
@@ -23,21 +24,47 @@ class UserRepository {
 }
 
   //login email comum
-  Future<void> signInWithCredentials(String email, String password) {
-    return _firebaseAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> signInWithCredentials(String email, String password) async {
+    //FirebaseUser user = await _firebaseAuth.currentUser();
+    //signOut();
+    //dynamic retorno = isEmailVerified();
+    //print(retorno);
+    //if(retorno == true){ 
+      print("Toooooooooooooooooooooooooppppppppppppppppppppppppppppppppppppppp");
+      return _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    //}
+    //else{
+      //print("Errrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrrrrrrrrrr");
+    //}
   }
 
   //create account
+  //falta verificar se confirmou email e adcioanar um label pra mandar o usuario confirmar o email
   Future<void> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
-    ); 
-  
+    );   
   }
+
+  Future<void> sendEmailVerification() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    user.sendEmailVerification();
+  }
+
+  Future<bool> isEmailVerified() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    if (user.isEmailVerified == true){
+      return true;
+    } 
+    else{
+      return false;
+    }      
+  }
+
 
   //Future<void> confirmarEmail() async {
     //final currentUser = await _firebaseAuth.currentUser();
@@ -67,10 +94,13 @@ class UserRepository {
     
   }
 
+   Future<void>  getUserInstance() async {
+    return (await _firebaseAuth.currentUser());
+  }
+
   Future<void> resetPassword(String email) async {
     return await _firebaseAuth.sendPasswordResetEmail(email: email);
 }
-
 
 
 }

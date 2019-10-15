@@ -20,6 +20,7 @@ import 'mapbox/mapbox_main.dart';
 class TelaPrincipal extends StatefulWidget {
   @override
   _TelaPrincipalState createState() => _TelaPrincipalState();
+
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
@@ -153,10 +154,9 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       contentPadding: EdgeInsets.all(0),
       content: new Container(
         width: 300,
-        
         height: 100,
+        
         child: Column(children: <Widget>[    
-
         Container(
           width: double.infinity,
           color: Colors.deepOrange, 
@@ -164,13 +164,12 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           FlatButton(
             child:
               Text("Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
-            onPressed: (){              
+            onPressed: () async {              
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
               LoggedOut());
               //facebookLogin.logOut();       
-     
-              Navigator.pop(context);    
-                         
+              Navigator.pop(context); 
+              Navigator.pop(context);                     
             },
           ),
         ),  

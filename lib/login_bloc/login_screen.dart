@@ -12,10 +12,10 @@ class LoginScreen extends StatefulWidget {
         _userRepository = userRepository,
         super(key: key);
 
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   LoginBloc _loginBloc;
 
   UserRepository get _userRepository => widget._userRepository;
@@ -41,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         
       ),
       backgroundColor: Colors.deepOrange,
+    
     );
   }
 
@@ -49,4 +50,5 @@ class _LoginScreenState extends State<LoginScreen> {
     _loginBloc.dispose();
     super.dispose();
   }
+
 }

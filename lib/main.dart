@@ -22,13 +22,15 @@ void main() {
 
 class MyHomePage extends StatefulWidget {
    final UserRepository _userRepository= UserRepository();
-  _MyHomePageState createState() => _MyHomePageState();
+    MyHomePageState createState() => MyHomePageState();
 
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
     final UserRepository _userRepository = UserRepository();
     AuthenticationBloc _authenticationBloc;
+
+  MyHomePageState();
     @override
     void initState() {
       super.initState();
@@ -60,6 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }
+
+void exibirMsg(){
+    Scaffold.of(context).showSnackBar(
+       SnackBar(
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [Text("Confirme seu email!"),],
+        ),
+      ),
+    );
+  }
 
   @override
     void dispose() {

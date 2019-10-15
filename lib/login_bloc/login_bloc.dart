@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:personal_trainer/login_bloc/login_event.dart';
@@ -10,6 +11,7 @@ import 'package:personal_trainer/login_bloc/validators.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   UserRepository _userRepository;
+  static UserRepository ur = new UserRepository();
 
   LoginBloc({
     @required UserRepository userRepository,
@@ -71,17 +73,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  
   Stream<LoginState> _mapLoginWithCredentialsPressedToState({
     String email,
     String password,
   }) async* {
-    yield LoginState.loading();
-    try {
-      await _userRepository.signInWithCredentials(email, password);
-      yield LoginState.success();
-    } catch (_) {
-      yield LoginState.failure();
-    }
-  }
+      yield LoginState.loading();
+      try {
+        await _userRepository.signInWithCredentials(email, password);
+        yield LoginState.success();
+      } catch (_) {
+        yield LoginState.failure();
+      }
+    } 
+
 }
