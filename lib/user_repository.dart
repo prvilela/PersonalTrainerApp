@@ -24,21 +24,11 @@ class UserRepository {
 }
 
   //login email comum
-  Future<void> signInWithCredentials(String email, String password) async {
-    //FirebaseUser user = await _firebaseAuth.currentUser();
-    //signOut();
-    //dynamic retorno = isEmailVerified();
-    //print(retorno);
-    //if(retorno == true){ 
-      print("Toooooooooooooooooooooooooppppppppppppppppppppppppppppppppppppppp");
-      return _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    //}
-    //else{
-      //print("Errrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrrrrrrrrrr");
-    //}
+  Future<void> signInWithCredentials(String email, String password) async {   
+        return _firebaseAuth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
   }
 
   //create account
@@ -47,15 +37,15 @@ class UserRepository {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
-    );   
+    );
   }
 
-  Future<void> sendEmailVerification() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    user.sendEmailVerification();
-  }
+  //Future<void> sendEmailVerification() async {
+    //FirebaseUser user = await _firebaseAuth.currentUser();
+    //user.sendEmailVerification();
+  //}
 
-  Future<bool> isEmailVerified() async {
+  /*Future<bool> isEmailVerified() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     if (user.isEmailVerified == true){
       return true;
@@ -63,7 +53,7 @@ class UserRepository {
     else{
       return false;
     }      
-  }
+  }*/
 
 
   //Future<void> confirmarEmail() async {

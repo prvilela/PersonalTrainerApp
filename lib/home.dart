@@ -168,7 +168,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
               LoggedOut());
               //facebookLogin.logOut();       
-              Navigator.pop(context); 
               Navigator.pop(context);                     
             },
           ),

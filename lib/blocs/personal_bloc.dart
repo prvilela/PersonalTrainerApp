@@ -23,20 +23,31 @@ class PersonalBloc extends BlocBase{
       _createdController.add(true);
     }else{
       unsavedData = {
-        "email":null,
-        "password":null,
+        "name":null,
+        "phone":null,
+        "id_confef":null,
       };
       _createdController.add(false);
     }
     _dataController.add(unsavedData);
   }
 
+  void saveName(String text){
+    unsavedData["name"] = text;
+  }
+  void savePhone(String text){
+    unsavedData["phone"] = text;
+  }
+  void saveConfef(String text){
+    unsavedData["id_confef"] = text;
+  }
   void saveEmail(String text){
     unsavedData["email"] = text;
   }
   void savePassword(String text){
     unsavedData["password"] = text;
   }
+
 
   Future<bool> savePersonal() async{
     _loadingController.add(true);

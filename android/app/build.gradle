@@ -65,7 +65,7 @@ dependencies {
     //dependency for using firebase database
     implementation 'com.google.firebase:firebase-database:16.0.6'
     //dependency for email and password authentication
-    implementation 'com.google.firebase:firebase-auth:16.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.0.0'
     //dependency for cloud storage
     implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.google.firebase:firebase-firestore:18.1.0'

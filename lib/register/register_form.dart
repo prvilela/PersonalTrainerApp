@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/blocs/authentication_event.dart';
 import 'package:personal_trainer/login_bloc/login_form.dart';
 import 'package:personal_trainer/login_bloc/login_screen.dart';
+import 'package:personal_trainer/register/personal_register_data.dart';
 import 'package:personal_trainer/register/register_bloc.dart';
 import 'package:personal_trainer/register/register_event.dart';
 import 'package:personal_trainer/register/register_state.dart';
@@ -19,19 +22,18 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   UserRepository ur = new UserRepository();
 
   FirebaseAuth _firebaseAuth;
   _RegisterFormState({FirebaseAuth firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
-
   RegisterBloc _registerBloc;
 
   bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+      emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
 
   bool isRegisterButtonEnabled(RegisterState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -41,12 +43,15 @@ class _RegisterFormState extends State<RegisterForm> {
   void initState() {
     super.initState();
     _registerBloc = BlocProvider.of<RegisterBloc>(context);
-    _emailController.addListener(_onEmailChanged);
-    _passwordController.addListener(_onPasswordChanged);
+    emailController.addListener(_onEmailChanged);
+    passwordController.addListener(_onPasswordChanged);
   }
 
   @override
   Widget build(BuildContext context) {
+    var email = emailController.text;
+    var password = passwordController.text;
+
     return BlocListener(
       bloc: _registerBloc,
       listener: (BuildContext context, RegisterState state) {
@@ -67,9 +72,9 @@ class _RegisterFormState extends State<RegisterForm> {
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).dispatch(LoggedIn());
-          Navigator.of(context).pop();
+          //Navigator.of(context).pop();
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context)=>TelaPrincipal())
+            MaterialPageRoute(builder: (context)=>PersonalData())
           );
           Scaffold.of(context).showSnackBar(
             SnackBar(
@@ -104,9 +109,9 @@ class _RegisterFormState extends State<RegisterForm> {
             padding: EdgeInsets.all(20),
             child: Form(
               child: ListView(
-                children: <Widget>[
+                children: <Widget>[                
                   TextFormField(
-                    controller: _emailController,
+                    controller: emailController,
                     decoration: InputDecoration(
                       icon: Icon(Icons.email, color: Colors.deepOrange),
                       hintText: 'Email',
@@ -122,7 +127,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     },
                   ),
                   TextFormField(
-                    controller: _passwordController,
+                    controller: passwordController,
                     decoration: InputDecoration(
                       icon: Icon(Icons.lock, color: Colors.deepOrange),
                       hintText: 'Password',
@@ -159,28 +164,28 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   void _onEmailChanged() {
     _registerBloc.dispatch(
-      EmailChanged(email: _emailController.text),
+      EmailChanged(email: emailController.text),
     );
   }
 
   void _onPasswordChanged() {
     _registerBloc.dispatch(
-      PasswordChanged(password: _passwordController.text),
+      PasswordChanged(password: passwordController.text),
     );
   }
 
   void _onFormSubmitted() {
     _registerBloc.dispatch(
       Submitted(
-        email: _emailController.text,
-        password: _passwordController.text,
+        email: emailController.text,
+        password: passwordController.text,
       ),
     );
   }

@@ -33,6 +33,6 @@ class Submitted extends RegisterEvent {
 
   @override
   String toString() {
-    return 'Submitted { email: $email, password: $password }';
+    return 'Submitted { email: $email, password: $password}';
   }
 }

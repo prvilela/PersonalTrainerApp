@@ -15,7 +15,7 @@ class CreateAccountButton extends StatelessWidget {
     return FlatButton(
       color: Colors.deepOrange,
       child: Text(
-        'Create an Account',
+        'Crie uma Conta',
         style: TextStyle(color:Colors.white),
       ),
       onPressed: () {
