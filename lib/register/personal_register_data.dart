@@ -173,11 +173,10 @@ class PersonalDataState extends State<PersonalData>{
 
 
   Future<void> sendCodeToPhoneNumber() async {
-    FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    FirebaseUser user1 = await _firebaseAuth.currentUser();
-    final PhoneVerificationCompleted verificationCompleted = (user1){
+    //FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+    final PhoneVerificationCompleted verificationCompleted = (AuthCredential credential){
       setState(() {
-          print('Inside _sendCodeToPhoneNumber: signInWithPhoneNumber auto succeeded: $user1');
+          print('Inside _sendCodeToPhoneNumber: signInWithPhoneNumber auto succeeded: $credential');
       });
     };
 

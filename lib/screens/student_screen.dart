@@ -6,13 +6,11 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
 
-class StudentScreen extends StatefulWidget {
+class StudentScreen extends StatefulWidget{
   final DocumentSnapshot student;
-
   StudentScreen({this.student});
   @override
   _StudentScreenState createState() => _StudentScreenState(student);
-
   static pegarId() {}
 }
 
@@ -21,7 +19,6 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   
-
   _StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
 
@@ -200,7 +197,6 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
       );
 
       bool success = await _studentBloc.saveStudent();
-
       _scaffoldKey.currentState.removeCurrentSnackBar();
       _scaffoldKey.currentState.showSnackBar(
           SnackBar(

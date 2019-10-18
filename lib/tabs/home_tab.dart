@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:personal_trainer/Widget/aula_tile.dart';
 import 'package:personal_trainer/Widget/student_tile.dart';
 import 'package:personal_trainer/screens/agendarTreino_screen.dart';
 
@@ -16,8 +17,7 @@ class _HomeTabState extends State<HomeTab> {
   final controllerSearch = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) { 
     if(x==0){
     return ListView(
       children: <Widget>[
@@ -29,7 +29,38 @@ class _HomeTabState extends State<HomeTab> {
             child:
               ListView(
                 children: <Widget>[
-
+                  FutureBuilder(
+                    future: FirebaseAuth.instance.currentUser(),
+                    builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
+                      if(!snapshot1.hasData){
+                        return Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+                          ),
+                        );
+                      }else{
+                        return FutureBuilder<QuerySnapshot>(
+                          future: Firestore.instance.collection("aulas").where(
+                            "id", isEqualTo: snapshot1.data.uid).getDocuments(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData)
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+                                  ),
+                                );
+                              else
+                                return ListView.builder(
+                                  itemCount: snapshot.data.documents.length,
+                                  itemBuilder: (context, index) {
+                                    return AulaTile(snapshot.data.documents[index]);
+                                  }
+                                );
+                            },
+                        );
+                      }
+                    }
+                  )
                 ],
               )
           ),
@@ -331,6 +362,20 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   }
+
+  catchId(){
+                  FutureBuilder(
+                    future: FirebaseAuth.instance.currentUser(),
+                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                        if (snapshot.hasData) {          
+                        String id = (snapshot.data.uid);
+                        print(id); 
+                        return Text("$id");                     
+                        }                                          
+                    }      
+                  );
+                  
+                  }
 
   @override
   // TODO: implement wantKeepAlive

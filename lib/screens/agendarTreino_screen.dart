@@ -3,37 +3,75 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:personal_trainer/blocs/aulas_bloc.dart';
 import 'package:personal_trainer/time.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AgendarTreinoScreen extends StatefulWidget{
-  final DocumentSnapshot agendar;
-  AgendarTreinoScreen ({this.agendar});
-
-_AgendarTreinoScreenState createState() => _AgendarTreinoScreenState(agendar);
-
+  final DocumentSnapshot aulas;
+  AgendarTreinoScreen ({this.aulas});
+  @override
+  _AgendarTreinoScreenState createState() => _AgendarTreinoScreenState(aulas);
+  static pegarId() {}
 }
 
-class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AutomaticKeepAliveClientMixin{
-  _AgendarTreinoScreenState(DocumentSnapshot agendar);
+class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
+  //final AulaBloc _aulaBloc;
+  final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  static DocumentSnapshot aulas;
+  
+  _AgendarTreinoScreenState(DocumentSnapshot aulas);
+      AulaBloc _aulaBloc = AulaBloc(aulas);
 
   TimeState t1 = new TimeState();
+  final controllerName = TextEditingController();
   final controllerCpf = TextEditingController();
   final controllerDate = TextEditingController();
   final controllerTime = TextEditingController();
+  final controllerAcademia = TextEditingController();
+  final controllerDuracao = TextEditingController();
+  final controllerPreco = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
+    //super.build(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Agendar Treino"),
+      key: _scaffoldKey,
+      appBar: AppBar(
+      title: StreamBuilder<bool>(
+          stream: _aulaBloc.outCreated,
+          builder: (context, snapshot) {
+            return Text("Agendar Treino Avulso");
+          }
+        ),
       backgroundColor: Colors.deepOrange,
       actions: <Widget>[
         StreamBuilder<bool>(
+            stream: _aulaBloc.outCreated,
+            initialData: false,
+            builder: (context,snapshot){
+              if(snapshot.data)
+                return StreamBuilder<bool>(
+                    stream: _aulaBloc.outLoading,
+                    initialData: false,
+                    builder: (context, snapshot) {
+                      return IconButton(icon: Icon(Icons.remove),
+                        onPressed: snapshot.data ? null : (){
+                          _aulaBloc.deleteAula();
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }
+                );
+              else return Container();
+            },
+          ),
+        StreamBuilder<bool>(
             builder: (context, snapshot) {
               return IconButton(icon: Icon(Icons.save),
-                onPressed: (){},
+                onPressed: saveAula,
               );
             }
           )
@@ -41,22 +79,39 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       ],
 
       ),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child: ListView(
-          children: <Widget>[
-            TextFormField(
-              controller: controllerCpf,
-              decoration: _buildDecoration("CPF:"),
-              inputFormatters:[
-                WhitelistingTextInputFormatter.digitsOnly,
-                CpfInputFormatter(),
-              ],
+      body: Form(
+        key: _formKey,
+        child: StreamBuilder<Map>(
+          stream: _aulaBloc.outData,
+          builder: (context, snapshot) {
+            if(!snapshot.hasData) return Container();
+            return ListView(
+              padding: EdgeInsets.all(16),
+              children: <Widget>[
 
+            TextFormField(
+              initialValue: snapshot.data["name"],
+              onSaved: _aulaBloc.saveName,
+              controller: controllerName,
+              decoration: _buildDecoration("Nome:"),
             ),
             SizedBox(height: 8.0),
 
             TextFormField(
+              initialValue: snapshot.data["cpf"],
+              onSaved: _aulaBloc.saveCpf,
+              controller: controllerCpf,
+              decoration: _buildDecorationCpf("CPF:"),
+              inputFormatters:[
+                WhitelistingTextInputFormatter.digitsOnly,
+                CpfInputFormatter(),
+              ],
+            ),
+            SizedBox(height: 8.0),
+
+            TextFormField(
+              initialValue: snapshot.data["data"],
+              onSaved: _aulaBloc.saveData,
               controller: controllerDate,
               decoration: _buildDecorationDate("Data:"),
               keyboardType: TextInputType.numberWithOptions(),
@@ -68,6 +123,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
             SizedBox(height: 8.0), 
 
             TextFormField(
+              initialValue: snapshot.data["hora"],
+              onSaved: _aulaBloc.saveHora,
               controller: controllerTime,
               decoration: _buildDecorationTime("Horario:"),
               keyboardType: TextInputType.numberWithOptions(),                            
@@ -79,19 +136,91 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
             SizedBox(height: 8.0),
 
             TextFormField(
-              decoration: _buildDecoration("Academia:"),
+              initialValue: snapshot.data["academia"],
+              onSaved: _aulaBloc.saveAcademia,
+              controller: controllerAcademia,
+              decoration: _buildDecorationAcademia("Academia:"),
+            ),
+            SizedBox(height: 8.0),
+
+            TextFormField(
+              initialValue: snapshot.data["duracao"],
+              onSaved: _aulaBloc.saveDuracao,
+              controller: controllerDuracao,
+              decoration: _buildDecoration("Duração:"),
+              inputFormatters: [
+                WhitelistingTextInputFormatter.digitsOnly,
+              ],
+            ),
+            SizedBox(height: 8.0), 
+
+            TextFormField(
+              initialValue: snapshot.data["preco"],
+              onSaved: _aulaBloc.savePreco,
+              controller: controllerPreco,
+              decoration: _buildDecoration("Preço:"),
+              inputFormatters: [
+                WhitelistingTextInputFormatter.digitsOnly,
+              ],
+            ), 
+             SizedBox(height: 8.0),  
+
+            TextFormField(
+              initialValue: snapshot.data["frequencia"],
+              onSaved: _aulaBloc.saveFrequencia,
+              controller: controllerDuracao,
+              decoration: _buildDecoration("Duração:"),
+              inputFormatters: [
+                WhitelistingTextInputFormatter.digitsOnly,
+              ],
             ),
 
-          ],
-        ),
-        
+            FutureBuilder(
+              future: FirebaseAuth.instance.currentUser(),
+              builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                if (snapshot.hasData) {
+                  _aulaBloc.saveId(snapshot.data.uid);
+                  return Text("");
+                }                                          
+              }
+              ),
+                 
+              ],
+            );
+          }     
+        ),    
       ),
-      
-    );
-    
+    );    
   }
 
-  InputDecoration _buildDecoration(String label) {
+  void saveAula() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text("Salvando aula...",
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: Duration(minutes: 1),
+            backgroundColor: Colors.black,
+          )
+      );
+
+      bool success = await _aulaBloc.saveAula();
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text(success ? "Aula salva" : "Erro ao salvar",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.black,
+          )
+      );
+    }
+  }
+
+  InputDecoration _buildDecorationCpf(String label) {
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
@@ -140,6 +269,39 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
                 controllerTime.text = await t1.selectTime(context) as String,
               
         ),
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecorationAcademia(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){
+            
+          }
+                          
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecoration(String label) {
+      return InputDecoration(
+        labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
@@ -200,8 +362,6 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with Automati
       
     }
 
-  @override
-  bool get wantKeepAlive => true;
 }
 
 
