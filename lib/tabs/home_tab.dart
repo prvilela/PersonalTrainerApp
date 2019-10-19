@@ -19,16 +19,14 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) { 
     if(x==0){
+
     return ListView(
       children: <Widget>[
-        Column(children: <Widget>[
-
+        Column(children: <Widget>[  
           Container(
             width: double.infinity,
             height: 420,
-            child:
-              ListView(
-                children: <Widget>[
+            child:   
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
                     builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
@@ -50,20 +48,22 @@ class _HomeTabState extends State<HomeTab> {
                                   ),
                                 );
                               else
+                              
                                 return ListView.builder(
                                   itemCount: snapshot.data.documents.length,
                                   itemBuilder: (context, index) {
                                     return AulaTile(snapshot.data.documents[index]);
                                   }
                                 );
+                                
                             },
                         );
                       }
                     }
-                  )
-                ],
-              )
+                  ),
+                              
           ),
+          
 
           Container(
             width: double.infinity,
@@ -123,10 +123,8 @@ class _HomeTabState extends State<HomeTab> {
             )
           )
 
-
-
         ],),
-      ],
+      ],   
     );
   }
 
@@ -378,6 +376,6 @@ class _HomeTabState extends State<HomeTab> {
                   }
 
   @override
-  // TODO: implement wantKeepAlive
+  
   bool get wantKeepAlive => true;
 }

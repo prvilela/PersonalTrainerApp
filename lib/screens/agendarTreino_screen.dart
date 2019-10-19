@@ -33,7 +33,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
   final controllerAcademia = TextEditingController();
   final controllerDuracao = TextEditingController();
   final controllerPreco = TextEditingController();
-
+  final controllerFrequencia = TextEditingController();
+ 
   @override
   Widget build(BuildContext context) {
     //super.build(context);
@@ -168,8 +169,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
             TextFormField(
               initialValue: snapshot.data["frequencia"],
               onSaved: _aulaBloc.saveFrequencia,
-              controller: controllerDuracao,
-              decoration: _buildDecoration("Duração:"),
+              controller: controllerFrequencia,
+              decoration: _buildDecoration("Frequencia:"),
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
               ],
