@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/home.dart';
+import 'package:personal_trainer/screens/pacotesAula_screen.dart';
 
 class BottomNavigationClass extends StatelessWidget{
 
@@ -11,7 +12,7 @@ class BottomNavigationClass extends StatelessWidget{
   void initState() {
     _items = new List();
     _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.fitness_center, color: Colors.deepOrange,),
-     title: new Text('Treino', style: TextStyle(color: Colors.white),)));
+     title: new Text('Pacotes', style: TextStyle(color: Colors.white),)));
     _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.calendar_today, color: Colors.deepOrange),
      title: new Text('Agenda', style: TextStyle(color: Colors.white),)));
     _items.add(new BottomNavigationBarItem(icon: new Icon(Icons.home, color: Colors.deepOrange),
@@ -35,7 +36,7 @@ class BottomNavigationClass extends StatelessWidget{
 
           if(_currentIndex == 0){
             Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>TelaPrincipal())
+                    MaterialPageRoute(builder: (context)=>PacoteAula())
                   );
           }
 

@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:personal_trainer/home.dart';
+import 'package:personal_trainer/tiles/bottomNavigation.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // Example holidays
@@ -45,6 +46,7 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
   AnimationController _animationController;
   CalendarController _calendarController;
   DateTime _selectedDay = DateTime.now();
+  BottomNavigationClass bn = new BottomNavigationClass();
  
 
   @override
@@ -122,6 +124,7 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
           Expanded(child: _buildEventList()),
         ],
       ),
+      bottomNavigationBar: bn,
     );
   }
 

@@ -25,7 +25,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   PageController _pageController= PageController();
   FirebaseAuth _firebaseAuth;
   final facebookLogin = FacebookLogin();
-
   BottomNavigationClass bn = new BottomNavigationClass();
 
   @override
