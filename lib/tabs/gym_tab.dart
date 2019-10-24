@@ -34,7 +34,7 @@ class _GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin{
               _mapController.complete(controller);
             },
           ),
-          Positioned(
+          /*Positioned(
             top: 60,
             left: MediaQuery.of(context).size.width * 0.05,
             // width: MediaQuery.of(context).size.width * 0.9,
@@ -51,7 +51,7 @@ class _GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin{
                 controller.animateCamera(CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
               },
             ),
-          ),
+          ),*/
         ],
       ),
     );

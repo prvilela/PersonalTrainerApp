@@ -15,8 +15,6 @@ import 'package:personal_trainer/blocs/bloc.dart';
 import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 
-import 'mapbox/mapbox_main.dart';
-
 class TelaPrincipal extends StatefulWidget {
   @override
   _TelaPrincipalState createState() => _TelaPrincipalState();
@@ -38,7 +36,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       children: <Widget>[
         Scaffold(
           appBar: AppBar(
-            title: Text("Home"),
+            title: Text("Agenda"),
             backgroundColor: Colors.deepOrange,
             centerTitle: true,
             actions: <Widget>[
@@ -101,7 +99,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
-          body: MapBoxExample(),
+          body: Container(),//MapBoxExample(),
           floatingActionButton: SpeedDial(
             child: Icon(Icons.view_list),
             backgroundColor: Colors.orange,

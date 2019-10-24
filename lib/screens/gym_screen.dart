@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/blocs/gym_bloc.dart';
 
+import 'package:personal_trainer/screens/map.dart';
+
 class GymScreen extends StatefulWidget {
 
   final DocumentSnapshot gym;
@@ -28,6 +30,28 @@ class _GymScreenState extends State<GymScreen> {
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecorationName(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context)=> Demo())
+            );
+            //MapBoxPlaceSearchWidget(apiKey: "sk.eyJ1IjoiZmFiaW9wcmFkbyIsImEiOiJjazE5ZWF6YXcwNXN3M21wY3B5bmFqNjhsIn0.R8bd5J7h0V9WwQixvXsYIw)"
+          }                    
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
         ),
@@ -95,18 +119,10 @@ class _GymScreenState extends State<GymScreen> {
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
-                    decoration: _buildDecoratiom("Nome"),
+                    decoration: _buildDecorationName("Nome"),
                     onSaved: _gymBloc.saveName,
                   ),
-                  SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields
-              
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["phone"],
-                    decoration: _buildDecoratiom("Telefone"),
-                    //onSaved: _gymBloc.saveName,
-                  ),
-                  SizedBox(height: 8.0),
+                  SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields                            
 
                   TextFormField(
                     style: _fieldStale,
@@ -114,7 +130,16 @@ class _GymScreenState extends State<GymScreen> {
                     decoration: _buildDecoratiom("Endereço"),
                     //onSaved: _gymBloc.saveName,
                   ),
-                 
+                  SizedBox(height: 8.0),
+
+                  TextFormField(
+                    style: _fieldStale,
+                    initialValue: snapshot.data["custo"],
+                    decoration: _buildDecoratiom("Custo"),
+                    //onSaved: _gymBloc.saveName,
+                  ),
+
+
                 ],
               );
             }

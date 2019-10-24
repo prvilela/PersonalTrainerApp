@@ -36,26 +36,26 @@ class CalendarPage extends StatefulWidget {
   final String title;
 
   @override
-  _CalendarPageState createState() => _CalendarPageState();
+  CalendarPageState createState() => CalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMixin {
+class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
+  DateTime _selectedDay = DateTime.now();
+ 
 
   @override
   void initState() {
     super.initState();
-    final _selectedDay = DateTime.now();
-
+    
     _events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
+      //_selectedDay: ['Event A7= "teste"', 'Event B7', 'Event C7', 'Event D7'],
+      //_selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
     };
- 
+    
     _selectedEvents = _events[_selectedDay] ?? [];
 
     _calendarController = CalendarController();
@@ -75,11 +75,24 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
     super.dispose();
   }
 
-  void _onDaySelected(DateTime day, List events) {
+  
+  void onDaySelected(DateTime day, List events1){
     print('CALLBACK: _onDaySelected');
     setState(() {
-      _selectedEvents = events;
+      _selectedEvents = events1;
     });
+  }
+
+  void adicionarTreinos(DateTime day, List events1){
+    setState(() {
+      //essa linha de baixo, molde para passar dados para o calendáriooooooooo
+      _events = { day: [events1]};
+      _selectedEvents = events1;
+      print(day);
+      print(events1);
+      print("topzaooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    });
+    onDaySelected(day, events1);
   }
 
   void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
@@ -132,7 +145,7 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
-      onDaySelected: _onDaySelected,
+      onDaySelected: onDaySelected,
       onVisibleDaysChanged: _onVisibleDaysChanged,
     );
   }
@@ -221,7 +234,7 @@ class _CalendarPageState extends State<CalendarPage> with TickerProviderStateMix
         },
       ),
       onDaySelected: (date, events) {
-        _onDaySelected(date, events);
+        onDaySelected(date, events);
         _animationController.forward(from: 0.0);
       },
       onVisibleDaysChanged: _onVisibleDaysChanged,

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/aulas_bloc.dart';
+import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/time.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -16,9 +17,13 @@ class AgendarTreinoScreen extends StatefulWidget{
 }
 
 class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
+  DateTime day = DateTime.now();
+  List lista = ['fabio', 'prado'];
   //final AulaBloc _aulaBloc;
+  CalendarPageState cps = new CalendarPageState();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   static DocumentSnapshot aulas;
   
@@ -72,7 +77,11 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
         StreamBuilder<bool>(
             builder: (context, snapshot) {
               return IconButton(icon: Icon(Icons.save),
-                onPressed: saveAula,
+                onPressed: (){
+                  saveAula();
+                  print("Aqui vai passar pro calendario!");
+                  cps.adicionarTreinos(day, lista);
+                },
               );
             }
           )
@@ -100,6 +109,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
 
             TextFormField(
               initialValue: snapshot.data["cpf"],
+              keyboardType: TextInputType.numberWithOptions(),
               onSaved: _aulaBloc.saveCpf,
               controller: controllerCpf,
               decoration: _buildDecorationCpf("CPF:"),
@@ -146,6 +156,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
 
             TextFormField(
               initialValue: snapshot.data["duracao"],
+              keyboardType: TextInputType.numberWithOptions(),
               onSaved: _aulaBloc.saveDuracao,
               controller: controllerDuracao,
               decoration: _buildDecoration("Duração:"),
@@ -157,6 +168,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
 
             TextFormField(
               initialValue: snapshot.data["preco"],
+              keyboardType: TextInputType.numberWithOptions(),
               onSaved: _aulaBloc.savePreco,
               controller: controllerPreco,
               decoration: _buildDecoration("Preço:"),
@@ -168,6 +180,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
 
             TextFormField(
               initialValue: snapshot.data["frequencia"],
+              keyboardType: TextInputType.numberWithOptions(),
               onSaved: _aulaBloc.saveFrequencia,
               controller: controllerFrequencia,
               decoration: _buildDecoration("Frequencia:"),
@@ -229,8 +242,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
           icon: Icon(Icons.search),
           onPressed: (){
             consultarCpf(context);
-          }
-                          
+          }                    
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),

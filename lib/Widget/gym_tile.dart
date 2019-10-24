@@ -28,9 +28,9 @@ class GymTile extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    _buildRow("Telefone: ", gym.data["phone"]),
+                    _buildRow("Telefone: ", gym.data["location"]),
                     SizedBox(height: 4,),
-                    _buildRow("Localização: ", gym.data["location"]),
+                    _buildRow("Localização: ", gym.data["price"]),
                     SizedBox(height: 4,),            
 
                     Container(

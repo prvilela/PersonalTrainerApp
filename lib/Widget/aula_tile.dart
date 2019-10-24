@@ -17,8 +17,8 @@ class AulaTile extends StatelessWidget {
         onTap: (){},
         child: Card(
           child: ExpansionTile(
-            leading: Icon(Icons.person, color: Colors.deepOrange,),
-            title:  Text(aulas.data["name"],
+            leading: Text(aulas.data["hora"], style: TextStyle(color: Colors.deepOrange, fontSize: 22)),
+            title:  Text(aulas.data["name"] + " - " + aulas.data["academia"], 
               style: _fieldStale
             ),
             children: <Widget>[
