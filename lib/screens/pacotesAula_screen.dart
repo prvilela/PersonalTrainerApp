@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_trainer/calendarioPacotes/schedules_page.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 
 class PacoteAula extends StatefulWidget {
@@ -7,7 +7,7 @@ class PacoteAula extends StatefulWidget {
   _PacoteAulaState createState() => _PacoteAulaState();
 }
 
-class _PacoteAulaState extends State<PacoteAula>{
+class _PacoteAulaState extends State<PacoteAula> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   BottomNavigationClass bn = new BottomNavigationClass();
@@ -33,10 +33,7 @@ class _PacoteAulaState extends State<PacoteAula>{
         backgroundColor: Colors.deepOrange,
       ),
 
-      body: Container(
-        child:
-        Text("")
-      ),
+      body: SchedulesPage(),
 
       bottomNavigationBar: bn,
     
@@ -44,8 +41,6 @@ class _PacoteAulaState extends State<PacoteAula>{
 
   }
 
-  void saveGym() async{
-    
-  }
+
 
 }
