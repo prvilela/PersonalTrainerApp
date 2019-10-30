@@ -140,9 +140,8 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                       WhitelistingTextInputFormatter.digitsOnly,
                       TelefoneInputFormatter(digito_9: true),
                     ],
-                    decoration: _buildDecoratiom("Telefone"),
+                    decoration: _buildDecoratiom("Celular"),
                     onSaved: _studentBloc.savePhone,
-                    validator: validatePhone,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -150,7 +149,6 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
                     onSaved: _studentBloc.saveGoal,
-                    validator: validateGoal,
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -159,7 +157,6 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     decoration: _buildDecoratiom("Restrições"),
                     maxLines: 4,
                     onSaved: _studentBloc.saveRestrictions,
-                    validator: validateRestrictions,
                   ),
 
                   FutureBuilder(

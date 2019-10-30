@@ -1,23 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:personal_trainer/blocs/gym_bloc.dart';
-
-import 'package:personal_trainer/screens/map.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class GymScreen extends StatefulWidget {
-
   final DocumentSnapshot gym;
-
   GymScreen({this.gym});
-
   @override
   _GymScreenState createState() => _GymScreenState(gym);
+  static pegarId() {}
 }
 
 class _GymScreenState extends State<GymScreen> {
-
   final GymBloc _gymBloc;
-
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,10 +43,8 @@ class _GymScreenState extends State<GymScreen> {
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
           onPressed: (){
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context)=> Demo())
-            );
-            //MapBoxPlaceSearchWidget(apiKey: "sk.eyJ1IjoiZmFiaW9wcmFkbyIsImEiOiJjazE5ZWF6YXcwNXN3M21wY3B5bmFqNjhsIn0.R8bd5J7h0V9WwQixvXsYIw)"
+            
+           
           }                    
         ),
         enabledBorder: OutlineInputBorder(
@@ -84,7 +79,6 @@ class _GymScreenState extends State<GymScreen> {
                     stream: _gymBloc.outLoading,
                     initialData: false,
                     builder: (context, snapshot) {
-                      //remover academia (colocar confirma ação futuramente)
                       return IconButton(icon: Icon(Icons.remove),
                         onPressed: snapshot.data ? null : (){
                           _gymBloc.deleteGym();
@@ -128,17 +122,32 @@ class _GymScreenState extends State<GymScreen> {
                     style: _fieldStale,
                     initialValue: snapshot.data["endereço"],
                     decoration: _buildDecoratiom("Endereço"),
-                    //onSaved: _gymBloc.saveName,
+                    onSaved: _gymBloc.saveLoacation,
                   ),
                   SizedBox(height: 8.0),
 
                   TextFormField(
                     style: _fieldStale,
-                    initialValue: snapshot.data["custo"],
-                    decoration: _buildDecoratiom("Custo"),
-                    //onSaved: _gymBloc.saveName,
+                    initialValue: snapshot.data["phone"],
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter(digito_9: true),
+                    ],
+                    decoration: _buildDecoratiom("Telefone"),
+                    onSaved: _gymBloc.savePhone,
                   ),
 
+                  FutureBuilder(
+                    future: FirebaseAuth.instance.currentUser(),
+                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                        if (snapshot.hasData) {
+                        _gymBloc.saveId(snapshot.data.uid);
+                        return Text("");
+                        }                                          
+                    }
+                    
+                  )
 
                 ],
               );
@@ -150,7 +159,8 @@ class _GymScreenState extends State<GymScreen> {
   }
 
   void saveGym() async{
-    _formKey.currentState.save();
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
 
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -158,7 +168,7 @@ class _GymScreenState extends State<GymScreen> {
             style: TextStyle(color: Colors.white),
           ),
         duration: Duration(minutes: 1),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.black,
       )
     );
 
@@ -170,8 +180,10 @@ class _GymScreenState extends State<GymScreen> {
           content: Text(success ? "Academia salva":"Erro ao salvar",
             style: TextStyle(color: Colors.white),
           ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.black,
       )
     );
   }
+  }
 }
+

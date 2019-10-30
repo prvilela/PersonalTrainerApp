@@ -25,7 +25,7 @@ class GymBloc extends BlocBase{
       unsavedData = {
         "name":null,
         "location":null,
-        "price":null,
+        "phone":null,
       };
       _createdController.add(false);
     }
@@ -35,11 +35,14 @@ class GymBloc extends BlocBase{
   void saveName(String text){
     unsavedData["name"] = text;
   }
-  void savePhone(String text){
+  void saveLoacation(String text){
     unsavedData["location"] = text;
   }
-  void saveLocation(String text){
-    unsavedData["price"] = text;
+  void savePhone(String text){
+    unsavedData["phone"] = text;
+  }
+  void saveId(String text){
+    unsavedData["id"] = text;
   }
 
   Future<bool> saveGym() async{

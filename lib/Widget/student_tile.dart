@@ -20,9 +20,9 @@ class StudentTile extends StatelessWidget {
         child: Card(
           child: ExpansionTile(
             leading: Icon(Icons.person, color: Colors.deepOrange,),
-            title:  Text(student.data["name"],
+            title:  Text(student.data["name"],  
               style: _fieldStale
-            ),
+            ),           
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16,right: 16,top: 0,bottom: 8),
@@ -35,7 +35,7 @@ class StudentTile extends StatelessWidget {
                     SizedBox(height: 4,),
                     _buildRow("E-mail: ", student.data["email"]),
                     SizedBox(height: 4,),
-                    _buildRow("Telefone: ", student.data["phone"]),
+                    _buildRow("Celular: ", student.data["phone"]),
                     SizedBox(height: 4,),
                     _buildRow("Objetivo: ", student.data["goal"]),
                     SizedBox(height: 4,),

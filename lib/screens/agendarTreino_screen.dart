@@ -7,6 +7,7 @@ import 'package:personal_trainer/blocs/aulas_bloc.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/time.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:personal_trainer/validators/aula_avulsa_validators.dart';
 
 class AgendarTreinoScreen extends StatefulWidget{
   final DocumentSnapshot aulas;
@@ -16,7 +17,7 @@ class AgendarTreinoScreen extends StatefulWidget{
   static pegarId() {}
 }
 
-class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
+class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvulsaValidator{
   DateTime day = DateTime.now();
   List lista = ['fabio', 'prado'];
   //final AulaBloc _aulaBloc;
@@ -104,6 +105,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
               onSaved: _aulaBloc.saveName,
               controller: controllerName,
               decoration: _buildDecoration("Nome:"),
+              validator: validateName,
             ),
             SizedBox(height: 8.0),
 
@@ -117,6 +119,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
                 WhitelistingTextInputFormatter.digitsOnly,
                 CpfInputFormatter(),
               ],
+              validator: validateCpf,
             ),
             SizedBox(height: 8.0),
 
@@ -130,6 +133,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
                 WhitelistingTextInputFormatter.digitsOnly,
                 DataInputFormatter(),
               ],
+              validator: validateDate,
             ),
             SizedBox(height: 8.0), 
 
@@ -143,6 +147,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
                 WhitelistingTextInputFormatter.digitsOnly, 
                 LengthLimitingTextInputFormatter(4)                                                    
               ],
+              validator: validateHour,
             ),
             SizedBox(height: 8.0),
 
@@ -151,6 +156,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
               onSaved: _aulaBloc.saveAcademia,
               controller: controllerAcademia,
               decoration: _buildDecorationAcademia("Academia:"),
+              validator: validateGym,
             ),
             SizedBox(height: 8.0),
 
@@ -163,6 +169,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
               ],
+              validator: validateDuration,
             ),
             SizedBox(height: 8.0), 
 
@@ -175,6 +182,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
               ],
+              validator: validatePrice,
             ), 
              SizedBox(height: 8.0),  
 
@@ -187,6 +195,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
               ],
+              validator: validateFrequency,
             ),
 
             FutureBuilder(
@@ -336,7 +345,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen>{
         var teste2 = list.documents.map((doc) => doc.data['name']);
         var teste3 = list.documents.map((doc) => doc.data['email']);
         var teste4 = list.documents.map((doc) => doc.data['phone']);
-        var concatenar = "CPF: $teste1 \n" + "Nome: $teste2 \n" + "Email: $teste3 \n" + "Telefone: $teste4 \n"; 
+        var concatenar = "CPF: $teste1 \n" + "Nome: $teste2 \n" + "Email: $teste3 \n" + "Celular: $teste4 \n"; 
         var concatenar2 = concatenar.replaceAll('(','');
         var concatenar3 = concatenar2.replaceAll(')','');
         exibirDialogAluno(concatenar3);     

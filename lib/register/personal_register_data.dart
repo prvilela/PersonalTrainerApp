@@ -87,7 +87,7 @@ class PersonalDataState extends State<PersonalData>{
                       WhitelistingTextInputFormatter.digitsOnly,
                       TelefoneInputFormatter(digito_9: true),
                     ],
-                    decoration: _buildDecoratiom("Telefone"),
+                    decoration: _buildDecoratiom("Celular"),
                     onSaved: _personalBloc.savePhone,
                     //validator: validatePhone,
                   ),

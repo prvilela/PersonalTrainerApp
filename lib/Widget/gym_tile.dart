@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:personal_trainer/screens/gym_screen.dart';
 
 class GymTile extends StatelessWidget {
 
@@ -10,7 +11,7 @@ class GymTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 20);
+    final _fieldStale = TextStyle(color: Colors.deepOrange, fontSize: 20);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -22,15 +23,15 @@ class GymTile extends StatelessWidget {
             title:  Text(gym.data["name"],
               style: _fieldStale
             ),
-           /* children: <Widget>[
+            children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16,right: 16,top: 0,bottom: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    _buildRow("Telefone: ", gym.data["location"]),
+                    _buildRow("Endereço: ", gym.data["location"]),
                     SizedBox(height: 4,),
-                    _buildRow("Localização: ", gym.data["price"]),
+                    _buildRow("Telefone: ", gym.data["phone"]),
                     SizedBox(height: 4,),            
 
                     Container(
@@ -50,7 +51,7 @@ class GymTile extends StatelessWidget {
                   ],
                 ),
               )
-            ],*/
+            ],
 
           ),
         ),
