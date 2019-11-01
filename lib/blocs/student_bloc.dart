@@ -25,11 +25,14 @@ class StudentBloc extends BlocBase{
       unsavedData = {
         "name":null,
         "birthday":null,
+        "gender":null,
         "cpf":null,
         "email":null,
-        "goal":null,
         "phone":null,
-        "restrictions":null
+        "goal":null,  
+        "restrictions":null,
+        "status":null,
+        "gym":null
       };
       _createdController.add(false);
     }
@@ -41,6 +44,9 @@ class StudentBloc extends BlocBase{
   }
   void saveBirthday(String text){
     unsavedData["birthday"] = text;
+  }
+  void saveGender(String text){
+    unsavedData["gender"] = text;
   }
   void saveCpf(String text){
     unsavedData["cpf"] = text;
@@ -60,7 +66,12 @@ class StudentBloc extends BlocBase{
   void saveId(String text){
     unsavedData["id"] = text;
   }
-
+  void saveStatus(String text){
+    unsavedData["status"] = text;
+  }
+  void saveGym(String text){
+    unsavedData["gym"] = text;
+  }
 
   Future<bool> saveStudent() async{
     _loadingController.add(true);

@@ -18,6 +18,9 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
   final StudentBloc _studentBloc;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  int campoGenero;
+  int campoStatus;
   
   _StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
@@ -143,11 +146,67 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     decoration: _buildDecoratiom("Celular"),
                     onSaved: _studentBloc.savePhone,
                   ),
+
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio(
+                        value: 0,
+                        groupValue: campoGenero,
+                        onChanged: attValorRadio,
+                      ),
+                      Text("Homem"),
+
+                      Radio(
+                        value: 1,
+                        groupValue: campoGenero,
+                        onChanged: attValorRadio,
+                      ),
+                      Text("Mulher"),
+
+                      Radio(
+                        value: 2,
+                        groupValue: campoGenero,
+                        onChanged: attValorRadio,
+                      ),
+                      Text("Outro"),
+                    ]                      
+                  ),
+                  
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio(
+                        value: 0,
+                        groupValue: campoStatus,
+                        onChanged: attValorRadio2,
+                      ),
+                      Text("Ativo"),
+
+                      Radio(
+                        value: 1,
+                        groupValue: campoStatus,
+                        onChanged: attValorRadio2,
+                      ),
+                      Text("Não Ativo"),
+                    ]                  
+                  ),
+
+                  SizedBox(height: 8.0),
+                  TextFormField(
+                    style: _fieldStale,
+                    initialValue: snapshot.data["gym"],
+                    decoration: _buildDecoratiom("Academia"),
+                    onSaved: _studentBloc.saveGym,
+                  ),
                   SizedBox(height: 8.0),
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
+                    maxLines: 3,
                     onSaved: _studentBloc.saveGoal,
                   ),
                   SizedBox(height: 8.0),
@@ -155,9 +214,9 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    maxLines: 4,
+                    maxLines: 3,
                     onSaved: _studentBloc.saveRestrictions,
-                  ),
+                  ),                      
 
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
@@ -177,6 +236,36 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
       ),
     );
 
+  }
+
+  attValorRadio(int value){
+    setState(() {
+      campoGenero = value;
+    });
+
+    if(campoGenero == 0){
+      _studentBloc.saveGender("Homem");
+    }
+    if(campoGenero == 1){
+      _studentBloc.saveGender("Mulher");
+    }
+    if(campoGenero == 2){
+      _studentBloc.saveGender("Outro");
+    }
+
+  }
+
+  attValorRadio2(int value){
+    setState(() {
+      campoStatus = value;
+    });
+
+    if(campoStatus == 0){
+      _studentBloc.saveStatus("Ativo");
+    }
+    if(campoStatus == 1){
+      _studentBloc.saveStatus("Não Ativo");
+    }
   }
 
   void saveStudent() async {

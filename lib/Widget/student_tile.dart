@@ -33,6 +33,8 @@ class StudentTile extends StatelessWidget {
                     SizedBox(height: 4,),
                     _buildRow("Data de Nascimento: ", student.data["birthday"]),
                     SizedBox(height: 4,),
+                    _buildRow("Sexo: ", student.data["gender"]),
+                    SizedBox(height: 4,),
                     _buildRow("E-mail: ", student.data["email"]),
                     SizedBox(height: 4,),
                     _buildRow("Celular: ", student.data["phone"]),
@@ -40,6 +42,10 @@ class StudentTile extends StatelessWidget {
                     _buildRow("Objetivo: ", student.data["goal"]),
                     SizedBox(height: 4,),
                     _buildRow("Restrições: ", student.data["restrictions"]),
+                    SizedBox(height: 4,),
+                    _buildRow("Academia: ", student.data["gym"]),
+                    SizedBox(height: 4,),
+                    _buildRow("Status: ", student.data["status"]),
                     
                     Container(
                       child: FlatButton(

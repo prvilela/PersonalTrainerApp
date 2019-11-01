@@ -18,7 +18,7 @@ class WeekWidget extends StatelessWidget {
   final Function onTapDay;
 
   WeekWidget(this.schedules,
-      {this.dayLabels = const ["S", "M", "T", "W", "T", "F", "S"],
+      {this.dayLabels = const ["D", "S", "T", "Q", "Q", "S", "S"],
       @required this.onTapDay,
       this.hourLableCount = 24,
       this.space = 8,
@@ -33,7 +33,7 @@ class WeekWidget extends StatelessWidget {
       this.highlightColor = const Color.fromARGB(255, 238, 31, 37),
       this.barBackgroundColor = const Color.fromARGB(255, 207, 207, 207),
       this.splitLineColor = const Color.fromARGB(255, 230, 230, 230),
-      this.barBorderRadius = 10,
+      this.barBorderRadius = 0,
       this.dayLabelOffset = 10,
       this.hourLabelOffset = 10});
 

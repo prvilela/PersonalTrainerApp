@@ -10,7 +10,7 @@ class DayBar extends CustomPainter {
   final double borderRadius;
 
   DayBar(
-      {this.splitCount = 48,
+      {this.splitCount = 24,
       this.borderRadius = 10,
       this.highlights = const [],
       this.bgColor = const Color.fromARGB(255, 207, 207, 207),
