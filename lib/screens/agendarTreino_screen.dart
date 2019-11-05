@@ -21,7 +21,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
   DateTime day = DateTime.now();
   List lista = ['fabio', 'prado'];
   //final AulaBloc _aulaBloc;
-  CalendarPageState cps = new CalendarPageState();
+  Calendar cps = new Calendar();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -81,7 +81,6 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
                 onPressed: (){
                   saveAula();
                   print("Aqui vai passar pro calendario!");
-                  cps.adicionarTreinos(day, lista);
                 },
               );
             }

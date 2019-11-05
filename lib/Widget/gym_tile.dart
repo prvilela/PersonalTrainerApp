@@ -31,8 +31,7 @@ class GymTile extends StatelessWidget {
                   children: <Widget>[
                     _buildRow("Endereço: ", gym.data["location"]),
                     SizedBox(height: 4,),
-                    _buildRow("Telefone: ", gym.data["phone"]),
-                    SizedBox(height: 4,),            
+                    _buildRow("Telefone: ", gym.data["phone"]),            
 
                     Container(
                       child: FlatButton(

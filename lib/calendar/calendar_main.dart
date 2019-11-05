@@ -1,50 +1,62 @@
-//  Copyright (c) 2019 Aleksander Woźniak
+  //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
-import 'package:flutter/material.dart';
-import 'package:personal_trainer/home.dart';
-import 'package:personal_trainer/tiles/bottomNavigation.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-class Calendar extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:personal_trainer/calendar/table_calendar.dart';
+import 'package:personal_trainer/tiles/bottomNavigation.dart';
+
+// Example holidays
+final Map<DateTime, List> _holidays = {
+  DateTime(2019, 1, 1): ['New Year\'s Day'],
+  DateTime(2019, 1, 6): ['Epiphany'],
+  DateTime(2019, 2, 14): ['Valentine\'s Day'],
+  DateTime(2019, 4, 21): ['Easter Sunday'],
+  DateTime(2019, 4, 22): ['Easter Monday'],
+};
+
+class CalendarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Calendário',
+      title: 'Table Calendar Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
       ),
-      home: CalendarPage(title: 'Calendário'),
+      home: Calendar(title: 'Table Calendar Demo'),
     );
   }
 }
 
-class CalendarPage extends StatefulWidget {
-  CalendarPage({Key key, this.title}) : super(key: key);
+class Calendar extends StatefulWidget {
+  Calendar({Key key, this.title}) : super(key: key);
+
   final String title;
 
   @override
-  CalendarPageState createState() => CalendarPageState();
+  _CalendarState createState() => _CalendarState();
 }
 
-class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixin {
+class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
-  DateTime _selectedDay = DateTime.now();
   BottomNavigationClass bn = new BottomNavigationClass();
- 
+
   @override
   void initState() {
     super.initState();
+    final _selectedDay = DateTime.now();
+
     _events = {
-      //_selectedDay: ['Event A7= "teste"', 'Event B7', 'Event C7', 'Event D7'],
+      _selectedDay.subtract(Duration(days: 30)): [],
+      _selectedDay: [],
       //_selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
     };
-    
+
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
+
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -60,26 +72,14 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
     super.dispose();
   }
 
-  void onDaySelected(DateTime day, List events1){
+  void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
     setState(() {
-      _selectedEvents = events1;
+      _selectedEvents = events;
     });
   }
 
-  void adicionarTreinos(DateTime day, List events1){
-    setState(() {
-      //essa linha de baixo, molde para passar dados para o calendáriooooooooo
-      _events = { day: [events1]};
-      _selectedEvents = events1;
-      print(day);
-      print(events1);
-      print("topzaooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    });
-    onDaySelected(day, events1);
-  }
-
-  void _onVisibleDaysChanged(DateTime first, DateTime last) {
+  void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
   }
 
@@ -87,11 +87,7 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
         title: Text(widget.title),
-        backgroundColor: Colors.deepOrange,
-        leading: IconButton(icon: Icon(Icons.arrow_back),
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TelaPrincipal()),))
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -101,11 +97,12 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
           _buildTableCalendar(),
           // _buildTableCalendarWithBuilders(),
           const SizedBox(height: 8.0),
-          //_buildButtons(),
+          _buildButtons(),
           const SizedBox(height: 8.0),
           Expanded(child: _buildEventList()),
         ],
       ),
+
       bottomNavigationBar: bn,
     );
   }
@@ -115,9 +112,10 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
     return TableCalendar(
       calendarController: _calendarController,
       events: _events,
+      holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: Colors.deepOrange,
+        selectedColor: Colors.deepOrange[400],
         todayColor: Colors.deepOrange[200],
         markersColor: Colors.brown[700],
         outsideDaysVisible: false,
@@ -125,11 +123,61 @@ class CalendarPageState extends State<CalendarPage> with TickerProviderStateMixi
       headerStyle: HeaderStyle(
         formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
-          color: Colors.black,
+          color: Colors.deepOrange[400],
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
-      onDaySelected: onDaySelected,
+      onDaySelected: _onDaySelected,
+      onVisibleDaysChanged: _onVisibleDaysChanged,
+    );
+  }
+
+  Widget _buildButtons() {
+    final dateTime = _events.keys.elementAt(_events.length - 2);
+
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            RaisedButton(
+              child: Text('Month'),
+              onPressed: () {
+                setState(() {
+                  _calendarController.setCalendarFormat(CalendarFormat.month);
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text('2 weeks'),
+              onPressed: () {
+                setState(() {
+                  _calendarController.setCalendarFormat(CalendarFormat.twoWeeks);
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text('Week'),
+              onPressed: () {
+                setState(() {
+                  _calendarController.setCalendarFormat(CalendarFormat.week);
+                });
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 8.0),
+        RaisedButton(
+          child: Text('Voltar para hoje'),
+          onPressed: () {
+            _calendarController.setSelectedDay(
+              DateTime.now(),
+              runCallback: true,
+            );
+          },
+        ),
+      ],
     );
   }
 

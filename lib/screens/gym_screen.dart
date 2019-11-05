@@ -40,13 +40,6 @@ class _GymScreenState extends State<GymScreen> {
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
-        suffixIcon: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: (){
-            
-           
-          }                    
-        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
         ),
@@ -90,7 +83,7 @@ class _GymScreenState extends State<GymScreen> {
               else return Container();
             },
           ),
-          //salvar academia
+
           StreamBuilder<bool>(
             stream: _gymBloc.outLoading,
             builder: (context, snapshot) {
@@ -120,7 +113,7 @@ class _GymScreenState extends State<GymScreen> {
 
                   TextFormField(
                     style: _fieldStale,
-                    initialValue: snapshot.data["endereço"],
+                    initialValue: snapshot.data["location"],
                     decoration: _buildDecoratiom("Endereço"),
                     onSaved: _gymBloc.saveLoacation,
                   ),
@@ -173,7 +166,6 @@ class _GymScreenState extends State<GymScreen> {
     );
 
     bool success = await _gymBloc.saveGym();
-
     _scaffoldKey.currentState.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(

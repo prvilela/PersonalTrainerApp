@@ -8,6 +8,7 @@ import 'package:personal_trainer/validators/student_validators.dart';
 
 class StudentScreen extends StatefulWidget{
   final DocumentSnapshot student;
+
   StudentScreen({this.student});
   @override
   _StudentScreenState createState() => _StudentScreenState(student);
@@ -21,6 +22,11 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   int campoGenero;
   int campoStatus;
+  TextEditingController name = new TextEditingController();
+  TextEditingController birthday = new TextEditingController();
+  TextEditingController cpf = new TextEditingController();
+  TextEditingController objetivos = new TextEditingController();
+  TextEditingController restrictions = new TextEditingController();
   
   _StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
@@ -31,6 +37,25 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    } 
+
+    InputDecoration _buildDecorationGym(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){
+
+          }                    
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
         ),
@@ -97,6 +122,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
+                    controller: name,
                     onSaved: _studentBloc.saveName,
                     validator: validateName,
                   ),
@@ -105,6 +131,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["birthday"],
                     decoration: _buildDecoratiom("Data de Nascimento"),
+                    controller: birthday,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -123,6 +150,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                       CpfInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("CPF"),
+                    controller: cpf,
                     onSaved: _studentBloc.saveCpf,
                     validator: validateCpf,
                   ),
@@ -147,58 +175,60 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     onSaved: _studentBloc.savePhone,
                   ),
 
-                  SizedBox(height: 8.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Radio(
                         value: 0,
+                        activeColor: Colors.deepOrange,
                         groupValue: campoGenero,
                         onChanged: attValorRadio,
                       ),
-                      Text("Homem"),
+                      Text("Homem", style: TextStyle(color: Colors.deepOrange)),
 
                       Radio(
                         value: 1,
+                        activeColor: Colors.deepOrange,
                         groupValue: campoGenero,
                         onChanged: attValorRadio,
                       ),
-                      Text("Mulher"),
+                      Text("Mulher", style: TextStyle(color: Colors.deepOrange)),
 
                       Radio(
                         value: 2,
+                        activeColor: Colors.deepOrange,
                         groupValue: campoGenero,
                         onChanged: attValorRadio,
                       ),
-                      Text("Outro"),
+                      Text("Outro", style: TextStyle(color: Colors.deepOrange)),
                     ]                      
                   ),
                   
-                  SizedBox(height: 8.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Radio(
                         value: 0,
+                        activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
                         onChanged: attValorRadio2,
                       ),
-                      Text("Ativo"),
+                      Text("Ativo", style: TextStyle(color: Colors.deepOrange)),
 
                       Radio(
                         value: 1,
+                        activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
                         onChanged: attValorRadio2,
                       ),
-                      Text("Não Ativo"),
+                      Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
                   ),
-
-                  SizedBox(height: 8.0),
+         
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["gym"],
-                    decoration: _buildDecoratiom("Academia"),
+                    decoration: _buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
                   ),
                   SizedBox(height: 8.0),
@@ -206,7 +236,8 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
-                    maxLines: 3,
+                    controller: objetivos,
+                    maxLines: 2,
                     onSaved: _studentBloc.saveGoal,
                   ),
                   SizedBox(height: 8.0),
@@ -214,7 +245,8 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    maxLines: 3,
+                    controller: restrictions,
+                    maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
                   ),                      
 

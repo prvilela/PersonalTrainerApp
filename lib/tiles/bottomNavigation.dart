@@ -3,9 +3,15 @@ import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/home.dart';
 import 'package:personal_trainer/screens/pacotesAula_screen.dart';
 
-class BottomNavigationClass extends StatelessWidget{
+class BottomNavigationClass extends StatefulWidget{
 
+  @override
+  _BottomNavigationClassState createState() => _BottomNavigationClassState();
+}
+
+class _BottomNavigationClassState extends State<BottomNavigationClass> {
   List<BottomNavigationBarItem> _items;
+
   int _currentIndex = 2;
 
   @override
@@ -42,7 +48,7 @@ class BottomNavigationClass extends StatelessWidget{
 
           if(_currentIndex == 1){
             Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>Calendar()) 
+                    MaterialPageRoute(builder: (context)=>CalendarApp()) 
                   );
           }
 
@@ -68,6 +74,4 @@ class BottomNavigationClass extends StatelessWidget{
       )
     );
   }
-
-
 }

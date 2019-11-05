@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_trainer/screens/agendarTreino_screen.dart';
-import 'package:personal_trainer/screens/agendarTreino_screen.dart';
 
 class AulaTile extends StatelessWidget {
   final DocumentSnapshot aulas;
