@@ -22,7 +22,7 @@ class StudentTile extends StatelessWidget {
             leading: Icon(Icons.person, color: Colors.deepOrange,),
             title:  Text(student.data["name"],  
               style: _fieldStale
-            ),           
+            ),
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16,right: 16,top: 0,bottom: 8),
@@ -71,7 +71,7 @@ class StudentTile extends StatelessWidget {
     );
   }
   Widget _buildRow(String text,String data){
-    final _fieldStale = TextStyle(color: Colors.deepOrange, fontSize: 16);
+    final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 16);
     return Row(
       children: <Widget>[
         Text(text, style: _fieldStale,),

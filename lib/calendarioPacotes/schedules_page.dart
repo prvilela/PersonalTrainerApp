@@ -65,26 +65,25 @@ class _SchedulesPageState extends State<SchedulesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        
-        body: Center(
-          child: Container(
-            color: Color.fromARGB(255, 237, 237, 237),
-            padding: EdgeInsets.all(20),
-            child: OrientationBuilder(
-              builder: (c, o) {
-                return WeekWidget(
-                  _schedules,
-                  hourLableCount: o == Orientation.portrait ? 24 : 12,
-                  space: o == Orientation.portrait ? 10 : 25,
-                  onTapDay: (index) {
-                    showScheduleDetailsAt(context, index);
-                  },
-                );
-              },
-            ),
-            constraints: BoxConstraints.expand(),
+      body: Center(
+        child: Container(
+          color: Color.fromARGB(255, 237, 237, 237),
+          padding: EdgeInsets.all(20),
+          child: OrientationBuilder(
+            builder: (c, o) {
+              return WeekWidget(
+                _schedules,
+                hourLableCount: o == Orientation.portrait ? 24 : 12,
+                space: o == Orientation.portrait ? 10 : 25,
+                onTapDay: (index) {
+                  showScheduleDetailsAt(context, index);
+                },
+              );
+            },
           ),
-        ));
+          constraints: BoxConstraints.expand(),
+        ),
+      ));     
   }
 
   void showScheduleDetailsAt(BuildContext context, int index) {

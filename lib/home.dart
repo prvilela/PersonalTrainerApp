@@ -98,7 +98,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
-          body: Container(),//MapBoxExample(),
+          body: GymTab(),
           floatingActionButton: SpeedDial(
             child: Icon(Icons.view_list),
             backgroundColor: Colors.orange,

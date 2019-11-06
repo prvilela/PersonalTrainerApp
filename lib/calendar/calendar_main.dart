@@ -22,7 +22,8 @@ class CalendarApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: Calendar(title: 'Table Calendar Demo'),
+      home: Calendar(title: 'Calendário'),
+      debugShowCheckedModeBanner: false
     );
   }
 }
@@ -88,6 +89,14 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.today),
+            onPressed: (){
+              backToday();
+            },
+          )
+        ],
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -141,43 +150,26 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            RaisedButton(
-              child: Text('Month'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.month);
-                });
+            IconButton(
+              icon: Icon(Icons.access_time, size: 40, color: Colors.deepOrange),
+              alignment: Alignment.center,
+              tooltip: "Gerenciar",
+              onPressed: (){
+                //chamar pacotes comn o dia selecionado bem aqui!
               },
-            ),
-            RaisedButton(
-              child: Text('2 weeks'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.twoWeeks);
-                });
-              },
-            ),
-            RaisedButton(
-              child: Text('Week'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.week);
-                });
-              },
-            ),
+            )
+          
           ],
         ),
-        const SizedBox(height: 8.0),
-        RaisedButton(
-          child: Text('Voltar para hoje'),
-          onPressed: () {
-            _calendarController.setSelectedDay(
-              DateTime.now(),
-              runCallback: true,
-            );
-          },
-        ),
+        
       ],
+    );
+  }
+
+  void backToday(){
+    _calendarController.setSelectedDay(
+      DateTime.now(),
+        runCallback: true,
     );
   }
 

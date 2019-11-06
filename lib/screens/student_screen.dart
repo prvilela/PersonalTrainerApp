@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:personal_trainer/Widget/gym_tile.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
 
@@ -54,6 +55,32 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
           icon: Icon(Icons.search),
           onPressed: (){
 
+
+            showAlertDialog1(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () { },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+       okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+  }            
+            
           }                    
         ),
         enabledBorder: OutlineInputBorder(
@@ -64,6 +91,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
         ),
       );
     }
+
 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
 
