@@ -24,8 +24,8 @@ class TelaPrincipal extends StatefulWidget {
 class _TelaPrincipalState extends State<TelaPrincipal> {
   PageController _pageController= PageController();
   FirebaseAuth _firebaseAuth;
-  final facebookLogin = FacebookLogin();
   BottomNavigationClass bn = new BottomNavigationClass();
+  FacebookLoginButtonState flbs = new FacebookLoginButtonState();
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +164,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             onPressed: () async {              
               BlocProvider.of<AuthenticationBloc>(context).dispatch(
               LoggedOut());
-              //facebookLogin.logOut();       
+              flbs.logout();
               Navigator.pop(context);                     
             },
           ),

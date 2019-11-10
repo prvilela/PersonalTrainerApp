@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendarioPacotes/schedules_page.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 
+
 class PacoteAula extends StatefulWidget {
   @override
   _PacoteAulaState createState() => _PacoteAulaState();
@@ -36,6 +37,31 @@ class _PacoteAulaState extends State<PacoteAula> {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: (){
+              return showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Formato do horário'),
+
+                  content: Text("horários disponíveis"), 
+
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Voltar'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Confirmar'),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
           )
         ],

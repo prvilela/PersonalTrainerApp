@@ -1,19 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:personal_trainer/home.dart';
-import 'package:personal_trainer/main.dart';
 
 class FacebookLoginButton extends StatefulWidget {
   @override
-  _FacebookLoginButtonState createState() => _FacebookLoginButtonState();
+  FacebookLoginButtonState createState() => FacebookLoginButtonState();
 }
 
-class _FacebookLoginButtonState extends State<FacebookLoginButton> {
-
+class FacebookLoginButtonState extends State<FacebookLoginButton> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   bool isLoggedIn = false;
   var facebookLogin = FacebookLogin();
+  FirebaseUser myUser;
+
+  String _message;
 
   void onLoginStatusChanged(bool isLoggedIn) {
     setState(() {
@@ -36,9 +39,8 @@ class _FacebookLoginButtonState extends State<FacebookLoginButton> {
     );
   }
 
-
-
-void initiateFacebookLogin() async {
+void 
+initiateFacebookLogin() async {
     var facebookLoginResult = await facebookLogin.logInWithReadPermissions(['email']);
      switch (facebookLoginResult.status) {
       case FacebookLoginStatus.error:
@@ -52,16 +54,22 @@ void initiateFacebookLogin() async {
       case FacebookLoginStatus.loggedIn:
         print("LoggedIn");
         onLoginStatusChanged(true);
+        final credential = FacebookAuthProvider.getCredential(
+        accessToken: facebookLoginResult.accessToken.token,
+        );
+        final user = (await _auth.signInWithCredential(credential)).user;
+        _message = "Logged in as ${user.displayName}";
+
         trocarTela();
         break;
     }
-
   }
 
   logout() async {
     await facebookLogin.logOut();
-    onLoginStatusChanged(false);
-    print("Logged out");
+    _auth.signOut();
+    print("Logged out from Facebook!");
+    trocarTela();
   }
 
   trocarTela(){

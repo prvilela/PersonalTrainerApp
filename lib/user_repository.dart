@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'login_bloc/facebook_login_button.dart';
 
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+
+  FacebookLoginButtonState flbs = new FacebookLoginButtonState();
 
   UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin, name})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
@@ -31,19 +34,18 @@ class UserRepository {
       );     
   }
 
-  verificarConfirmar({String email, String password}) async{
+  verificarConfirmar(String email, String password) async{
     FirebaseUser user = await _firebaseAuth.currentUser();
     if (user.isEmailVerified){
+      signInWithCredentials(email, password);
     }
     else{
       print("Não verificou o email né tio!");
-      signOut();
       // colocar sign out aqui, usuario n confirmou o email
     }  
   }
 
   //create account
-  //falta verificar se confirmou email e adcioanar um label pra mandar o usuario confirmar o email
   Future<void> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
@@ -62,32 +64,9 @@ class UserRepository {
      }
   }
 
-  //Future<void> sendEmailVerification() async {
-    //FirebaseUser user = await _firebaseAuth.currentUser();
-    //user.sendEmailVerification();
-  //}
-
-  /*Future<bool> isEmailVerified() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    if (user.isEmailVerified == true){
-      return true;
-    } 
-    else{
-      return false;
-    }      
-  }*/
-
-
-  //Future<void> confirmarEmail() async {
-    //final currentUser = await _firebaseAuth.currentUser();
-    //print(currentUser);
-    //currentUser.sendEmailVerification(); 
-    //print("aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee keaioooooooooooooooooooooooo");
-    
-  //}
-
   //logout
   Future<void> signOut() async {
+    flbs.logout();
     return Future.wait([
       _firebaseAuth.signOut(),
       _googleSignIn.signOut(),
