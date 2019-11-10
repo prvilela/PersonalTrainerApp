@@ -36,6 +36,29 @@ class _PacoteAulaState extends State<PacoteAula> {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: (){
+              return showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Formato do horário'),
+                  content: Text("horários disponíveis"), 
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Voltar'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Confirmar'),
+                      onPressed: () {
+                        //Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
             },
           )
         ],

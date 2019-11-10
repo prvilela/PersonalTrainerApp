@@ -32,7 +32,7 @@ enum FormatAnimation { slide, scale }
 enum StartingDayOfWeek { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 
 int _getWeekdayNumber(StartingDayOfWeek weekday) {
-  return StartingDayOfWeek.values.indexOf(weekday) + 1;
+  return StartingDayOfWeek.values.indexOf(weekday);
 }
 
 /// Gestures available to interal `TableCalendar`'s logic.

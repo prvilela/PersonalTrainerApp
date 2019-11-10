@@ -230,7 +230,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     ]                      
                   ),
                   
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Radio(
@@ -249,7 +249,8 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       ),
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
-                  ),
+                  ),*/
+                  //attValorRadio2(0),
          
                   TextFormField(
                     style: _fieldStale,
@@ -276,7 +277,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     controller: restrictions,
                     maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
-                  ),                      
+                  ),                   
 
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
@@ -292,6 +293,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                 ],
               );
             }
+            
           )
       ),
     );
@@ -323,23 +325,15 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   }
 
-  attValorRadio2(int value){
-    setState(() {
-      campoStatus = value;
-    });
-
-    if(campoStatus == 0){
-      _studentBloc.saveStatus("Ativo");
-    }
-    if(campoStatus == 1){
-      _studentBloc.saveStatus("Não Ativo");
-    }
+  attValorRadio2(){
+    _studentBloc.saveStatus("Ativo");
   }
 
 
   void saveStudent() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      attValorRadio2();
 
       _scaffoldKey.currentState.showSnackBar(
           SnackBar(

@@ -79,15 +79,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }) async* {
       yield LoginState.loading();
       try {
-        await _userRepository.signInWithCredentials(email, password);
+        await _userRepository.verificarConfirmar(email, password);
         yield LoginState.success();
       } catch (_) {
         yield LoginState.failure();
       }
-      _userRepository.verificarConfirmar(
-      email: email,
-      password: password
-    );
     } 
 
 }

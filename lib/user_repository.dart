@@ -31,19 +31,18 @@ class UserRepository {
       );     
   }
 
-  verificarConfirmar({String email, String password}) async{
+  verificarConfirmar(String email, String password) async{
     FirebaseUser user = await _firebaseAuth.currentUser();
     if (user.isEmailVerified){
+      signInWithCredentials(email, password);
     }
     else{
       print("Não verificou o email né tio!");
-      signOut();
       // colocar sign out aqui, usuario n confirmou o email
     }  
   }
 
   //create account
-  //falta verificar se confirmou email e adcioanar um label pra mandar o usuario confirmar o email
   Future<void> signUp({String email, String password}) async {
     return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
@@ -61,30 +60,6 @@ class UserRepository {
         print(e.message);
      }
   }
-
-  //Future<void> sendEmailVerification() async {
-    //FirebaseUser user = await _firebaseAuth.currentUser();
-    //user.sendEmailVerification();
-  //}
-
-  /*Future<bool> isEmailVerified() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    if (user.isEmailVerified == true){
-      return true;
-    } 
-    else{
-      return false;
-    }      
-  }*/
-
-
-  //Future<void> confirmarEmail() async {
-    //final currentUser = await _firebaseAuth.currentUser();
-    //print(currentUser);
-    //currentUser.sendEmailVerification(); 
-    //print("aeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee keaioooooooooooooooooooooooo");
-    
-  //}
 
   //logout
   Future<void> signOut() async {
