@@ -73,7 +73,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } catch (_) {
       yield RegisterState.failure();
     }
-    //_userRepository.sendEmailVerification();
+    _userRepository.enviarEmail(
+      email: email,
+      password: password
+    );
 
   }
   

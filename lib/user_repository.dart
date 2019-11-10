@@ -24,11 +24,22 @@ class UserRepository {
 }
 
   //login email comum
-  Future<void> signInWithCredentials(String email, String password) async {   
-        return _firebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
+  Future<void> signInWithCredentials(String email, String password) async { 
+      return _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );     
+  }
+
+  verificarConfirmar({String email, String password}) async{
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    if (user.isEmailVerified){
+    }
+    else{
+      print("Não verificou o email né tio!");
+      signOut();
+      // colocar sign out aqui, usuario n confirmou o email
+    }  
   }
 
   //create account
@@ -38,6 +49,17 @@ class UserRepository {
       email: email,
       password: password,
     );
+  }
+
+  enviarEmail({String email, String password}) async{
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    try {
+        await user.sendEmailVerification();
+        return await user.uid;
+     } catch (e) {
+        print("An error occured while trying to send email verification");
+        print(e.message);
+     }
   }
 
   //Future<void> sendEmailVerification() async {

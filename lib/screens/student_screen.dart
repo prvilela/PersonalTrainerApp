@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/Widget/gym_tile.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
+import 'package:personal_trainer/tabs/gym_tab.dart';
+import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
 
 class StudentScreen extends StatefulWidget{
@@ -12,14 +14,15 @@ class StudentScreen extends StatefulWidget{
 
   StudentScreen({this.student});
   @override
-  _StudentScreenState createState() => _StudentScreenState(student);
+  StudentScreenState createState() => StudentScreenState(student);
   static pegarId() {}
 }
 
-class _StudentScreenState extends State<StudentScreen> with StudentValidator{
+class StudentScreenState extends State<StudentScreen> with StudentValidator{
   final StudentBloc _studentBloc;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  GymTabState gts = new GymTabState();
 
   int campoGenero;
   int campoStatus;
@@ -28,8 +31,10 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
   TextEditingController cpf = new TextEditingController();
   TextEditingController objetivos = new TextEditingController();
   TextEditingController restrictions = new TextEditingController();
+  TextEditingController academia = new TextEditingController();
+  var retorno;
   
-  _StudentScreenState(DocumentSnapshot student):
+  StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
 
   @override
@@ -47,40 +52,34 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
       );
     } 
 
-    InputDecoration _buildDecorationGym(String label) {
+
+    InputDecoration buildDecorationGym(String label) {
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
           onPressed: (){
+            return showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Lista de Academias'),
+                  content: gts.exibirListaAcademias(),  
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Confirmar'),
+                      onPressed: () {
+                        //academia.text = atualizarNomeAcademia(name);
+                        //attAcademia(name);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
 
-
-            showAlertDialog1(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () { },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-       okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-
-  }            
-            
           }                    
         ),
         enabledBorder: OutlineInputBorder(
@@ -91,7 +90,6 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
         ),
       );
     }
-
 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
 
@@ -256,8 +254,10 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["gym"],
-                    decoration: _buildDecorationGym("Academia"),
+                    decoration: buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
+                    controller: academia,
+                       
                   ),
                   SizedBox(height: 8.0),
                   TextFormField(
@@ -298,6 +298,14 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   }
 
+  atualizarNomeAcademia(name){
+    setState(() async {
+      retorno = name;
+      academia.text = await name;
+    });
+    
+  }
+
   attValorRadio(int value){
     setState(() {
       campoGenero = value;
@@ -327,6 +335,7 @@ class _StudentScreenState extends State<StudentScreen> with StudentValidator{
       _studentBloc.saveStatus("Não Ativo");
     }
   }
+
 
   void saveStudent() async {
     if (_formKey.currentState.validate()) {

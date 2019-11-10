@@ -84,6 +84,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (_) {
         yield LoginState.failure();
       }
+      _userRepository.verificarConfirmar(
+      email: email,
+      password: password
+    );
     } 
 
 }

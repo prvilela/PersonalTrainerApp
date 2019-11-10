@@ -99,8 +99,7 @@ class PersonalDataState extends State<PersonalData>{
                     ),
                     onPressed: (){
                       savePersonal();
-                      exibirMsgSms();
-                      sendCodeToPhoneNumber();
+                      exibirMsgConfirmar();
                     },
                     child: Text('Criar Conta', style: TextStyle(color: Colors.white)),
                     disabledColor: Colors.black,
@@ -128,7 +127,7 @@ class PersonalDataState extends State<PersonalData>{
 
   }
 
-  void exibirMsgSms(){
+  void exibirMsgConfirmar(){
     Scaffold.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(
@@ -136,7 +135,7 @@ class PersonalDataState extends State<PersonalData>{
         duration: const Duration(seconds: 10),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("Confirme seu email!"),],
+          children: [Text("Um email de confirmação foi enviado para seu email !"),],
         ),
       ),
     );
@@ -171,52 +170,5 @@ class PersonalDataState extends State<PersonalData>{
     }
   }
 
-
-  Future<void> sendCodeToPhoneNumber() async {
-    //FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
-    final PhoneVerificationCompleted verificationCompleted = (AuthCredential credential){
-      setState(() {
-          print('Inside _sendCodeToPhoneNumber: signInWithPhoneNumber auto succeeded: $credential');
-      });
-    };
-
-    final PhoneVerificationFailed verificationFailed = (AuthException authException) {
-      setState(() {
-        print('Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}');}
-        );
-    };
-
-    final PhoneCodeSent codeSent =
-        (String verificationId, [int forceResendingToken]) async {
-      this.verificationId = verificationId;
-      print("code sent to " + _phoneNumberController.text);
-    };
-
-    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
-        (String verificationId) {
-      this.verificationId = verificationId;
-      print("time out");
-    };
-
-     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: _phoneNumberController.text,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
-  }
-
-
-  /*void _signInWithPhoneNumber(String smsCode) async {
-    await FirebaseAuth.instance.signInWithPhoneNumber(
-      verificationId: verificationId,
-      smsCode: smsCode).then((FirebaseUser user) async {
-        final FirebaseUser currentUser = await _auth.currentUser();
-        assert(user.uid == currentUser.uid);
-        print('signed in with phone number successful: user -> $user');
-      }
-    );
-  }*/
 
 }
