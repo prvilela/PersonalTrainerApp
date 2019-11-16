@@ -32,6 +32,7 @@ class StudentBloc extends BlocBase{
         "goal":null,  
         "restrictions":null,
         "status":null,
+        "id":null,
         "gym":null
       };
       _createdController.add(false);

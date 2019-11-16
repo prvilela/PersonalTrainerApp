@@ -98,7 +98,10 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       appBar: AppBar(
         title: StreamBuilder<bool>(
           stream: _studentBloc.outCreated,
+          initialData: false,
           builder: (context, snapshot) {
+
+
             return Text(snapshot.data ? "Editar Aluno":"Cadastrar Aluno");
           }
         ),
@@ -148,7 +151,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
-                    controller: name,
+                    //controller: name,
                     onSaved: _studentBloc.saveName,
                     validator: validateName,
                   ),
@@ -157,7 +160,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["birthday"],
                     decoration: _buildDecoratiom("Data de Nascimento"),
-                    controller: birthday,
+                    //controller: birthday,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -176,7 +179,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       CpfInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("CPF"),
-                    controller: cpf,
+                    //controller: cpf,
                     onSaved: _studentBloc.saveCpf,
                     validator: validateCpf,
                   ),
@@ -257,7 +260,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     initialValue: snapshot.data["gym"],
                     decoration: buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
-                    controller: academia,
+                    //controller: academia,
                        
                   ),
                   SizedBox(height: 8.0),
@@ -265,7 +268,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
-                    controller: objetivos,
+                    //controller: objetivos,
                     maxLines: 2,
                     onSaved: _studentBloc.saveGoal,
                   ),
@@ -274,7 +277,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    controller: restrictions,
+                    //controller: restrictions,
                     maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
                   ),                   
