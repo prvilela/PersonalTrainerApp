@@ -1,7 +1,9 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_trainer/Widget/student_tile.dart';
+import 'package:personal_trainer/blocs/getStudent_bloc.dart';
 
 class StudentTab extends StatefulWidget {
   @override
@@ -13,37 +15,35 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
-    return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
-        if(!snapshot1.hasData){
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-            ),
-          );
-        }else {
-          return FutureBuilder<QuerySnapshot>(
-            future: Firestore.instance.collection("student").where(
-                "id", isEqualTo: snapshot1.data.uid).getDocuments(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-                  ),
-                );
-              else
-                return ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, index) {
-                      return StudentTile(snapshot.data.documents[index]);
-                    }
-                );
-            },
-          );
-        }
-      }
+    final _studentBloc = BlocProvider.of<GetStudentBloc>(context);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16),
+      child: StreamBuilder<List>(
+        stream: _studentBloc.outStudents,
+        builder: (context,snapshot){
+          if(!snapshot.hasData){
+            return Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+              ),
+            );
+          }else if(snapshot.data.length == 0){
+            return Center(
+              child: Text("Nenhum aluno encontrado!",
+                style: TextStyle(color: Colors.pinkAccent),
+              ),
+            );
+          }else{
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index){
+                return StudentTile(snapshot.data[index]);
+              }
+            );
+          }
+        },
+      ),
     );
   }
        

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
+import 'package:personal_trainer/blocs/getStudent_bloc.dart';
 import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
 import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
@@ -10,10 +10,8 @@ import 'package:personal_trainer/tabs/home_tab.dart';
 import 'package:personal_trainer/tabs/gym_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:personal_trainer/blocs/bloc.dart';
-import 'package:personal_trainer/blocs/authentication_bloc.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 
 class TelaPrincipal extends StatefulWidget {
   @override
@@ -27,118 +25,156 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   BottomNavigationClass bn = new BottomNavigationClass();
   FacebookLoginButtonState flbs = new FacebookLoginButtonState();
 
+  GetStudentBloc _getStudentBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _getStudentBloc = GetStudentBloc();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: _pageController,
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        Scaffold(
-          appBar: AppBar(
-            title: Text("Agenda"),
-            backgroundColor: Colors.deepOrange,
-            centerTitle: true,
-            actions: <Widget>[
-              Container(
-                child:
-                  FlatButton(
-                    child:
-                      Padding(
-                        child:
-                          Icon(Icons.account_circle, color: Colors.white),
-                          padding: EdgeInsets.fromLTRB(25, 0, 0, 0),  
-                      ),
-                    onPressed: (){
-                      botaoSignOut(context);
-                    },
-                  ),
-                                                      
-              ),
-            ]
+    return BlocProvider<GetStudentBloc>(
+      bloc: _getStudentBloc,
+      child: PageView(
+        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          Scaffold(
+            appBar: AppBar(
+              title: Text("Agenda"),
+              backgroundColor: Colors.deepOrange,
+              centerTitle: true,
+              actions: <Widget>[
+                Container(
+                  child:
+                    FlatButton(
+                      child:
+                        Padding(
+                          child:
+                            Icon(Icons.account_circle, color: Colors.white),
+                            padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                        ),
+                      onPressed: (){
+                        botaoSignOut(context);
+                      },
+                    ),
+
+                ),
+              ]
+            ),
+            drawer: CustomDrawer(_pageController),
+            body: HomeTab(),
+            bottomNavigationBar: bn,
           ),
-          drawer: CustomDrawer(_pageController),
-          body: HomeTab(),
-          bottomNavigationBar: bn,
-        ),
 
 
 
 
-        Scaffold(
-          appBar: AppBar(
-            title: Text("Alunos"),
-            backgroundColor: Colors.deepOrange,
-            centerTitle: true,
-          ),
-          drawer: CustomDrawer(_pageController),
-          body: StudentTab(),
-          floatingActionButton: SpeedDial(
-            child: Icon(Icons.view_list),
-            backgroundColor: Colors.deepOrange,
-            children:[
-              SpeedDialChild(
-                child: Icon(Icons.add),
-                backgroundColor: Colors.orange,
-                label:"Adicionar um aluno",
-                labelStyle: TextStyle(fontSize: 14),
-                onTap: (){
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>StudentScreen())
-                  );
-                }
-              )
-            ],
-          ),
-        ),
-
-        Scaffold(
-          appBar: AppBar(
-            title: Text("Academias"),
-            backgroundColor: Colors.deepOrange,
-            centerTitle: true,
-          ),
-          drawer: CustomDrawer(_pageController),
-          body: GymTab(),
-          floatingActionButton: SpeedDial(
-            child: Icon(Icons.view_list),
-            backgroundColor: Colors.orange,
-            children:[
-              SpeedDialChild(
-                child: Icon(Icons.add),
-                backgroundColor: Colors.orange,
-                label:"Adicionar uma academia",
-                labelStyle: TextStyle(fontSize: 14),
-                onTap: (){
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>GymScreen())
-                  );
-                }
-              )
-            ],
-          ),
-        ),
-
-        Scaffold(
-          appBar: AppBar(
-            title: Text("Exit"),
-            backgroundColor: Colors.deepOrange,
-            centerTitle: true,
-          ),
-          drawer: CustomDrawer(_pageController),
-          body: Container(
-            child: 
-            IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () {
-                BlocProvider.of<AuthenticationBloc>(context).dispatch(
-                  LoggedOut(),
-                );
-              },
+          Scaffold(
+            appBar: AppBar(
+              title: Text("Alunos"),
+              backgroundColor: Colors.deepOrange,
+              centerTitle: true,
+            ),
+            drawer: CustomDrawer(_pageController),
+            body: StudentTab(),
+            floatingActionButton: SpeedDial(
+              child: Icon(Icons.view_list),
+              backgroundColor: Colors.deepOrange,
+              children:[
+                SpeedDialChild(
+                  child: Icon(Icons.add),
+                  backgroundColor: Colors.orange,
+                  label:"Adicionar um aluno",
+                  labelStyle: TextStyle(fontSize: 14),
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context)=>StudentScreen())
+                    );
+                  }
+                ),
+                SpeedDialChild(
+                    child: Icon(Icons.reorder),
+                    backgroundColor: Colors.orange,
+                    label:"Ordenar por nome do aluno",
+                    labelStyle: TextStyle(fontSize: 14),
+                    onTap: (){
+                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERNAME);
+                    }
+                ),
+                SpeedDialChild(
+                    child: Icon(Icons.reorder),
+                    backgroundColor: Colors.orange,
+                    label:"Ordenar por Academia",
+                    labelStyle: TextStyle(fontSize: 14),
+                    onTap: (){
+                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERGYM);
+                    }
+                ),
+                SpeedDialChild(
+                    child: Icon(Icons.arrow_upward),
+                    backgroundColor: Colors.orange,
+                    label:"Alunos ativos acima",
+                    labelStyle: TextStyle(fontSize: 14),
+                    onTap: (){
+                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERATIV);
+                    }
+                )
+              ],
             ),
           ),
-        ),
-        
-      ],
+
+          Scaffold(
+            appBar: AppBar(
+              title: Text("Academias"),
+              backgroundColor: Colors.deepOrange,
+              centerTitle: true,
+            ),
+            drawer: CustomDrawer(_pageController),
+            body: GymTab(),
+            floatingActionButton: SpeedDial(
+              child: Icon(Icons.view_list),
+              backgroundColor: Colors.orange,
+              children:[
+                SpeedDialChild(
+                  child: Icon(Icons.add),
+                  backgroundColor: Colors.orange,
+                  label:"Adicionar uma academia",
+                  labelStyle: TextStyle(fontSize: 14),
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context)=>GymScreen())
+                    );
+                  }
+                )
+              ],
+            ),
+          ),
+
+          Scaffold(
+            appBar: AppBar(
+              title: Text("Exit"),
+              backgroundColor: Colors.deepOrange,
+              centerTitle: true,
+            ),
+            drawer: CustomDrawer(_pageController),
+            body: Container(
+              child:
+              IconButton(
+                icon: Icon(Icons.exit_to_app),
+                onPressed: () {
+                 // BlocProvider.of<AuthenticationBloc>(context).dispatch(
+                   // LoggedOut(),
+                  //);
+                },
+              ),
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 
@@ -162,10 +198,11 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             child:
               Text("Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
             onPressed: () async {              
-              BlocProvider.of<AuthenticationBloc>(context).dispatch(
-              LoggedOut());
-              flbs.logout();
-              Navigator.pop(context);                     
+             // BlocProvider.of<AuthenticationBloc>(context).dispatch(
+              //LoggedOut());
+              //flbs.logout();
+              //Navigator.pop(context);
+              signOut();
             },
           ),
         ),  
@@ -195,6 +232,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       }
     );
  
+  }
+
+  void signOut() async{
+    await FirebaseAuth.instance.signOut();
+    flbs.logout();
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=> MyHomePage())
+    );
   }
 
   
