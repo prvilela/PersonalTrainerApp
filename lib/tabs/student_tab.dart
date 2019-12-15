@@ -15,12 +15,8 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
-    final _studentBloc = BlocProvider.of<GetStudentBloc>(context);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
-      child: StreamBuilder<List>(
-        stream: _studentBloc.outStudents,
+    return FutureBuilder(
+      future: FirebaseAuth.instance.currentUser(),
         builder: (context,snapshot){
           if(!snapshot.hasData){
             return Center(
@@ -43,7 +39,6 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
             );
           }
         },
-      ),
     );
   }
        

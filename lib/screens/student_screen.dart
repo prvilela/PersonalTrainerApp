@@ -240,7 +240,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                         value: 0,
                         activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
-                        onChanged: attValorRadio2,
+                         onChanged: attValorRadio2,
                       ),
                       Text("Ativo", style: TextStyle(color: Colors.deepOrange)),
 
@@ -253,7 +253,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
                   ),*/
-                  //attValorRadio2(0),
+
          
                   TextFormField(
                     style: _fieldStale,
@@ -336,6 +336,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
   void saveStudent() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      //salvar como ativo automático
       attValorRadio2();
 
       _scaffoldKey.currentState.showSnackBar(

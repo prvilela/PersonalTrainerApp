@@ -68,7 +68,7 @@ initiateFacebookLogin() async {
   logout() async {
     await facebookLogin.logOut();
     _auth.signOut();
-    print("Logged out from Facebook! x");
+    print("Logged out from Facebook!");
     trocarTela();
   }
 
