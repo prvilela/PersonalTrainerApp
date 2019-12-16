@@ -307,7 +307,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
           onPressed: (){
-            
+            listarAcademias(context);
           }
                           
         ),
@@ -336,10 +336,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
 //man dps tem q add aquele codigo q tu fez de pegar só os alunos do email logado no momento aqui.
     consultarCpf(BuildContext context) async{
       FirebaseAuth.instance.currentUser();
-
       QuerySnapshot list = await Firestore.instance.collection("student").where(
       "cpf", isEqualTo: controllerCpf.text).getDocuments();
-     
         var teste1 = list.documents.map((doc) => doc.data['cpf']);
         var teste2 = list.documents.map((doc) => doc.data['name']);
         var teste3 = list.documents.map((doc) => doc.data['email']);
@@ -347,40 +345,83 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
         var concatenar = "CPF: $teste1 \n" + "Nome: $teste2 \n" + "Email: $teste3 \n" + "Celular: $teste4 \n"; 
         var concatenar2 = concatenar.replaceAll('(','');
         var concatenar3 = concatenar2.replaceAll(')','');
-        exibirDialogAluno(concatenar3);     
+        exibirDialogAluno(concatenar3); 
     }
 
     exibirDialogAluno(String concatenar){
       Alert(
-      context: context,
-      title: "Dados do Aluno",
-      content: Container(
-        child:
-      Text(concatenar),
-      ),
-      buttons: [
-        DialogButton(
-          child: Text(
-            "Cancelar",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () { 
-            Navigator.pop(context);
-            controllerCpf.text = "";
-          },
-          color: Color.fromRGBO(189, 13, 13, 1.0),
-        ), 
-        DialogButton(
-          child: Text(
-            "Confirmar",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.pop(context),
-            color: Color.fromRGBO(30, 200, 30, 1.0)
-        )
-      ],
-    ).show();
-      
+        context: context,
+        title: "Dados do Aluno",
+        content: Container(
+          child:
+            Text(concatenar),
+        ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () { 
+                Navigator.pop(context);
+                controllerCpf.text = "";
+              },
+              color: Color.fromRGBO(189, 13, 13, 1.0),
+            ), 
+            DialogButton(
+              child: Text(
+                "Confirmar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Color.fromRGBO(30, 200, 30, 1.0)
+            )
+          ],
+      ).show();     
+    }
+
+
+    listarAcademias(BuildContext context) async{
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      String sid = user.uid;
+      print(sid);
+      QuerySnapshot list = await Firestore.instance.collection("gym").where("id", isEqualTo: sid).getDocuments();
+      var names = list.documents.map((doc) => doc.data['name']);
+      //print(names);
+      exibirAlertaAcademias(names);
+      print(names);
+    }
+
+    exibirAlertaAcademias(names){
+      Alert(
+        context: context,
+        title: "Academias cadastradas",
+        content: Container(
+          child:
+            Text(names),
+        ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () { 
+                Navigator.pop(context);
+                controllerCpf.text = "";
+              },
+              color: Color.fromRGBO(189, 13, 13, 1.0),
+            ), 
+            DialogButton(
+              child: Text(
+                "Confirmar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Color.fromRGBO(30, 200, 30, 1.0)
+            )
+          ],
+      ).show();
     }
 
 }

@@ -25,7 +25,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
   GymTabState gts = new GymTabState();
 
   int campoGenero;
-  int campoStatus;
+  int campoStatus = 0;
   TextEditingController name = new TextEditingController();
   TextEditingController birthday = new TextEditingController();
   TextEditingController cpf = new TextEditingController();
@@ -233,14 +233,14 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     ]                      
                   ),
                   
-                  /*Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Radio(
                         value: 0,
                         activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
-                         onChanged: attValorRadio2,
+                        onChanged: attValorRadio2,
                       ),
                       Text("Ativo", style: TextStyle(color: Colors.deepOrange)),
 
@@ -252,7 +252,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       ),
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
-                  ),*/
+                  ),
 
          
                   TextFormField(
@@ -328,16 +328,26 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   }
 
-  attValorRadio2(){
-    _studentBloc.saveStatus("Ativo");
+  attValorRadio2(int value){
+    setState(() {
+      campoStatus = value;
+    });
+
+    if(campoStatus == 0){
+      _studentBloc.saveStatus("Ativo");
+    }
+
+    if(campoStatus == 1){
+      _studentBloc.saveStatus("Não Ativo");
+    }
+
+    
   }
 
 
   void saveStudent() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      //salvar como ativo automático
-      attValorRadio2();
 
       _scaffoldKey.currentState.showSnackBar(
           SnackBar(

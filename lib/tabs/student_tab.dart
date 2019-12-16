@@ -47,22 +47,19 @@ class _StudentTabState extends State<StudentTab> with AutomaticKeepAliveClientMi
     );
   }
        
-        catchId(){
-                  FutureBuilder(
-                    future: FirebaseAuth.instance.currentUser(),
-                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-                        if (snapshot.hasData) {          
-                        String id = (snapshot.data.uid);
-                        print(id); 
-                        return Text("$id");                     
-                        }                                          
-                    }      
-                  );
+  catchId(){
+    FutureBuilder(
+      future: FirebaseAuth.instance.currentUser(),
+      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+        if (snapshot.hasData) {          
+          String id = (snapshot.data.uid);
+          print(id); 
+          return Text("$id");                     
+        }                                          
+      }      
+    );                
+  }
                   
-                  }
-                  
-
   @override
-
   bool get wantKeepAlive => true;
 }

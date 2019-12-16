@@ -15,7 +15,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   int x=0;
   final controllerSearch = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) { 
     if(x==0){
@@ -25,7 +25,7 @@ class _HomeTabState extends State<HomeTab> {
         Column(children: <Widget>[  
           Container(
             width: double.infinity,
-            height: 420,
+            height: MediaQuery.of(context).size.height  * 0.7,
             child:   
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
@@ -84,6 +84,10 @@ class _HomeTabState extends State<HomeTab> {
                   )
                 ),
 
+
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child:
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -100,9 +104,12 @@ class _HomeTabState extends State<HomeTab> {
                     },
                   )
                 ),
+                ),
+
 
                 Container(
                   padding: EdgeInsets.all(0),
+                  alignment: Alignment.bottomRight,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.orange),
                     borderRadius: BorderRadius.circular(20),
