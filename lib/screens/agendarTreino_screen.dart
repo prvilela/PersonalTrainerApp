@@ -387,9 +387,12 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       print(sid);
       QuerySnapshot list = await Firestore.instance.collection("gym").where("id", isEqualTo: sid).getDocuments();
       var names = list.documents.map((doc) => doc.data['name']);
-      //print(names);
-      exibirAlertaAcademias(names);
+      var concatenar1 = " $names";
+      var concatenar2 = concatenar1.replaceAll('(','');
+      var concatenar3 = concatenar2.replaceAll(')','');
+      var concatenar4 = concatenar3.replaceAll(',','\n');
       print(names);
+      exibirAlertaAcademias(concatenar4);
     }
 
     exibirAlertaAcademias(names){
@@ -397,8 +400,16 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
         context: context,
         title: "Academias cadastradas",
         content: Container(
-          child:
-            Text(names),
+            height: MediaQuery.of(context).size.height  * 0.4,
+            width: MediaQuery.of(context).size.height  * 0.3,
+            child:
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index){
+                return Text(names);  
+              }
+            )
         ),
           buttons: [
             DialogButton(
@@ -408,7 +419,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
               ),
               onPressed: () { 
                 Navigator.pop(context);
-                controllerCpf.text = "";
+                controllerAcademia.text = "";
               },
               color: Color.fromRGBO(189, 13, 13, 1.0),
             ), 
