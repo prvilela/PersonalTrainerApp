@@ -390,7 +390,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       var concatenar1 = " $names";
       var concatenar2 = concatenar1.replaceAll('(','');
       var concatenar3 = concatenar2.replaceAll(')','');
-      var concatenar4 = concatenar3.replaceAll(',','\n');
+      var concatenar4 = concatenar3.split(",");
       print(names);
       exibirAlertaAcademias(concatenar4);
     }
@@ -398,17 +398,30 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
     exibirAlertaAcademias(names){
       Alert(
         context: context,
+        
         title: "Academias cadastradas",
         content: Container(
+          
             height: MediaQuery.of(context).size.height  * 0.4,
             width: MediaQuery.of(context).size.height  * 0.3,
             child:
             ListView.builder(
+              
               shrinkWrap: true,
-              itemCount: 1,
+              itemCount: names.length,
               itemBuilder: (BuildContext context, int index){
-                return Text(names);  
+                return 
+                  FlatButton(                
+                    textColor: Colors.deepOrange,
+                    highlightColor: Colors.orange[200],
+                    child: Text(names[index], style: TextStyle(fontSize: 20,),),
+                    onPressed: (){
+                      var nome = names[index];
+                      controllerAcademia.text = "$nome";
+                    }
+                  );                      
               }
+              
             )
         ),
           buttons: [
