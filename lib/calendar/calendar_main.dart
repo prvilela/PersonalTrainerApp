@@ -33,10 +33,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    final _selectedDay = DateTime.now();
-
     _calendarController = CalendarController();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -128,7 +125,9 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
               alignment: Alignment.center,
               tooltip: "Gerenciar",
               onPressed: (){
-                //chamar pacotes comn o dia selecionado bem aqui!
+
+
+
               },
             )
           

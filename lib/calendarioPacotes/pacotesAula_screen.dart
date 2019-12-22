@@ -15,9 +15,19 @@ class _PacoteAulaState extends State<PacoteAula> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   BottomNavigationClass bn = new BottomNavigationClass();
 
+  @override
+  void initState() {
+    super.initState();
+    _calendarController = CalendarController();
+  }
+  @override
+  void dispose() {
+    _calendarController.dispose();
+    super.dispose();
+  }
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +69,7 @@ class _PacoteAulaState extends State<PacoteAula> {
                     FlatButton(
                       child: Text('Confirmar'),
                       onPressed: () {
-                        
+                       
                         //Navigator.of(context).pop();
                       },
                     ),
@@ -73,20 +83,40 @@ class _PacoteAulaState extends State<PacoteAula> {
       ),
 
 
-      body: SchedulesPage(),
+      body: 
+        Column(
+          children: <Widget>[
+
+            Container(
+              margin: EdgeInsets.only(left: MediaQuery.of(context).size.height  * 0.027),
+              height: MediaQuery.of(context).size.height  * 0.18,
+              width: MediaQuery.of(context).size.width  * 0.9,
+              child: _buildTableCalendar(),
+            ),
+
+            Container(
+              height: MediaQuery.of(context).size.height  * 0.65,
+              child: SchedulesPage(),  
+            ),
+
+          ]
+        ),
+   
       //linha a seguir irá adicionar o calendário para mostrar apenas a semana escolhida
-          //_buildTableCalendar(),
-
+      //_buildTableCalendar(),
       bottomNavigationBar: bn,
-    
     );
-
   }
 
     Widget _buildTableCalendar() {
     return TableCalendar(
       calendarController: _calendarController,
       startingDayOfWeek: StartingDayOfWeek.monday,
+      initialCalendarFormat: CalendarFormat.week,
+      availableCalendarFormats: const {
+      CalendarFormat.week: 'Week',
+    },
+
       calendarStyle: CalendarStyle(
         selectedColor: Colors.deepOrange[400],
         todayColor: Colors.deepOrange[200],
