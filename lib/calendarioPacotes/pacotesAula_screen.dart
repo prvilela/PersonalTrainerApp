@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendarioPacotes/schedules_page.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
+import 'package:personal_trainer/calendar/table_calendar.dart';
 
 
 class PacoteAula extends StatefulWidget {
@@ -9,9 +10,14 @@ class PacoteAula extends StatefulWidget {
 }
 
 class _PacoteAulaState extends State<PacoteAula> {
+  CalendarController _calendarController;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   BottomNavigationClass bn = new BottomNavigationClass();
+
+  void _onDaySelected(DateTime day, List events) {
+    print('CALLBACK: _onDaySelected');
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +48,7 @@ class _PacoteAulaState extends State<PacoteAula> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Formato do horário'),
-
                   content: Text("horários disponíveis"), 
-
                   actions: <Widget>[
                     FlatButton(
                       child: Text('Voltar'),
@@ -68,7 +72,10 @@ class _PacoteAulaState extends State<PacoteAula> {
         ],
       ),
 
+
       body: SchedulesPage(),
+      //linha a seguir irá adicionar o calendário para mostrar apenas a semana escolhida
+          //_buildTableCalendar(),
 
       bottomNavigationBar: bn,
     
@@ -76,6 +83,25 @@ class _PacoteAulaState extends State<PacoteAula> {
 
   }
 
-
+    Widget _buildTableCalendar() {
+    return TableCalendar(
+      calendarController: _calendarController,
+      startingDayOfWeek: StartingDayOfWeek.monday,
+      calendarStyle: CalendarStyle(
+        selectedColor: Colors.deepOrange[400],
+        todayColor: Colors.deepOrange[200],
+        markersColor: Colors.brown[700],
+        outsideDaysVisible: false,
+      ),
+      headerStyle: HeaderStyle(
+        formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        formatButtonDecoration: BoxDecoration(
+          color: Colors.deepOrange[400],
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+      ),
+      onDaySelected: _onDaySelected,
+    );
+  }
 
 }

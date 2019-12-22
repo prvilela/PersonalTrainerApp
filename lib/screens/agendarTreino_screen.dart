@@ -398,26 +398,26 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
     exibirAlertaAcademias(names){
       Alert(
         context: context,
-        
         title: "Academias cadastradas",
-        content: Container(
-          
+        content: Container(      
             height: MediaQuery.of(context).size.height  * 0.4,
             width: MediaQuery.of(context).size.height  * 0.3,
             child:
-            ListView.builder(
-              
+            ListView.builder(           
               shrinkWrap: true,
               itemCount: names.length,
               itemBuilder: (BuildContext context, int index){
                 return 
-                  FlatButton(                
+                  FlatButton(            
                     textColor: Colors.deepOrange,
                     highlightColor: Colors.orange[200],
                     child: Text(names[index], style: TextStyle(fontSize: 20,),),
                     onPressed: (){
-                      var nome = names[index];
+                      var nome = names[index];           
                       controllerAcademia.text = "$nome";
+                      setState(() {
+                        names[index] = Colors.red;
+                      });
                     }
                   );                      
               }

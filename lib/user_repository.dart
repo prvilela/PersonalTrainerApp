@@ -66,7 +66,7 @@ class UserRepository {
 
   //logout
   Future<void> signOut() async {
-    flbs.logout();
+    //flbs.logout();
     return Future.wait([
       _firebaseAuth.signOut(),
       _googleSignIn.signOut(),
