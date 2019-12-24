@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
 import 'package:personal_trainer/blocs/getStudent_bloc.dart';
+import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
 import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
@@ -65,12 +66,26 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               ]
             ),
             drawer: CustomDrawer(_pageController),
-            body: HomeTab(),
+
+            body: 
+              GestureDetector(
+                onPanUpdate: (details){
+                  if (details.delta.dx > 0)
+                    print("Direita vai para tela da esquerda");
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CalendarApp()),
+                    );
+                  if (details.delta.dx < 0)
+                    print("Esquerda vai para tela da direita");
+                  //Navigator.push(context,
+                    //MaterialPageRoute(builder: (context) => CalendarApp()),
+                  //);
+                },
+                child:
+                  HomeTab(),
+              ),
             bottomNavigationBar: bn,
           ),
-
-
-
 
           Scaffold(
             appBar: AppBar(
@@ -79,6 +94,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               centerTitle: true,
             ),
             drawer: CustomDrawer(_pageController),
+
             body: StudentTab(),
             floatingActionButton: SpeedDial(
               child: Icon(Icons.view_list),

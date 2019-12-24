@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/calendarioPacotes/schedules_page.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
 
-
 class PacoteAula extends StatefulWidget {
   @override
-  _PacoteAulaState createState() => _PacoteAulaState();
+  PacoteAulaState createState() => PacoteAulaState();
+  //PacoteAula({Key key, this.dia}) : super(key:key);
+  
+  //Calendar dia;
 }
 
-class _PacoteAulaState extends State<PacoteAula> {
+class PacoteAulaState extends State<PacoteAula> {
   CalendarController _calendarController;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   BottomNavigationClass bn = new BottomNavigationClass();
 
+  
   @override
   void initState() {
     super.initState();
     _calendarController = CalendarController();
+    
   }
   @override
   void dispose() {
@@ -28,6 +33,7 @@ class _PacoteAulaState extends State<PacoteAula> {
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,7 @@ class _PacoteAulaState extends State<PacoteAula> {
       );
     } 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
-
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Pacotes de Aula'),
@@ -82,10 +88,19 @@ class _PacoteAulaState extends State<PacoteAula> {
         ],
       ),
 
-
       body: 
-        Column(
-          children: <Widget>[
+        GestureDetector(
+          onPanUpdate: (details){
+            if (details.delta.dx < 0){
+              print("Esquerda vai para tela da direita");
+              //aqui oh
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CalendarApp()),
+              );
+            }
+          },
+            child: Column(            
+              children: <Widget>[
 
             Container(
               margin: EdgeInsets.only(left: MediaQuery.of(context).size.height  * 0.027),
@@ -93,13 +108,13 @@ class _PacoteAulaState extends State<PacoteAula> {
               width: MediaQuery.of(context).size.width  * 0.9,
               child: _buildTableCalendar(),
             ),
-
+            
             Container(
               height: MediaQuery.of(context).size.height  * 0.65,
               child: SchedulesPage(),  
             ),
 
-          ]
+          ],)
         ),
    
       //linha a seguir irá adicionar o calendário para mostrar apenas a semana escolhida
@@ -109,6 +124,8 @@ class _PacoteAulaState extends State<PacoteAula> {
   }
 
     Widget _buildTableCalendar() {
+    //setDate(dia);
+    print('');
     return TableCalendar(
       calendarController: _calendarController,
       startingDayOfWeek: StartingDayOfWeek.monday,
@@ -134,4 +151,14 @@ class _PacoteAulaState extends State<PacoteAula> {
     );
   }
 
+
+  void setDate(var date){
+    setState(() {
+      _calendarController.setSelectedDay(
+        _calendarController = date
+      );
+    });
+  }
+
 }
+

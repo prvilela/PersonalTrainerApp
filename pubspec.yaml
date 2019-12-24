@@ -53,6 +53,7 @@ dependencies:
   rflutter_alert: ^1.0.2
   flushbar: ^1.9.0
   flutter_map: ^0.7.3
+  intro_slider: ^1.0.8
   
 dev_dependencies:
   brasil_fields: ^0.0.7+2

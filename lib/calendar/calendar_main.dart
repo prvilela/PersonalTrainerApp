@@ -1,6 +1,8 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
+import 'package:personal_trainer/calendarioPacotes/pacotesAula_screen.dart';
+import 'package:personal_trainer/home.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 
 class CalendarApp extends StatelessWidget {
@@ -19,16 +21,18 @@ class CalendarApp extends StatelessWidget {
 
 class Calendar extends StatefulWidget {
   Calendar({Key key, this.title}) : super(key: key);
-
+  //DateTime dia;
   final String title;
   @override
-  _CalendarState createState() => _CalendarState();
+  CalendarState createState() => CalendarState();
+
 }
 
-class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
+class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
   BottomNavigationClass bn = new BottomNavigationClass();
+  var diaSelecionado;
 
   @override
   void initState() {
@@ -51,6 +55,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
+    setState(() {
+      diaSelecionado = day;
+    });
+
   }
 
   void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
@@ -72,17 +80,32 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
           )
         ],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          // Switch out 2 lines below to play with TableCalendar's settings
-          //-----------------------
-          _buildTableCalendar(),
-          // _buildTableCalendarWithBuilders(),
-          const SizedBox(height: 8.0),
-          _buildButtons(),
-          const SizedBox(height: 8.0),
-        ],
+      body: 
+        GestureDetector(
+          onPanUpdate: (details){
+
+            if (details.delta.dx < 0){
+              print("Esquerda vai para tela da direita");
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TelaPrincipal()),
+              );
+            }
+            else if (details.delta.dx > 0){
+              print("Direita vai para tela da esquerda");
+              Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => PacoteAula()),
+              );
+            }         
+          },
+          child:          
+            Column(
+              children: <Widget>[
+                _buildTableCalendar(),
+                _buildButtons(),
+                _buildContainer(),                                                     
+              ],
+            ),
+          
       ),
 
       bottomNavigationBar: bn,
@@ -113,7 +136,6 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   }
 
   Widget _buildButtons() {
-
     return Column(
       children: <Widget>[
         Row(
@@ -125,8 +147,19 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
               alignment: Alignment.center,
               tooltip: "Gerenciar",
               onPressed: (){
-
-
+                //chamar tela pacotes com o dia selecionado daqui           
+                //obs: diaSelecionado está no formato DateTime, vem com horas, caso seja necessário alterar -->
+                //isto futuramente, mas cuidado já que ele é passado para a classe pacotesAula_screen que recebe -->
+                //no mesmo formato
+                if(diaSelecionado != 'null'){
+                  print(diaSelecionado);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>PacoteAula()),
+                  );                 
+                }
+                else{
+                  print("Selcione uma data");
+                }
 
               },
             )
@@ -135,6 +168,14 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
         ),
         
       ],
+    );
+  }
+
+  Widget _buildContainer(){
+    return Container(
+      height: MediaQuery.of(context).size.height  * 0.35,
+      width: MediaQuery.of(context).size.width  * 1,
+      color: Colors.white,
     );
   }
 
