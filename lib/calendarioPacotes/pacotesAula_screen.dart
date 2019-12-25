@@ -54,6 +54,7 @@ class PacoteAulaState extends State<PacoteAula> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Pacotes de Aula'),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.deepOrange,
         actions: <Widget>[
           IconButton(

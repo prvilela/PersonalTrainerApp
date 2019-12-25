@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/home.dart';
 import 'package:personal_trainer/calendarioPacotes/pacotesAula_screen.dart';
+import 'package:personal_trainer/pagamento.dart';
 
 class BottomNavigationClass extends StatefulWidget{
 
@@ -60,7 +61,7 @@ class _BottomNavigationClassState extends State<BottomNavigationClass> {
 
           if(_currentIndex == 3){
             Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>TelaPrincipal())
+                    MaterialPageRoute(builder: (context)=>Pagamento())
                   );
           }
 

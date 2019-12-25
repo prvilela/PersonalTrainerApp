@@ -5,6 +5,7 @@ import 'package:personal_trainer/blocs/getStudent_bloc.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
 import 'package:personal_trainer/main.dart';
+import 'package:personal_trainer/pagamento.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
 import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
@@ -70,16 +71,18 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             body: 
               GestureDetector(
                 onPanUpdate: (details){
-                  if (details.delta.dx > 0)
+                  if (details.delta.dx > 0){
                     print("Direita vai para tela da esquerda");
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CalendarApp()),
                     );
-                  if (details.delta.dx < 0)
+                  }
+                  if (details.delta.dx < 0){
                     print("Esquerda vai para tela da direita");
-                  //Navigator.push(context,
-                    //MaterialPageRoute(builder: (context) => CalendarApp()),
-                  //);
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Pagamento()),
+                    );
+                  }
                 },
                 child:
                   HomeTab(),
