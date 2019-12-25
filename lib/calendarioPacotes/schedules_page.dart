@@ -67,7 +67,7 @@ class _SchedulesPageState extends State<SchedulesPage> {
     return Scaffold(
       body: Center(
         child: Container(
-          color: Color.fromARGB(255, 237, 237, 237),
+          color: Colors.white,
           padding: EdgeInsets.all(20),
           child: OrientationBuilder(
             builder: (c, o) {

@@ -100,21 +100,24 @@ class PacoteAulaState extends State<PacoteAula> {
               );
             }
           },
-            child: Column(            
+            child: Column(                          
               children: <Widget>[
-
+ 
             Container(
               margin: EdgeInsets.only(left: MediaQuery.of(context).size.height  * 0.027),
-              height: MediaQuery.of(context).size.height  * 0.18,
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height  * 0.156,
               width: MediaQuery.of(context).size.width  * 0.9,
               child: _buildTableCalendar(),
             ),
-            
+
             Container(
-              height: MediaQuery.of(context).size.height  * 0.65,
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height  * 0.0),
+              height: MediaQuery.of(context).size.height  * 0.673,
               child: SchedulesPage(),  
             ),
-
+           
+            
           ],)
         ),
    

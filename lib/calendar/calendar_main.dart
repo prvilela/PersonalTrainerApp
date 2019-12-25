@@ -83,7 +83,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
       body: 
         GestureDetector(
           onPanUpdate: (details){
-
             if (details.delta.dx < 0){
               print("Esquerda vai para tela da direita");
               Navigator.push(context,
@@ -97,7 +96,10 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
               );
             }         
           },
-          child:          
+          child:      
+          Container(
+            color: Colors.white, 
+            child:  
             Column(
               children: <Widget>[
                 _buildTableCalendar(),
@@ -105,6 +107,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
                 _buildContainer(),                                                     
               ],
             ),
+            ) 
           
       ),
 
@@ -173,7 +176,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   Widget _buildContainer(){
     return Container(
-      height: MediaQuery.of(context).size.height  * 0.35,
+      height: MediaQuery.of(context).size.height  * 0.3625,
       width: MediaQuery.of(context).size.width  * 1,
       color: Colors.white,
     );
