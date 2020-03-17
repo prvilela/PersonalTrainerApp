@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "288908960392-j1qakcl1vjp3tcducnpa7dbatmhdq5ak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.personal_trainer",
+            "certificate_hash": "ca4c1d93c2b4a405e5bdd99d1123b2100a057f2a"
+          }
+        },
+        {
           "client_id": "288908960392-9adeqch18eblootq91a41a3po3ncchj0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -29,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAy_hAu3TRxS6RrZRTOQL4fz_6VaCKsiT8"
+          "current_key": "AIzaSyAlKzlbRcieC7MMpxhH4XXteODQ0_0TzJI"
         }
       ],
       "services": {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_trainer/telaCadastrarPT.dart';
 import 'home.dart';
 
+
 //codigo do github Personal Trainer Plinio
 void main() => runApp(MyApp());
 
@@ -37,13 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
     
     return Scaffold(
       backgroundColor: Colors.deepOrange,
-      body: Container(   
+      body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Column(  
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[ 
+          children: <Widget>[
 
             //logotipo da tela de login
             Padding(
