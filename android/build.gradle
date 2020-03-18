@@ -2,10 +2,13 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' } 
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.google.gms:google-services:3.2.1'
     }
 }
 
@@ -14,6 +17,14 @@ allprojects {
         google()
         jcenter()
     }
+}
+
+ext {
+    // The following are only a few examples of the types of properties you can define.
+    compileSdkVersion = 28
+    // You can also use this to specify versions for dependencies. Having consistent
+    // versions between modules can avoid behavior conflicts.
+    supportLibVersion = '1.0.0-beta01'
 }
 
 rootProject.buildDir = '../build'

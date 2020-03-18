@@ -1,126 +1,83 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
-//teste
-void main() => runApp(MyApp());
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:personal_trainer/blocs/authentication_bloc.dart';
+import 'package:personal_trainer/user_repository.dart';
+import 'package:personal_trainer/home.dart';
+import 'package:personal_trainer/screens/splash_screen.dart';
+import 'package:personal_trainer/login_bloc/login_screen.dart';
+import 'package:personal_trainer/blocs/simple_bloc_delegate.dart';
+import 'package:personal_trainer/blocs/bloc.dart';
+//import 'package:personal_trainer/flutter_facebook_login.dart';
 
-class MyApp extends StatelessWidget {
+//import com.facebook.FacebookSdk;
+//import com.facebook.appevents.AppEventsLogger;
+//codigo do github Personal Trainer Plinio
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(     
-        primaryColor: Colors.deepOrange
-      ),
-      home: MyHomePage(title: 'Tela Login'),
-      debugShowCheckedModeBanner: false,
-      
-    );
+void main() { 
+  WidgetsFlutterBinding.ensureInitialized(); //meu sem essa linha aqui nem vai man, att do flutter
+  BlocSupervisor().delegate = SimpleBlocDelegate();
+  runApp(MyHomePage());
   }
-}
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-  
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+   final UserRepository _userRepository= UserRepository();
+    MyHomePageState createState() => MyHomePageState();
+
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    
-    return Scaffold(
-      backgroundColor: Colors.deepOrange,
-      body: Container(   
-        child: Column(  
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[        
-            Padding(
-              child:
-                TextField(
-                  style: TextStyle(color: Colors.white, fontSize: 18), 
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.person, color: Colors.white),
-                    hintText: "Email",
-                    hintStyle: TextStyle(color: Colors.white),
-                    enabledBorder: UnderlineInputBorder(      
-                      borderSide: BorderSide(color: Colors.white),                     
-                    )                  
-                  ),
-                ),                     
-                padding: EdgeInsets.fromLTRB(10, 10, 45, 10),
-            ),
-          
-            Padding(
-              child:
-              TextField(
-                style: TextStyle(color: Colors.white, fontSize: 18), 
-                decoration: InputDecoration(
-                  icon: Icon(Icons.lock, color: Colors.white),
-                  hintText: "Senha", 
-                  hintStyle: TextStyle(color: Colors.white), 
-                  enabledBorder: UnderlineInputBorder(      
-                    borderSide: BorderSide(color: Colors.white),   
-                  )                             
-                ),
-                obscureText: true,
-              ),
-              padding: EdgeInsets.fromLTRB(10, 5, 45, 20),
-            ), 
+class MyHomePageState extends State<MyHomePage> {
+    final UserRepository _userRepository = UserRepository();
+    AuthenticationBloc _authenticationBloc;
 
-            RaisedButton(
+  MyHomePageState();
+    @override
+    void initState() {
+      super.initState();
+      _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
+      _authenticationBloc.dispatch(AppStarted());  
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return BlocProvider(
+        bloc: _authenticationBloc,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: BlocBuilder(
+            bloc: _authenticationBloc,
+            builder: (BuildContext context, AuthenticationState state) {
+                       
+              if (state is Unauthenticated) {
+                return LoginScreen(userRepository: _userRepository);
+              }
+              if (state is Authenticated) {
+                return TelaPrincipal();       
+              }
+
+              return SplashScreen();
               
-              onPressed: (){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context){
-                    //telaSecundaria("asghduifasdfasdfbabsd");
-                    return telaPrincipal("teste");               
-                    }
-                  )
-                );
-              },
-              child: Text("Sign-in", 
-                style: TextStyle(color: Colors.deepOrange,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                )
-              ),
-              padding: EdgeInsets.fromLTRB(45, 5, 45, 5),
-                         
-            ),
-
-            Padding(
-              child:
-              Text("Esqueci minha senha", style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
-              
-              padding: EdgeInsets.only(top: 10)
-            ),
-
-              Padding(
-                child:
-                Row(children: <Widget>[
-                // Align(alignment: CrossAxisAlignment.end,), 
-                  Text("Criar Conta"),     
-                ],),   
-                padding: EdgeInsets.all(10),
-              )
-
-          ],
-
-          
-          
-           
+            },
+          ),
         ),
+      );
+    }
 
-        
-
-      )
+void exibirMsg(){
+    Scaffold.of(context).showSnackBar(
+       SnackBar(
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [Text("Confirme seu email!"),],
+        ),
+      ),
     );
   }
+
+  @override
+    void dispose() {
+      _authenticationBloc.dispose();
+      super.dispose();
+    }
+  
 }
