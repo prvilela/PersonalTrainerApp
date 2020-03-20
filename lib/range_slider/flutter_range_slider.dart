@@ -89,6 +89,7 @@ class RangeSlider extends StatefulWidget {
   /// A fine-grained control of the appearance is achieved using a [SliderThemeData].
   const RangeSlider({
     Key key,
+    FormFieldSetter<String> onSaved,
     this.min = 0.0,
     this.max = 1.0,
     this.divisions,
@@ -97,9 +98,9 @@ class RangeSlider extends StatefulWidget {
     this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
-    this.showValueIndicator: false,
+    this.showValueIndicator: true,
     this.touchRadiusExpansionRatio = 3.33,
-    this.valueIndicatorMaxDecimals = 1,
+    this.valueIndicatorMaxDecimals = 0,
     this.valueIndicatorFormatter,
     this.allowThumbOverlap = false,
   })  : assert(min != null),
@@ -111,7 +112,9 @@ class RangeSlider extends StatefulWidget {
         assert(lowerValue >= min && lowerValue <= max),
         assert(upperValue >= lowerValue && upperValue <= max),
         assert(valueIndicatorMaxDecimals >= 0 && valueIndicatorMaxDecimals < 5),
-        super(key: key);
+        super(key: key,
+              //onSaved: onSaved,
+        );
 
   /// The minimum value the user can select.
   ///

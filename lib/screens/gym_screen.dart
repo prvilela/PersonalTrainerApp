@@ -21,7 +21,7 @@ class _GymScreenState extends State<GymScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   _GymScreenState(DocumentSnapshot gym):
-      _gymBloc = GymBloc(gym);
+    _gymBloc = GymBloc(gym);
 
   //valores de cada range slider
   List<RangeSliderData> rangeSliders;
@@ -86,16 +86,16 @@ class _GymScreenState extends State<GymScreen> {
             builder: (context,snapshot){
               if(snapshot.data)
                 return StreamBuilder<bool>(
-                    stream: _gymBloc.outLoading,
-                    initialData: false,
-                    builder: (context, snapshot) {
-                      return IconButton(icon: Icon(Icons.remove),
-                        onPressed: snapshot.data ? null : (){
-                          _gymBloc.deleteGym();
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    }
+                  stream: _gymBloc.outLoading,
+                  initialData: false,
+                  builder: (context, snapshot) {
+                    return IconButton(icon: Icon(Icons.remove),
+                      onPressed: snapshot.data ? null : (){
+                        _gymBloc.deleteGym();
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  }
                 );
               else return Container();
             },
@@ -112,55 +112,60 @@ class _GymScreenState extends State<GymScreen> {
         ],
       ),
       body: Form(
-          key: _formKey,
-          child: StreamBuilder<Map>(
-            stream: _gymBloc.outData,
-            builder: (context, snapshot) {
-              if(!snapshot.hasData) return Container();
-              return ListView(
-                padding: EdgeInsets.all(16),
-                children: <Widget>[
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["name"],
-                    decoration: _buildDecorationName("Nome"),
-                    onSaved: _gymBloc.saveName,
-                  ),
-                  SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields                            
+        key: _formKey,
+        child: StreamBuilder<Map>(
+          stream: _gymBloc.outData,
+          builder: (context, snapshot) {
+            if(!snapshot.hasData) return Container();
+            return ListView(
+              padding: EdgeInsets.all(16),
+              children: <Widget>[
+                TextFormField(
+                  style: _fieldStale,
+                  initialValue: snapshot.data["name"],
+                  decoration: _buildDecorationName("Nome"),
+                  onSaved: _gymBloc.saveName,
+                ),
+                SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields                            
 
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["location"],
-                    decoration: _buildDecoratiom("Endereço"),
-                    onSaved: _gymBloc.saveLocation,
-                  ),
-                  SizedBox(height: 8.0),
+                TextFormField(
+                  style: _fieldStale,
+                  initialValue: snapshot.data["location"],
+                  decoration: _buildDecoratiom("Endereço"),
+                  onSaved: _gymBloc.saveLocation,
+                ),
+                SizedBox(height: 8.0),
 
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["phone"],
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(digito_9: true),
-                    ],
-                    decoration: _buildDecoratiom("Telefone"),
-                    onSaved: _gymBloc.savePhone,
-                  ),
-                  SizedBox(height: 8.0),
+                TextFormField(
+                  style: _fieldStale,
+                  initialValue: snapshot.data["phone"],
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter.digitsOnly,
+                    TelefoneInputFormatter(digito_9: true),
+                  ],
+                  decoration: _buildDecoratiom("Telefone"),
+                  onSaved: _gymBloc.savePhone,
+                ),
+                SizedBox(height: 8.0),
 
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["preco"],
-                    decoration: _buildDecoratiom("Preço"),
-                    onSaved: _gymBloc.savePreco,
-                  ),
-                  SizedBox(height: 8.0),
+                TextFormField(
+                  style: _fieldStale,
+                  initialValue: snapshot.data["preco"],
+                  keyboardType: TextInputType.numberWithOptions(),
+                  inputFormatters:[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  decoration: _buildDecoratiom("Preço"),
+                  onSaved: _gymBloc.savePreco,
+                ),
+                SizedBox(height: 14.0),
 
-                  Text("Semana", style: _fieldStale),
-                  frs.RangeSlider(
+                Text("Semana", style: _fieldStale),
+                
+                frs.RangeSlider(
                   min: 0,
-                  max: 24,
+                  max: 24,          
                   lowerValue: _lowerValue,
                   upperValue: _upperValue,
                   divisions: 24,
@@ -171,6 +176,8 @@ class _GymScreenState extends State<GymScreen> {
                       _lowerValue = newLowerValue;
                       _upperValue = newUpperValue;
                     });
+                    _gymBloc.saveHorarioSemanaA(_lowerValue.toString());
+                    _gymBloc.saveHorarioSemanaF(_upperValue.toString());
                   },
                 ),
                 SizedBox(height: 8.0),
@@ -189,6 +196,8 @@ class _GymScreenState extends State<GymScreen> {
                       _lowerValue1 = newLowerValue;
                       _upperValue1 = newUpperValue;
                     });
+                    _gymBloc.saveHorarioSabadoA(_lowerValue1.toString());
+                    _gymBloc.saveHorarioSabadoF(_upperValue1.toString());
                   },
                 ),
                 SizedBox(height: 8.0),
@@ -207,18 +216,19 @@ class _GymScreenState extends State<GymScreen> {
                       _lowerValue2 = newLowerValue;
                       _upperValue2 = newUpperValue;
                     });
+                    _gymBloc.saveHorarioDomingoA(_lowerValue2.toString());
+                    _gymBloc.saveHorarioDomingoF(_upperValue2.toString());
                   },
                 ),      
                   
-                  FutureBuilder(
-                    future: FirebaseAuth.instance.currentUser(),
-                      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-                        if (snapshot.hasData) {
+                FutureBuilder(
+                  future: FirebaseAuth.instance.currentUser(),
+                    builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+                      if (snapshot.hasData) {
                         _gymBloc.saveId(snapshot.data.uid);
                         return Text("");
-                        }                                          
-                    }
-                    
+                      }                                          
+                    } 
                   )
 
                 ],
@@ -236,9 +246,9 @@ class _GymScreenState extends State<GymScreen> {
 
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-          content: Text("Salvando academia...",
-            style: TextStyle(color: Colors.white),
-          ),
+        content: Text("Salvando academia...",
+          style: TextStyle(color: Colors.white),
+        ),
         duration: Duration(minutes: 1),
         backgroundColor: Colors.black,
       )
@@ -248,13 +258,13 @@ class _GymScreenState extends State<GymScreen> {
     _scaffoldKey.currentState.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-          content: Text(success ? "Academia salva":"Erro ao salvar",
-            style: TextStyle(color: Colors.white),
-          ),
+        content: Text(success ? "Academia salva":"Erro ao salvar",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
       )
     );
-  }
+    }
   }
 
 
@@ -283,36 +293,36 @@ class _GymScreenState extends State<GymScreen> {
   List<RangeSliderData> _rangeSliderDefinitions() {
     return <RangeSliderData>[
       RangeSliderData(
-          min: 0.0, max: 100.0, lowerValue: 10.0, upperValue: 100.0),
+          min: 0, max: 100, lowerValue: 10, upperValue: 100),
       RangeSliderData(
-          min: 0.0,
-          max: 100.0,
-          lowerValue: 25.0,
-          upperValue: 75.0,
+          min: 0,
+          max: 100,
+          lowerValue: 25,
+          upperValue: 75,
           divisions: 20,
           overlayColor: Colors.red[100]),
       RangeSliderData(
-          min: 0.0,
-          max: 100.0,
-          lowerValue: 10.0,
-          upperValue: 30.0,
+          min: 0,
+          max: 100,
+          lowerValue: 10,
+          upperValue: 30,
           showValueIndicator: false,
           valueIndicatorMaxDecimals: 0),
       RangeSliderData(
-          min: 0.0,
-          max: 100.0,
-          lowerValue: 10.0,
-          upperValue: 30.0,
+          min: 0,
+          max: 100,
+          lowerValue: 10,
+          upperValue: 30,
           showValueIndicator: true,
           valueIndicatorMaxDecimals: 0,
           activeTrackColor: Colors.red,
           inactiveTrackColor: Colors.red[50],
           valueIndicatorColor: Colors.green),
       RangeSliderData(
-          min: 0.0,
-          max: 100.0,
-          lowerValue: 25.0,
-          upperValue: 75.0,
+          min: 0,
+          max: 100,
+          lowerValue: 25,
+          upperValue: 75,
           divisions: 20,
           thumbColor: Colors.grey,
           valueIndicatorColor: Colors.grey),

@@ -26,7 +26,13 @@ class GymBloc extends BlocBase{
         "name":null,
         "location":null,
         "phone":null,
-        "preco":null
+        "preco":null,
+        "horarioSemanaA":null,
+        "horarioSemanaF":null,
+        "horarioSabadoA":null,
+        "horarioSabadoF":null,
+        "horarioDomingoA":null,
+        "horarioDomingoF":null,
       };
       _createdController.add(false);
     }
@@ -49,6 +55,26 @@ class GymBloc extends BlocBase{
     unsavedData["id"] = text;
   }
 
+  //horarios range slider, sendo A para abertura e B para fechamento
+  void saveHorarioSemanaA(String text){
+    unsavedData["horarioSemanaA"] = text;
+  }
+  void saveHorarioSemanaF(String text){
+    unsavedData["horarioSemanaF"] = text;
+  }
+  void saveHorarioSabadoA(String text){
+    unsavedData["horarioSabadoA"] = text;
+  }
+  void saveHorarioSabadoF(String text){
+    unsavedData["horarioSabadoF"] = text;
+  }
+  void saveHorarioDomingoA(String text){
+    unsavedData["horarioDomingoA"] = text;
+  }
+  void saveHorarioDomingoF(String text){
+    unsavedData["horarioDomingoF"] = text;
+  }
+
   Future<bool> saveGym() async{
     _loadingController.add(true);
 
@@ -62,6 +88,7 @@ class GymBloc extends BlocBase{
       }
       _createdController.add(true);
       _loadingController.add(false);
+      print(unsavedData);
       return true;
     }catch(e){
       _loadingController.add(false);
