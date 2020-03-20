@@ -63,6 +63,7 @@ class GetStudentBloc extends BlocBase{
           else return -1;
         });
         break;
+        
       case SortCriteria.ORDERGYM:
         _students.sort((a,b){
           List<String> c = [a.data["gym"],b.data["gym"]];

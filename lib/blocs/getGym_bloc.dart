@@ -52,6 +52,7 @@ class GetGymBloc extends BlocBase{
 
   void _sort(){
     switch(_criteria){
+      
       case SortCriterioGym.ORDERNAME:
         _gym.sort((a,b){
           List<String> c = [a.data["name"],b.data["name"]];

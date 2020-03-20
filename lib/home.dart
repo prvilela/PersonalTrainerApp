@@ -43,6 +43,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           controller: _pageController,
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
+
             Scaffold(
               appBar: AppBar(
                 title: Text("Agenda"),
@@ -90,66 +91,67 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             ),
           
             BlocProvider<GetStudentBloc>( 
-            bloc: _getStudentBloc,
-            child:
-            Scaffold(
-              appBar: AppBar(
-                title: Text("Alunos"),
-                backgroundColor: Colors.deepOrange,
-                centerTitle: true,
-              ),
-              drawer: CustomDrawer(_pageController),
-              body: StudentTab(),
-              floatingActionButton: SpeedDial(
-                child: Icon(Icons.view_list),
-                backgroundColor: Colors.deepOrange,
-                children:[
-                  SpeedDialChild(
-                    child: Icon(Icons.add),
-                    backgroundColor: Colors.orange,
-                    label:"Adicionar um aluno",
-                    labelStyle: TextStyle(fontSize: 14),
-                    onTap: (){
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context)=>StudentScreen())
-                      );
-                    }
+              bloc: _getStudentBloc,
+              child:
+                Scaffold(
+                  appBar: AppBar(
+                    title: Text("Alunos"),
+                    backgroundColor: Colors.deepOrange,
+                    centerTitle: true,
                   ),
-                  SpeedDialChild(
-                    child: Icon(Icons.reorder),
-                    backgroundColor: Colors.orange,
-                    label:"Ordenar por nome do aluno",
-                    labelStyle: TextStyle(fontSize: 14),
-                    onTap: (){
-                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERNAME);
-                    }
+                  drawer: CustomDrawer(_pageController),
+                  body: StudentTab(),
+                  floatingActionButton: SpeedDial(
+                    child: Icon(Icons.view_list),
+                    backgroundColor: Colors.deepOrange,
+                    children:[
+                      SpeedDialChild(
+                        child: Icon(Icons.add),
+                        backgroundColor: Colors.orange,
+                        label:"Adicionar um aluno",
+                        labelStyle: TextStyle(fontSize: 14),
+                        onTap: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context)=>StudentScreen())
+                          );
+                        }
+                      ),
+                      SpeedDialChild(
+                        child: Icon(Icons.reorder),
+                        backgroundColor: Colors.orange,
+                        label:"Ordenar por nome do aluno",
+                        labelStyle: TextStyle(fontSize: 14),
+                        onTap: (){
+                          print("aluno");
+                          _getStudentBloc.setStudentCriteria(SortCriteria.ORDERNAME);
+                        }
+                      ),
+                      SpeedDialChild(
+                        child: Icon(Icons.reorder),
+                        backgroundColor: Colors.orange,
+                        label:"Ordenar por Academia",
+                        labelStyle: TextStyle(fontSize: 14),
+                        onTap: (){
+                          _getStudentBloc.setStudentCriteria(SortCriteria.ORDERGYM);
+                        }
+                      ),
+                      SpeedDialChild(
+                        child: Icon(Icons.arrow_upward),
+                        backgroundColor: Colors.orange,
+                        label:"Alunos ativos acima",
+                        labelStyle: TextStyle(fontSize: 14),
+                        onTap: (){
+                          _getStudentBloc.setStudentCriteria(SortCriteria.ORDERATIV);
+                        }
+                      )
+                    ],
                   ),
-                  SpeedDialChild(
-                    child: Icon(Icons.reorder),
-                    backgroundColor: Colors.orange,
-                    label:"Ordenar por Academia",
-                    labelStyle: TextStyle(fontSize: 14),
-                    onTap: (){
-                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERGYM);
-                    }
-                  ),
-                  SpeedDialChild(
-                    child: Icon(Icons.arrow_upward),
-                    backgroundColor: Colors.orange,
-                    label:"Alunos ativos acima",
-                    labelStyle: TextStyle(fontSize: 14),
-                    onTap: (){
-                      _getStudentBloc.setStudentCriteria(SortCriteria.ORDERATIV);
-                    }
-                  )
-                ],
-              ),
-            ), 
-          ),
+                ), 
+            ),
       
 
-          BlocProvider<GetGymBloc>( 
-            bloc: _getGymBloc,
+            BlocProvider<GetGymBloc>( 
+              bloc: _getGymBloc,
               child:
                 Scaffold(
                   appBar: AppBar(
@@ -175,50 +177,41 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                         }
                       ),
                       SpeedDialChild(
-                        child: Icon(Icons.add),
+                        child: Icon(Icons.reorder),
                         backgroundColor: Colors.orange,
                         label:"Ordenar por nome",
                         labelStyle: TextStyle(fontSize: 14),
                         onTap: (){
+                          print("academia");
                           _getGymBloc.setGymCriteria(SortCriterioGym.ORDERNAME);
-                        }
-                      ),
-                      SpeedDialChild(
-                        child: Icon(Icons.add),
-                        backgroundColor: Colors.orange,
-                        label:"Número maior de alunos",
-                        labelStyle: TextStyle(fontSize: 14),
-                        onTap: (){
-                    
                         }
                       ),
                     ],
                   ),
                 )
-          ),
-
-          Scaffold(
-            appBar: AppBar(
-              title: Text("Exit"),
-              backgroundColor: Colors.deepOrange,
-              centerTitle: true,
             ),
-            drawer: CustomDrawer(_pageController),
-            body: Container(
-              child:
-              IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                 // BlocProvider.of<AuthenticationBloc>(context).dispatch(
-                   // LoggedOut(),
-                  //);
-                },
+
+            Scaffold(
+              appBar: AppBar(
+                title: Text("Exit"),
+                backgroundColor: Colors.deepOrange,
+                centerTitle: true,
+              ),
+              drawer: CustomDrawer(_pageController),
+              body: Container(
+                child:
+                  IconButton(
+                    icon: Icon(Icons.exit_to_app),
+                    onPressed: () {
+                    // BlocProvider.of<AuthenticationBloc>(context).dispatch(
+                    // LoggedOut(),
+                    //);
+                    },
+                  ),
               ),
             ),
-          ),
   
-        ],
-
+          ],
     );
   }
 
@@ -285,6 +278,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         MaterialPageRoute(builder: (context)=> MyHomePage())
     );
   }
-
   
 }
+// \o/
