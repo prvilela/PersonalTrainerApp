@@ -29,8 +29,7 @@ class AulaBloc extends BlocBase{
         "hora":null,
         "academia":null,
         "duracao":null,
-        "preco":null,
-        "frequencia":null
+        "preco":null
       };
       _createdController.add(false);
     }
@@ -57,9 +56,6 @@ class AulaBloc extends BlocBase{
   }
   void savePreco(String text){
     unsavedData["preco"] = text;
-  }
-  void saveFrequencia(String text){
-    unsavedData["frequencia"] = text;
   }
   void saveId(String text){
     unsavedData["id"] = text;

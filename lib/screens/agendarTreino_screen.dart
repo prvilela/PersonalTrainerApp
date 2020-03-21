@@ -183,19 +183,6 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
               ],
               validator: validatePrice,
             ), 
-             SizedBox(height: 8.0),  
-
-            TextFormField(
-              initialValue: snapshot.data["frequencia"],
-              keyboardType: TextInputType.numberWithOptions(),
-              onSaved: _aulaBloc.saveFrequencia,
-              controller: controllerFrequencia,
-              decoration: _buildDecoration("Frequencia:"),
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-              ],
-              validator: validateFrequency,
-            ),
 
             FutureBuilder(
               future: FirebaseAuth.instance.currentUser(),
@@ -336,6 +323,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
 //man dps tem q add aquele codigo q tu fez de pegar só os alunos do email logado no momento aqui.
     consultarCpf(BuildContext context) async{
       FirebaseAuth.instance.currentUser();
+      
       QuerySnapshot list = await Firestore.instance.collection("student").where(
       "cpf", isEqualTo: controllerCpf.text).getDocuments();
         var teste1 = list.documents.map((doc) => doc.data['cpf']);
@@ -345,7 +333,14 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
         var concatenar = "CPF: $teste1 \n" + "Nome: $teste2 \n" + "Email: $teste3 \n" + "Celular: $teste4 \n"; 
         var concatenar2 = concatenar.replaceAll('(','');
         var concatenar3 = concatenar2.replaceAll(')','');
-        exibirDialogAluno(concatenar3); 
+
+        if(teste1.isEmpty){
+          print("vazio");
+          exibirAlunoInexistente();
+        }
+        else{
+          exibirDialogAluno(concatenar3); 
+        }
     }
 
     exibirDialogAluno(String concatenar){
@@ -380,6 +375,30 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       ).show();     
     }
 
+    exibirAlunoInexistente(){
+      Alert(
+        context: context,
+        title: "Aluno não cadastrado",
+        content: Container(
+          child:
+            Text(controllerCpf.text+" Ainda não foi cadastrado no sistema!"),
+        ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () { 
+                Navigator.pop(context);
+                controllerCpf.text = "";
+              },
+              color: Color.fromRGBO(189, 13, 13, 1.0),
+            ), 
+          ],
+      ).show();     
+    }
+
 
     listarAcademias(BuildContext context) async{
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -396,6 +415,8 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
     }
 
     exibirAlertaAcademias(names){
+      Color color1 = Colors.black;
+      Color color2 = Colors.deepOrange;
       Alert(
         context: context,
         title: "Academias cadastradas",
@@ -409,14 +430,15 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
               itemBuilder: (BuildContext context, int index){
                 return 
                   FlatButton(            
-                    textColor: Colors.deepOrange,
-                    highlightColor: Colors.orange[200],
+                    textColor: color1,
+                    highlightColor: Colors.orange,
                     child: Text(names[index], style: TextStyle(fontSize: 20,),),
                     onPressed: (){
                       var nome = names[index];           
                       controllerAcademia.text = "$nome";
                       setState(() {
                         names[index] = Colors.red;
+                        color1 = color2;
                       });
                     }
                   );                      

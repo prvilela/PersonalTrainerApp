@@ -37,8 +37,6 @@ class AulaTile extends StatelessWidget {
                     _buildRow("Duração: ", aulas.data["duracao"]),
                     SizedBox(height: 4,),
                     _buildRow("Preço: ", aulas.data["preco"]),
-                    SizedBox(height: 4,),
-                    _buildRow("Frequencia: ", aulas.data["frequencia"]),
                     
                     Container(
                       child: FlatButton(
