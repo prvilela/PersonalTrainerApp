@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum SortCriterioGym {ORDERNAME, ORDERATIV}
+enum SortCriterioGym {ORDERGYM, ORDERATIV}
 
 class GetGymBloc extends BlocBase{
 
@@ -46,20 +46,20 @@ class GetGymBloc extends BlocBase{
   }
 
   void setGymCriteria(SortCriterioGym criteria){
-    _criteria =criteria;
+    _criteria = criteria;
     _sort();
   }
 
   void _sort(){
     switch(_criteria){
       
-      case SortCriterioGym.ORDERNAME:
+      case SortCriterioGym.ORDERGYM:
         _gym.sort((a,b){
-          List<String> c = [a.data["name"],b.data["name"]];
+          List<String> c = [a.data["gym"],b.data["gym"]];
 
           c.sort();
 
-          if(c[0] == b.data["name"]) return 1;
+          if(c[0] == b.data["gym"]) return 1;
           else return -1;
         });
         break;

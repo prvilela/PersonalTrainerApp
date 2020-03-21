@@ -196,7 +196,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     keyboardType: TextInputType.phone,
                     initialValue: snapshot.data["phone"],
-                    inputFormatters: [
+                    inputFormatters:[
                       WhitelistingTextInputFormatter.digitsOnly,
                       TelefoneInputFormatter(digito_9: true),
                     ],
@@ -240,15 +240,15 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                         value: 0,
                         activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
-                        onChanged: attValorRadio2,
+                        onChanged: attCampoStatus,                    
                       ),
                       Text("Ativo", style: TextStyle(color: Colors.deepOrange)),
-
+                      
                       Radio(
                         value: 1,
                         activeColor: Colors.deepOrange,
                         groupValue: campoStatus,
-                        onChanged: attValorRadio2,
+                        onChanged: attCampoStatus2,
                       ),
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
@@ -287,6 +287,13 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
                         if (snapshot.hasData) {
                         _studentBloc.saveId(snapshot.data.uid);
+                        if(campoStatus == 0){
+                          _studentBloc.saveStatus("Ativo");
+                        }
+                        else{
+                          _studentBloc.saveStatus("Não Ativo");
+                        }
+                        
                         return Text("");
                         }                                          
                     }
@@ -328,20 +335,18 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   }
 
-  attValorRadio2(int value){
+  attCampoStatus(int value){
     setState(() {
-      campoStatus = value;
+      campoStatus = 0;
     });
+    _studentBloc.saveStatus("Ativo");
+  }
 
-    if(campoStatus == 0){
-      _studentBloc.saveStatus("Ativo");
-    }
-
-    if(campoStatus == 1){
-      _studentBloc.saveStatus("Não Ativo");
-    }
-
-    
+    attCampoStatus2(int value){
+    setState(() {
+      campoStatus = 1;
+    });
+    _studentBloc.saveStatus("Não Ativo");
   }
 
 

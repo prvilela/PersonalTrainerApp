@@ -183,7 +183,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                         labelStyle: TextStyle(fontSize: 14),
                         onTap: (){
                           print("academia");
-                          _getGymBloc.setGymCriteria(SortCriterioGym.ORDERNAME);
+                          _getGymBloc.setGymCriteria(SortCriterioGym.ORDERGYM);
                         }
                       ),
                     ],
@@ -234,7 +234,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           FlatButton(
             child:
               Text("Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
-            onPressed: () async {              
+            onPressed: () async {            
              // BlocProvider.of<AuthenticationBloc>(context).dispatch(
               //LoggedOut());
               //flbs.logout();
@@ -242,7 +242,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               signOut();
             },
           ),
-        ),  
+        ),
 
         Container(
           width: double.infinity,

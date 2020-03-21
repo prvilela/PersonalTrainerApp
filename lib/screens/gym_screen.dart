@@ -161,8 +161,8 @@ class _GymScreenState extends State<GymScreen> {
                 ),
                 SizedBox(height: 14.0),
 
-                Text("Semana", style: _fieldStale),
-                
+                Text("Semana: " + snapshot.data["horarioSemanaA"].toString()+ " - " + snapshot.data["horarioSemanaF"].toString(),
+                style: _fieldStale),
                 frs.RangeSlider(
                   min: 0,
                   max: 24,          
@@ -176,13 +176,20 @@ class _GymScreenState extends State<GymScreen> {
                       _lowerValue = newLowerValue;
                       _upperValue = newUpperValue;
                     });
+                    
+                    if(_lowerValue.toString() == "null"){
+                      _lowerValue = 0.0;
+                    }
+                    if(_upperValue.toString() == "null"){
+                      _upperValue = 0.0;
+                    }
                     _gymBloc.saveHorarioSemanaA(_lowerValue.toString());
                     _gymBloc.saveHorarioSemanaF(_upperValue.toString());
                   },
                 ),
                 SizedBox(height: 8.0),
 
-                Text("Sábado", style: _fieldStale),
+                Text("Sábado: " + snapshot.data["horarioSabadoA"].toString()+ " - " + snapshot.data["horarioSabadoF"].toString() , style: _fieldStale),
                 frs.RangeSlider(
                   min: 0,
                   max: 24,
@@ -202,7 +209,7 @@ class _GymScreenState extends State<GymScreen> {
                 ),
                 SizedBox(height: 8.0),
 
-                Text("Domingo", style: _fieldStale),
+                Text("Domingo: " + snapshot.data["horarioDomingoA"].toString()+" - "+ snapshot.data["horarioDomingoF"].toString() , style: _fieldStale),
                 frs.RangeSlider(
                   min: 0,
                   max: 24,
