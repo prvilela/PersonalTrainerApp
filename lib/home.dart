@@ -234,12 +234,9 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           FlatButton(
             child:
               Text("Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
-            onPressed: () async {            
-             // BlocProvider.of<AuthenticationBloc>(context).dispatch(
-              //LoggedOut());
-              //flbs.logout();
-              //Navigator.pop(context);
-              signOut();
+            onPressed: () async { 
+                                    
+              signOut();            
             },
           ),
         ),
@@ -274,6 +271,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   void signOut() async{
     await FirebaseAuth.instance.signOut();
     flbs.logout();
+    Navigator.of(context, rootNavigator: true).pop('dialog'); 
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=> MyHomePage())
     );

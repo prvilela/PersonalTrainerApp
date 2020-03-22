@@ -67,17 +67,17 @@ initiateFacebookLogin() async {
 
   logout() async {
     await facebookLogin.logOut();
-    _auth.signOut();
+    //_auth.signOut();
     print("Logged out from Facebook!");
     //trocarTela();
   }
 
   trocarTela(){
     Navigator.pop(context);
-  //  Navigator.push(
-     // context,
-     // MaterialPageRoute(builder: (context) => TelaPrincipal()),
-   // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TelaPrincipal()),
+   );
   }
 
 }
