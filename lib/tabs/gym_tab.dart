@@ -1,8 +1,11 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_trainer/Widget/gym_tile.dart';
 import 'package:personal_trainer/Widget/gym_tile2.dart';
+
+import '../blocs/getGym_bloc.dart';
 
 class GymTab extends StatefulWidget {
   @override
@@ -14,7 +17,38 @@ class GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
 
-    return FutureBuilder(
+    final _gymBloc = BlocProvider.of<GetGymBloc>(context);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16),
+      child: StreamBuilder<List>(
+        stream: _gymBloc.outGym,
+        builder: (context,snapshot){
+          if(!snapshot.hasData){
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+              ),
+            );
+          }else if(snapshot.data.length == 0){
+            return Center(
+              child: Text("Nenhum aluno encontrado!",
+                style: TextStyle(color: Colors.pinkAccent),
+              ),
+            );
+          }else{
+            return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index){
+                  return GymTile(snapshot.data[index]);
+                }
+            );
+          }
+        },
+      ),
+    );
+
+    /*return FutureBuilder(
       future: FirebaseAuth.instance.currentUser(),
       builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
         if(!snapshot1.hasData){
@@ -45,7 +79,7 @@ class GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin {
           );
         }
       }
-    );
+    );*/
   }
        
   catchId(){
