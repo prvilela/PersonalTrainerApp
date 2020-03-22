@@ -55,11 +55,11 @@ class GetGymBloc extends BlocBase{
       
       case SortCriterioGym.ORDERGYM:
         _gym.sort((a,b){
-          List<String> c = [a.data["gym"],b.data["gym"]];
+          List<String> c = [a.data["name"],b.data["name"]];
 
           c.sort();
 
-          if(c[0] == b.data["gym"]) return 1;
+          if(c[0] == b.data["name"]) return 1;
           else return -1;
         });
         break;
