@@ -1,11 +1,15 @@
 //  Copyright (c) 2019 Aleksander Woźniak
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
 import 'package:personal_trainer/calendarioPacotes/pacotesAula_screen.dart';
 import 'package:personal_trainer/home.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class CalendarApp extends StatelessWidget {
+    
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,19 +35,44 @@ class Calendar extends StatefulWidget {
 class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
+  Map<DateTime, List> _events;
+  List _selectedEvents;
+
   BottomNavigationClass bn = new BottomNavigationClass();
   var diaSelecionado;
 
   @override
   void initState() {
     super.initState();
+    
+    final _selectedDay = DateTime.now();
     _calendarController = CalendarController();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
 
+    initializeDateFormatting();
+
     _animationController.forward();
+    _events = {
+      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
+      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
+      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
+      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
+      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
+    };
+
+    _selectedEvents = _events[_selectedDay] ?? [];
+    _calendarController = CalendarController();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _animationController.forward();
+
   }
 
   @override
@@ -57,12 +86,17 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     print('CALLBACK: _onDaySelected');
     setState(() {
       diaSelecionado = day;
+      _selectedEvents = events;
     });
 
   }
 
   void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
+  }
+
+  void _onCalendarCreated(DateTime first, DateTime last, CalendarFormat format) {
+    print('CALLBACK: _onCalendarCreated');
   }
 
   @override
@@ -80,46 +114,33 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
           )
         ],
       ),
-      body: 
-        GestureDetector(
-          onPanUpdate: (details){
-            if (details.delta.dx < 0){
-              print("Esquerda vai para tela da direita");
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TelaPrincipal()),
-              );
-            }
-            else if (details.delta.dx > 0){
-              print("Direita vai para tela da esquerda");
-              Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => PacoteAula()),
-              );
-            }         
-          },
-          child:      
-          Container(
-            color: Colors.white, 
-            child:  
-            Column(
-              children: <Widget>[
-                _buildTableCalendar(),
-                _buildButtons(),
-                _buildContainer(),                                                     
-              ],
-            ),
-            ) 
-          
-      ),
+      body:       
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              _buildTableCalendar(),
+              const SizedBox(height: 8.0),
+              Expanded(child: _buildEventList()),  
 
+              
+            ]               
+          ),           
+        
+           
+          
       bottomNavigationBar: bn,
     );
+ 
   }
+
 
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {  
     return TableCalendar(
       calendarController: _calendarController,
-      startingDayOfWeek: StartingDayOfWeek.monday,
+      events: _events,
+      locale: 'pt_PT',
+      startingDayOfWeek: StartingDayOfWeek.sunday,
       calendarStyle: CalendarStyle(
         selectedColor: Colors.deepOrange[400],
         todayColor: Colors.deepOrange[200],
@@ -135,6 +156,30 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
       ),
       onDaySelected: _onDaySelected,
       onVisibleDaysChanged: _onVisibleDaysChanged,
+      onCalendarCreated: _onCalendarCreated,
+    );
+  }
+
+  Widget _buildEventsMarker(DateTime date, List events) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        color: _calendarController.isSelected(date)
+            ? Colors.brown[500]
+            : _calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400],
+      ),
+      width: 16.0,
+      height: 16.0,
+      child: Center(
+        child: Text(
+          '${events.length}',
+          style: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
+        ),
+      ),
     );
   }
 
@@ -188,6 +233,24 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
         DateTime.now()
       );
     });
+  }
+
+   Widget _buildEventList() {
+    return ListView(
+      children: _selectedEvents
+          .map((event) => Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 0.8),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: ListTile(
+                  title: Text(event.toString()),
+                  onTap: () => print('$event tapped!'),
+                ),
+              ))
+          .toList(),
+    );
   }
 
 }

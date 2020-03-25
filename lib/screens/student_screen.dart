@@ -8,6 +8,7 @@ import 'package:personal_trainer/blocs/student_bloc.dart';
 import 'package:personal_trainer/tabs/gym_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class StudentScreen extends StatefulWidget{
   final DocumentSnapshot student;
@@ -53,34 +54,16 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
     } 
 
 
-    InputDecoration buildDecorationGym(String label) {
+    InputDecoration _buildDecorationGym(String label) {
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
         suffixIcon: IconButton(
           icon: Icon(Icons.search),
           onPressed: (){
-            return showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Lista de Academias'),
-                  content: gts.exibirListaAcademias(),  
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('Confirmar'),
-                      onPressed: () {
-                        //academia.text = atualizarNomeAcademia(name);
-                        //attAcademia(name);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-
-          }                    
+            listarAcademias(context);
+          }
+                          
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
@@ -90,6 +73,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
         ),
       );
     }
+
 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
 
@@ -258,9 +242,9 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["gym"],
-                    decoration: buildDecorationGym("Academia"),
+                    decoration: _buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
-                    //controller: academia,
+                    controller: academia,
                        
                   ),
                   SizedBox(height: 8.0),
@@ -376,4 +360,77 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       );
     }
   }
+
+
+  listarAcademias(BuildContext context) async{
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      String sid = user.uid;
+      print(sid);
+      QuerySnapshot list = await Firestore.instance.collection("gym").where("id", isEqualTo: sid).getDocuments();
+      var names = list.documents.map((doc) => doc.data['name']);
+      var concatenar1 = " $names";
+      var concatenar2 = concatenar1.replaceAll('(','');
+      var concatenar3 = concatenar2.replaceAll(')','');
+      var concatenar4 = concatenar3.split(",");
+      print(names);
+      exibirAlertaAcademias(concatenar4);
+    }
+
+    exibirAlertaAcademias(names){
+      Color color1 = Colors.black;
+      Color color2 = Colors.deepOrange;
+      Alert(
+        context: context,
+        title: "Academias cadastradas",
+        content: Container(      
+            height: MediaQuery.of(context).size.height  * 0.4,
+            width: MediaQuery.of(context).size.height  * 0.3,
+            child:
+            ListView.builder(           
+              shrinkWrap: true,
+              itemCount: names.length,
+              itemBuilder: (BuildContext context, int index){
+                return 
+                  FlatButton(            
+                    textColor: color1,
+                    highlightColor: Colors.orange,
+                    child: Text(names[index], style: TextStyle(fontSize: 20,),),
+                    onPressed: (){
+                      var nome = names[index];           
+                      academia.text = "$nome";
+                      setState(() {
+                        names[index] = Colors.red;
+                        color1 = color2;
+                      });
+                    }
+                  );                      
+              }
+              
+            )
+        ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () { 
+                Navigator.pop(context);
+                academia.text = "";
+              },
+              color: Color.fromRGBO(189, 13, 13, 1.0),
+            ), 
+            DialogButton(
+              child: Text(
+                "Confirmar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Color.fromRGBO(30, 200, 30, 1.0)
+            )
+          ],
+      ).show();
+    }
+
+
 }

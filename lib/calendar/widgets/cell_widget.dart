@@ -42,11 +42,11 @@ class _CellWidget extends StatelessWidget {
   }
 
   Decoration _buildCellDecoration() {
-    if (isSelected && calendarStyle.renderSelectedFirst) {
+    if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
       return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
-    } else if (isToday) {
+    } else if (isToday && calendarStyle.highlightToday) {
       return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.todayColor);
-    } else if (isSelected) {
+    } else if (isSelected && calendarStyle.highlightSelected) {
       return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
     } else {
       return BoxDecoration(shape: BoxShape.circle);
@@ -56,11 +56,11 @@ class _CellWidget extends StatelessWidget {
   TextStyle _buildCellTextStyle() {
     if (isUnavailable) {
       return calendarStyle.unavailableStyle;
-    } else if (isSelected && calendarStyle.renderSelectedFirst) {
+    } else if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
       return calendarStyle.selectedStyle;
-    } else if (isToday) {
+    } else if (isToday && calendarStyle.highlightToday) {
       return calendarStyle.todayStyle;
-    } else if (isSelected) {
+    } else if (isSelected && calendarStyle.highlightSelected) {
       return calendarStyle.selectedStyle;
     } else if (isOutsideMonth && isHoliday) {
       return calendarStyle.outsideHolidayStyle;
