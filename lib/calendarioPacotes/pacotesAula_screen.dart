@@ -100,25 +100,29 @@ class PacoteAulaState extends State<PacoteAula> {
               );
             }
           },
-            child: Column(                          
+            child: ListView(
               children: <Widget>[
- 
-            Container(
-              margin: EdgeInsets.only(left: MediaQuery.of(context).size.height  * 0.027),
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height  * 0.156,
-              width: MediaQuery.of(context).size.width  * 0.9,
-              child: _buildTableCalendar(),
-            ),
+                Column(
+                  children: <Widget>[
 
-            Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height  * 0.0),
-              height: MediaQuery.of(context).size.height  * 0.673,
-              child: SchedulesPage(),  
-            ),
-           
-            
-          ],)
+                Container(
+                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.height  * 0.027),
+                  color: Colors.white,
+                  height: MediaQuery.of(context).size.height  * 0.156,
+                  width: MediaQuery.of(context).size.width  * 0.9,
+                  child: _buildTableCalendar(),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height  * 0.0),
+                  height: MediaQuery.of(context).size.height  * 0.673,
+                  child: SchedulesPage(),
+                ),
+
+
+          ],),
+              ],
+            )
         ),
    
       //linha a seguir irá adicionar o calendário para mostrar apenas a semana escolhida

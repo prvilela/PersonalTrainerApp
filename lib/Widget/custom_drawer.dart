@@ -28,6 +28,7 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.home,"Início",pageController,0) , 
               DrawerTile(Icons.person,"Alunos",pageController,1),
               DrawerTile(Icons.map, "Academias", pageController, 2),
+              DrawerTile(Icons.assignment, "Pacotes", pageController, 3),
               //DrawerTile(Icons.exit_to_app,"Sign out",pageController,3),
                    
             ],        

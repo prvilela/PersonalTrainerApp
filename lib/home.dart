@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/Widget/custom_drawer.dart';
+import 'package:personal_trainer/blocs/getPacotes_bloc.dart';
 import 'package:personal_trainer/blocs/getStudent_bloc.dart';
 import 'package:personal_trainer/blocs/getGym_bloc.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
@@ -8,9 +9,11 @@ import 'package:personal_trainer/login_bloc/facebook_login_button.dart';
 import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/pagamento.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
+import 'package:personal_trainer/screens/pacotes_screen.dart';
 import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
 import 'package:personal_trainer/tabs/gym_tab.dart';
+import 'package:personal_trainer/tabs/pacotes_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
@@ -29,12 +32,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
   GetStudentBloc _getStudentBloc;
   GetGymBloc _getGymBloc;
+  GetPacotesBloc _getPacotesBloc;
 
   @override
   void initState() {
     super.initState();
     _getStudentBloc = GetStudentBloc();
     _getGymBloc = GetGymBloc();
+    _getPacotesBloc = GetPacotesBloc();
   }
 
   @override
@@ -150,7 +155,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             ),
       
 
-            BlocProvider<GetGymBloc>( 
+            BlocProvider<GetGymBloc>(
               bloc: _getGymBloc,
               child:
                 Scaffold(
@@ -189,6 +194,38 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                     ],
                   ),
                 )
+            ),
+
+            BlocProvider<GetPacotesBloc>(
+              bloc: _getPacotesBloc,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text("Pacotes"),
+                  backgroundColor: Colors.deepOrange,
+                  centerTitle: true,
+                ),
+                drawer: CustomDrawer(_pageController),
+                body: PacotesTab(),
+                floatingActionButton: SpeedDial(
+                  child: Icon(Icons.view_list),
+                  backgroundColor: Colors.deepOrange,
+                  children: [
+                    SpeedDialChild(
+                        child: Icon(Icons.add),
+                        backgroundColor: Colors.orange,
+                        label:"Adicionar um pacote de aula",
+                        labelStyle: TextStyle(fontSize: 14),
+                        onTap: (){
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context)=>PacotesScreen())
+                          );
+
+
+                        }
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             Scaffold(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_trainer/Widget/gym_tile.dart';
 import 'package:personal_trainer/Widget/gym_tile2.dart';
+import 'package:personal_trainer/blocs/getPacotes_bloc.dart';
 
 import '../blocs/getGym_bloc.dart';
 
@@ -32,7 +33,7 @@ class GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin {
             );
           }else if(snapshot.data.length == 0){
             return Center(
-              child: Text("Nenhum aluno encontrado!",
+              child: Text("Nenhuma academia encontrada!",
                 style: TextStyle(color: Colors.pinkAccent),
               ),
             );

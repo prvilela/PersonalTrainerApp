@@ -66,70 +66,74 @@ class PagamentoState extends State<Pagamento> {
             }
           },
 
-            child: Column(            
+            child: ListView(
               children: <Widget>[
-              
+                Column(
+                  children: <Widget>[
 
-              Padding(
-                padding: EdgeInsets.all(40),
-                child:
 
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.deepOrange,
-                  border: Border.all(color: Colors.orange),
-                  borderRadius: BorderRadius.circular(25),
+                  Padding(
+                    padding: EdgeInsets.all(40),
+                    child:
+
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                      border: Border.all(color: Colors.orange),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    height: MediaQuery.of(context).size.height  * 0.6,
+                    width: MediaQuery.of(context).size.width  * 1,
+
+                    child: Text('')
                 ),
-                height: MediaQuery.of(context).size.height  * 0.6,
-                width: MediaQuery.of(context).size.width  * 1,
 
-                child: Text('')
-            ),
+                ),
 
-            ),
-
-
-            Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height  * 0.1,
-            color: Colors.white,
-            
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
 
                 Container(
-                  padding: EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.orange),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: FlatButton(
-                    child:
-                      Icon(Icons.payment, size: 40, color: Colors.orange),
-                    onPressed: (){},
-                  )
-                ),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height  * 0.1,
+                color: Colors.white,
 
-                Container(
-                  padding: EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.orange),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: FlatButton(
-                    child:
-                      Icon(Icons.email, size: 40, color: Colors.orange),
-                    onPressed: (){},
-                  )
-                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
 
-              ],
-            )
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.orange),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: FlatButton(
+                        child:
+                          Icon(Icons.payment, size: 40, color: Colors.orange),
+                        onPressed: (){},
+                      )
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.orange),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: FlatButton(
+                        child:
+                          Icon(Icons.email, size: 40, color: Colors.orange),
+                        onPressed: (){},
+                      )
+                    ),
+
+                  ],
+                )
           )
 
-          ],)
+          ],),
+              ],
+            )
         ),
   
       bottomNavigationBar: bn,
