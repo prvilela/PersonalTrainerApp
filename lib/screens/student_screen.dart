@@ -9,6 +9,7 @@ import 'package:personal_trainer/tabs/gym_tab.dart';
 import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:personal_trainer/time.dart';
 
 class StudentScreen extends StatefulWidget{
   final DocumentSnapshot student;
@@ -27,12 +28,16 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
   int campoGenero;
   int campoStatus = 0;
+  TimeState t1 = new TimeState();
   TextEditingController name = new TextEditingController();
   TextEditingController birthday = new TextEditingController();
   TextEditingController cpf = new TextEditingController();
   TextEditingController objetivos = new TextEditingController();
   TextEditingController restrictions = new TextEditingController();
   TextEditingController academia = new TextEditingController();
+  TextEditingController plano = new TextEditingController();
+  TextEditingController data = new TextEditingController();
+  TextEditingController hora = new TextEditingController();
   var retorno;
   
   StudentScreenState(DocumentSnapshot student):
@@ -135,7 +140,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
-                    //controller: name,
+                    controller: name,
                     onSaved: _studentBloc.saveName,
                     validator: validateName,
                   ),
@@ -144,7 +149,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["birthday"],
                     decoration: _buildDecoratiom("Data de Nascimento"),
-                    //controller: birthday,
+                    controller: birthday,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -163,7 +168,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       CpfInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("CPF"),
-                    //controller: cpf,
+                    controller: cpf,
                     onSaved: _studentBloc.saveCpf,
                     validator: validateCpf,
                   ),
@@ -237,17 +242,44 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
                   ),
-
-         
+  
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["gym"],
                     decoration: _buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
-                    controller: academia,
-                       
-                  ),
+                    controller: academia,               
+                  ),      
                   SizedBox(height: 8.0),
+
+                  TextFormField(
+                    initialValue: snapshot.data["data"],
+                    onSaved: _studentBloc.saveData,
+                    controller: data,
+                    decoration: _buildDecorationDate("Data:"),
+                    keyboardType: TextInputType.numberWithOptions(),
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly,
+                      DataInputFormatter(),
+                    ],
+                    //validator: validateDate,
+                  ),
+                  SizedBox(height: 8.0), 
+
+                  TextFormField(
+                    initialValue: snapshot.data["hora"],
+                    onSaved: _studentBloc.saveHora,
+                    controller: hora,
+                    decoration: _buildDecorationTime("Horario:"),
+                    keyboardType: TextInputType.numberWithOptions(),                            
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly, 
+                      LengthLimitingTextInputFormatter(4)                                                    
+                    ],
+                    //validator: validateHour,
+                    ),
+                    SizedBox(height: 8.0),
+
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["goal"],
@@ -257,14 +289,25 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     onSaved: _studentBloc.saveGoal,
                   ),
                   SizedBox(height: 8.0),
+
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    //controller: restrictions,
+                    controller: restrictions,
                     maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
-                  ),                   
+                  ),   
+                  SizedBox(height: 8.0),
+
+                  TextFormField(
+                    style: _fieldStale,
+                    initialValue: snapshot.data["plano"],
+                    decoration: _buildDecorationGym("Plano"),
+                    onSaved: _studentBloc.savePlano,
+                    controller: plano,               
+                  ),      
+                  SizedBox(height: 8.0),                 
 
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
@@ -360,6 +403,45 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       );
     }
   }
+
+      InputDecoration _buildDecorationDate(String label) {
+      return InputDecoration(
+        labelText: label,
+        suffixIcon: IconButton(
+          icon: Icon(Icons.calendar_today),
+          onPressed: () async => 
+          data.text = await t1.selectDate(context) as String,        
+                   
+        ),
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecorationTime(String label){
+            return InputDecoration(
+              labelText: label,
+              counterText: null,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.access_time),
+                onPressed: () async =>
+                hora.text = await t1.selectTime(context) as String,
+              
+        ),
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
 
 
   listarAcademias(BuildContext context) async{

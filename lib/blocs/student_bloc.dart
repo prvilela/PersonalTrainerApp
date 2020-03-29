@@ -33,7 +33,10 @@ class StudentBloc extends BlocBase{
         "restrictions":null,
         "status":null,
         "id":null,
-        "gym":null
+        "gym":null,
+        "plano":null,
+        "data":null,
+        "hora":null,
       };
       _createdController.add(false);
     }
@@ -72,6 +75,15 @@ class StudentBloc extends BlocBase{
   }
   void saveGym(String text){
     unsavedData["gym"] = text;
+  }
+  void savePlano(String text){
+    unsavedData["plano"] = text;
+  }
+  void saveData(String text){
+    unsavedData["data"] = text;
+  }
+  void saveHora(String text){
+    unsavedData["hora"] = text;
   }
 
   Future<bool> saveStudent() async{

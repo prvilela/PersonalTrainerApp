@@ -46,6 +46,12 @@ class StudentTile extends StatelessWidget {
                     _buildRow("Academia: ", student.data["gym"]),
                     SizedBox(height: 4,),
                     _buildRow("Status: ", student.data["status"]),
+                    SizedBox(height: 4,),
+                    _buildRow("Plano: ", student.data["plano"]),
+                    SizedBox(height: 4,),
+                    _buildRow("Data: ", student.data["data"]),
+                    SizedBox(height: 4,),
+                    _buildRow("Hora: ", student.data["hora"]),
                     
                     Container(
                       child: FlatButton(
