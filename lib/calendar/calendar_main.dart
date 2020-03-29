@@ -1,9 +1,9 @@
 //  Copyright (c) 2019 Aleksander Woźniak
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
-import 'package:personal_trainer/calendarioPacotes/pacotesAula_screen.dart';
 import 'package:personal_trainer/home.dart';
 import 'package:personal_trainer/tiles/bottomNavigation.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -84,6 +84,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
+    print(day.weekday);
     setState(() {
       diaSelecionado = day;
       _selectedEvents = events;
@@ -115,24 +116,28 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
         ],
       ),
       body:       
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              _buildTableCalendar(),
-              const SizedBox(height: 8.0),
-              Expanded(child: _buildEventList()),  
-
-              
-            ]               
-          ),           
-        
-           
+        GestureDetector(
+          onPanUpdate: (details){
+            if (details.delta.dx < 0){
+              print("Esquerda vai para tela da direita");
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TelaPrincipal()),
+              );
+            }        
+          },
+          child:
+            Column(
+              children: <Widget>[
+                _buildTableCalendarWithBuilders(),
+                const SizedBox(height: 8.0),
+                Expanded(child: _buildEventList()),
+              ]
+            ),
+          ),             
           
       bottomNavigationBar: bn,
     );
- 
   }
-
 
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {  
@@ -155,6 +160,86 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
         ),
       ),
       onDaySelected: _onDaySelected,
+      onVisibleDaysChanged: _onVisibleDaysChanged,
+      onCalendarCreated: _onCalendarCreated,
+    );
+  }
+
+  // More advanced TableCalendar configuration (using Builders & Styles)
+  Widget _buildTableCalendarWithBuilders(){
+    return TableCalendar(
+      locale: 'pt_PT',
+      calendarController: _calendarController,
+      events: _events,
+      initialCalendarFormat: CalendarFormat.month,
+      formatAnimation: FormatAnimation.slide,
+      startingDayOfWeek: StartingDayOfWeek.sunday,
+      availableGestures: AvailableGestures.all,
+      availableCalendarFormats: const {
+        CalendarFormat.month: '',
+        CalendarFormat.week: '',
+      },
+      calendarStyle: CalendarStyle(
+        outsideDaysVisible: false,
+        weekendStyle: TextStyle().copyWith(color: Colors.blue[800]),
+        holidayStyle: TextStyle().copyWith(color: Colors.blue[800]),
+      ),
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekendStyle: TextStyle().copyWith(color: Colors.blue[600]),
+      ),
+      headerStyle: HeaderStyle(
+        centerHeaderTitle: true,
+        formatButtonVisible: false,
+      ),
+      builders: CalendarBuilders(
+        selectedDayBuilder: (context, date, _) {
+          return FadeTransition(
+            opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
+            child: Container(
+              margin: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.only(top: 5.0, left: 6.0),
+              color: Colors.deepOrange[300],
+              width: 100,
+              height: 100,
+              child: Text(
+                '${date.day}',
+                style: TextStyle().copyWith(fontSize: 16.0),
+              ),
+            ),
+          );
+        },
+        todayDayBuilder: (context, date, _) {
+          return Container(
+            margin: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.only(top: 5.0, left: 6.0),
+            color: Colors.amber[400],
+            width: 100,
+            height: 100,
+            child: Text(
+              '${date.day}',
+              style: TextStyle().copyWith(fontSize: 16.0),
+            ),
+          );
+        },
+        markersBuilder: (context, date, events, holidays) {
+          final children = <Widget>[];
+
+          if (events.isNotEmpty) {
+            children.add(
+              Positioned(
+                right: 1,
+                bottom: 1,
+                child: _buildEventsMarker(date, events),
+              ),
+            );
+          }
+          return children;
+        },
+      ),
+      onDaySelected: (date, events) {
+        _onDaySelected(date, events);
+        _animationController.forward(from: 0.0);
+      },
       onVisibleDaysChanged: _onVisibleDaysChanged,
       onCalendarCreated: _onCalendarCreated,
     );
@@ -183,41 +268,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildButtons() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.access_time, size: 40, color: Colors.deepOrange),
-              alignment: Alignment.center,
-              tooltip: "Gerenciar",
-              onPressed: (){
-                //chamar tela pacotes com o dia selecionado daqui           
-                //obs: diaSelecionado está no formato DateTime, vem com horas, caso seja necessário alterar -->
-                //isto futuramente, mas cuidado já que ele é passado para a classe pacotesAula_screen que recebe -->
-                //no mesmo formato
-                if(diaSelecionado != 'null'){
-                  print(diaSelecionado);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>PacoteAula()),
-                  );                 
-                }
-                else{
-                  print("Selcione uma data");
-                }
-
-              },
-            )
-          
-          ],
-        ),
-        
-      ],
-    );
-  }
 
   Widget _buildContainer(){
     return Container(
@@ -229,10 +279,11 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void backToday(){
     setState(() {
-      _calendarController.setSelectedDay(
-        DateTime.now()
+      _calendarController.setSelectedDay(   
+        DateTime.now()    
       );
     });
+    
   }
 
    Widget _buildEventList() {

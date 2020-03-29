@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/calendar_main.dart';
 import 'package:personal_trainer/home.dart';
-import 'package:personal_trainer/calendarioPacotes/pacotesAula_screen.dart';
 import 'package:personal_trainer/pagamento.dart';
 
 class BottomNavigationClass extends StatefulWidget{
@@ -16,8 +15,6 @@ class _BottomNavigationClassState extends State<BottomNavigationClass> {
   @override
   void initState() {
     items = new List();
-    items.add(new BottomNavigationBarItem(icon: new Icon(Icons.fitness_center, color: Colors.deepOrange,),
-    title: new Text('Pacotes', style: TextStyle(color: Colors.white),)));
     items.add(new BottomNavigationBarItem(icon: new Icon(Icons.calendar_today, color: Colors.deepOrange),
     title: new Text('Agenda', style: TextStyle(color: Colors.white),)));
     items.add(new BottomNavigationBarItem(icon: new Icon(Icons.person_add, color: Colors.deepOrange),
@@ -40,23 +37,17 @@ class _BottomNavigationClassState extends State<BottomNavigationClass> {
 
           if(currentIndex == 0){
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context)=>PacoteAula())
+              MaterialPageRoute(builder: (context)=>CalendarApp()) 
             );
           }
 
           if(currentIndex == 1){
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context)=>CalendarApp()) 
-            );
-          }
-
-          if(currentIndex == 2){
-            Navigator.of(context).push(
               MaterialPageRoute(builder: (context)=>TelaPrincipal())
             );
           }
 
-          if(currentIndex == 3){
+          if(currentIndex == 2){
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context)=>Pagamento())
             );
