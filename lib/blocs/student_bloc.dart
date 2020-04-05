@@ -35,8 +35,16 @@ class StudentBloc extends BlocBase{
         "id":null,
         "gym":null,
         "plano":null,
-        "data":null,
         "hora":null,
+        "days":{
+          "segunda": false,
+          "terca"  : false,
+          "quarta" : false,
+          "quinta" : false,
+          "sexta"  : false,
+          "sabado" : false,
+          "domingo": false
+        }
       };
       _createdController.add(false);
     }
@@ -79,9 +87,10 @@ class StudentBloc extends BlocBase{
   void savePlano(String text){
     unsavedData["plano"] = text;
   }
-  void saveData(String text){
-    unsavedData["data"] = text;
+  void saveDays(Map<String, bool> text){
+    unsavedData["days"] = text;
   }
+
   void saveHora(String text){
     unsavedData["hora"] = text;
   }

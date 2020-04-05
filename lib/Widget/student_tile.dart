@@ -49,8 +49,6 @@ class StudentTile extends StatelessWidget {
                     SizedBox(height: 4,),
                     _buildRow("Plano: ", student.data["plano"]),
                     SizedBox(height: 4,),
-                    _buildRow("Data: ", student.data["data"]),
-                    SizedBox(height: 4,),
                     _buildRow("Hora: ", student.data["hora"]),
                     
                     Container(

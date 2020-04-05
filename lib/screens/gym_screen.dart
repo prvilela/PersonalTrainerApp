@@ -234,7 +234,8 @@ class _GymScreenState extends State<GymScreen> {
                       if (snapshot.hasData) {
                         _gymBloc.saveId(snapshot.data.uid);
                         return Text("");
-                      }                                          
+                      }
+                      return Text("");
                     } 
                   )
 

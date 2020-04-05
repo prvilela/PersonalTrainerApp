@@ -39,7 +39,20 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
   TextEditingController data = new TextEditingController();
   TextEditingController hora = new TextEditingController();
   var retorno;
-  
+
+  bool _seg = false;
+
+  Map<String, bool> days ={
+    "segunda": false,
+    "terca"  : false,
+    "quarta" : false,
+    "quinta" : false,
+    "sexta"  : false,
+    "sabado" : false,
+    "domingo": false
+  };
+
+
   StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
 
@@ -90,6 +103,9 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
           initialData: false,
           builder: (context, snapshot) {
 
+            if(snapshot.data){
+              _seg = true;
+            }
 
             return Text(snapshot.data ? "Editar Aluno":"Cadastrar Aluno");
           }
@@ -132,6 +148,9 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
           child: StreamBuilder<Map>(
             stream: _studentBloc.outData,
             builder: (context, snapshot) {
+             // if(_seg){
+               // inicializar(snapshot);
+              //}
               if(!snapshot.hasData) return Container();
               return ListView(
                 padding: EdgeInsets.all(16),
@@ -140,7 +159,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
-                    controller: name,
+                    //controller: name,
                     onSaved: _studentBloc.saveName,
                     validator: validateName,
                   ),
@@ -149,7 +168,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["birthday"],
                     decoration: _buildDecoratiom("Data de Nascimento"),
-                    controller: birthday,
+                    //controller: birthday,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -168,7 +187,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       CpfInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("CPF"),
-                    controller: cpf,
+                    //controller: cpf,
                     onSaved: _studentBloc.saveCpf,
                     validator: validateCpf,
                   ),
@@ -248,28 +267,106 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     initialValue: snapshot.data["gym"],
                     decoration: _buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
-                    controller: academia,               
+                    //controller: academia,
                   ),      
                   SizedBox(height: 8.0),
 
-                  TextFormField(
-                    initialValue: snapshot.data["data"],
-                    onSaved: _studentBloc.saveData,
-                    controller: data,
-                    decoration: _buildDecorationDate("Data:"),
-                    keyboardType: TextInputType.numberWithOptions(),
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly,
-                      DataInputFormatter(),
+                  SizedBox(height: 8.0),
+                  Text("Dias de aula:", style: _fieldStale,),
+
+                  Row(
+                    children: <Widget>[
+                      Text("Segunda", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["segunda"] = value;
+                          });
+                        },
+                        value: days["segunda"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                      SizedBox(width: 6.0),
+                      Text("Terça", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["terca"] = value;
+                          });
+                        },
+                        value: days["terca"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                      SizedBox(width: 7.0),
+                      Text("Quarta", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["quarta"] = value;
+                          });
+                        },
+                        value: days["quarta"],
+                        activeColor: Colors.deepOrange,
+                      ),
                     ],
-                    //validator: validateDate,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text("Quinta", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["quinta"] = value;
+                          });
+                        },
+                        value: days["quinta"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                      SizedBox(width: 8.0),
+                      Text("Sexta", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["sexta"] = value;
+                          });
+                        },
+                        value: days["sexta"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                      SizedBox(width: 8.0),
+                      Text("Sabado", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["sabado"] = value;
+                          });
+                        },
+                        value: days["sabado"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    children: <Widget>[
+                      Text("Domingo", style: _fieldStale,),
+                      Checkbox(
+                        onChanged: (bool value) {
+                          setState(() {
+                            days["domingo"] = value;
+                          });
+                        },
+                        value: days["domingo"],
+                        activeColor: Colors.deepOrange,
+                      ),
+                    ],
                   ),
                   SizedBox(height: 8.0), 
 
                   TextFormField(
                     initialValue: snapshot.data["hora"],
                     onSaved: _studentBloc.saveHora,
-                    controller: hora,
+                    //controller: hora,
                     decoration: _buildDecorationTime("Horario:"),
                     keyboardType: TextInputType.numberWithOptions(),                            
                     inputFormatters: [
@@ -294,7 +391,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    controller: restrictions,
+                    //controller: restrictions,
                     maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
                   ),   
@@ -305,7 +402,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     initialValue: snapshot.data["plano"],
                     decoration: _buildDecorationGym("Plano"),
                     onSaved: _studentBloc.savePlano,
-                    controller: plano,               
+                    //controller: plano,
                   ),      
                   SizedBox(height: 8.0),                 
 
@@ -322,11 +419,12 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                         }
                         
                         return Text("");
-                        }                                          
+                        }
+                        return Text("");
                     }
                     
                   ),
-                 
+
                 ],
               );
             }
@@ -378,6 +476,9 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
 
   void saveStudent() async {
+
+    _studentBloc.saveDays(days);
+
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
@@ -514,5 +615,16 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       ).show();
     }
 
+  void inicializar(AsyncSnapshot snapshot){
+    if(snapshot.hasData){
+      days["segunda"] = snapshot.data["days"]["segunda"];
+      days["terca"] = snapshot.data["days"]["terca"];
+      days["quarta"] = snapshot.data["days"]["quarta"];
+      days["quinta"] = snapshot.data["days"]["quinta"];
+      days["sexta"] = snapshot.data["days"]["sexta"];
+      days["sabado"] = snapshot.data["days"]["sabado"];
+      days["domingo"] = snapshot.data["days"]["domingo"];
+    }
+  }
 
 }

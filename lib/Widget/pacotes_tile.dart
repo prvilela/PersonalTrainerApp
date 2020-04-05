@@ -20,17 +20,12 @@ class PacotesTile extends StatelessWidget {
         child: Card(
           child: ExpansionTile(
             leading: Icon(Icons.person, color: Colors.deepOrange,),
-            title:  Text("Plano do aluno: "+pacotes.data["nameStudent"],
+            title:  Text("Plano: "+pacotes.data["type"],
                 style: _fieldStale
             ),
             children: <Widget>[
-              _buildRow("Tipo: ", pacotes.data["type"]),
-              SizedBox(height: 4,),
+
               _buildRow("Preço: ", pacotes.data["price"]),
-              SizedBox(height: 4,),
-              _buildRow("Hora: ", pacotes.data["time"]),
-              SizedBox(height: 4,),
-              _buildRow("Lugar: ", pacotes.data["place"]),
               SizedBox(height: 4,),
               _buildRow("Duração: ", pacotes.data["duration"]),
 

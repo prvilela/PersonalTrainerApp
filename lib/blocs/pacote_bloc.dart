@@ -25,20 +25,9 @@ class PacoteBloc extends BlocBase{
       unsavedData = {
         "idPersonal":null,
         "type":null,
-        "nameStudent":null,
         "price":null,
-        "time":null,
-        "place":null,
         "duration":null,
-        "days":{
-          "segunda": false,
-          "terca"  : false,
-          "quarta" : false,
-          "quinta" : false,
-          "sexta"  : false,
-          "sabado" : false,
-          "domingo": false
-        }
+
       };
       _createdController.add(false);
     }
@@ -51,24 +40,14 @@ class PacoteBloc extends BlocBase{
   void saveType (String text){
     unsavedData["type"] = text;
   }
-  void saveNameStudent(String text){
-    unsavedData["nameStudent"] = text;
-  }
   void savePrice(String text){
     unsavedData["price"] = text;
   }
-  void saveTime(String text){
-    unsavedData["time"] = text;
-  }
-  void savePlace(String text){
-    unsavedData["place"] = text;
-  }
+
   void saveDuration(String text){
     unsavedData["duration"] = text;
   }
-  void saveDays(Map<String, bool> text){
-    unsavedData["days"] = text;
-  }
+
 
   Future<bool> savePacote() async{
     _loadingController.add(true);

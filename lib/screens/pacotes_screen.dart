@@ -23,6 +23,8 @@ class _PacotesScreenState extends State<PacotesScreen> {
 
   bool _seg = false;
 
+  bool check = true;
+
   Map<String, bool> days ={
     "segunda": false,
     "terca"  : false,
@@ -115,14 +117,6 @@ class _PacotesScreenState extends State<PacotesScreen> {
                 children: <Widget>[
                   TextFormField(
                     style: _fieldStale,
-                    initialValue: snapshot.data["nameStudent"],
-                    decoration: _buildDecoratiom("Nome Aluno"),
-                    //controller: name,
-                    onSaved: _pacoteBloc.saveNameStudent,
-                    ),
-                  SizedBox(height: 8.0),
-                  TextFormField(
-                    style: _fieldStale,
                     initialValue: snapshot.data["type"],
                     decoration: _buildDecoratiom("Tipo Pacote"),
                     //controller: name,
@@ -139,23 +133,6 @@ class _PacotesScreenState extends State<PacotesScreen> {
                   SizedBox(height: 8.0),
                   TextFormField(
                     style: _fieldStale,
-                    initialValue: snapshot.data["time"],
-                    decoration: _buildDecoratiom("Horario"),
-                    keyboardType: TextInputType.datetime,
-                    //controller: name,
-                    onSaved: _pacoteBloc.saveTime,
-                  ),
-                  SizedBox(height: 8.0),
-                  TextFormField(
-                    style: _fieldStale,
-                    initialValue: snapshot.data["place"],
-                    decoration: _buildDecoratiom("Local"),
-                    //controller: name,
-                    onSaved: _pacoteBloc.savePlace,
-                  ),
-                  SizedBox(height: 8.0),
-                  TextFormField(
-                    style: _fieldStale,
                     initialValue: snapshot.data["duration"],
                     decoration: _buildDecoratiom("Duração(em minutos)"),
                     keyboardType: TextInputType.datetime,
@@ -163,94 +140,6 @@ class _PacotesScreenState extends State<PacotesScreen> {
                     onSaved: _pacoteBloc.saveDuration,
                   ),
                   SizedBox(height: 8.0),
-
-                  Row(
-                    children: <Widget>[
-                      Text("Segunda", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["segunda"] = value;
-                          });
-                        },
-                        value: days["segunda"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                      SizedBox(width: 6.0),
-                      Text("Terça", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["terca"] = value;
-                          });
-                        },
-                        value: days["terca"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                      SizedBox(width: 7.0),
-                      Text("Quarta", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["quarta"] = value;
-                          });
-                        },
-                        value: days["quarta"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text("Quinta", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["quinta"] = value;
-                          });
-                        },
-                        value: days["quinta"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                      SizedBox(width: 8.0),
-                      Text("Sexta", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["sexta"] = value;
-                          });
-                        },
-                        value: days["sexta"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                      SizedBox(width: 8.0),
-                      Text("Sabado", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["sabado"] = value;
-                          });
-                        },
-                        value: days["sabado"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    children: <Widget>[
-                      Text("Domingo", style: _fieldStale,),
-                      Checkbox(
-                        onChanged: (bool value) {
-                          setState(() {
-                            days["domingo"] = value;
-                          });
-                        },
-                        value: days["domingo"],
-                        activeColor: Colors.deepOrange,
-                      ),
-                    ],
-                  ),
                   FutureBuilder(
                       future: FirebaseAuth.instance.currentUser(),
                       builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
@@ -258,7 +147,7 @@ class _PacotesScreenState extends State<PacotesScreen> {
                           _pacoteBloc.saveId(snapshot.data.uid);
                           return Text("");
                         }else
-                          return null;
+                          return Text("");
                       }
 
                   ),
@@ -284,7 +173,7 @@ class _PacotesScreenState extends State<PacotesScreen> {
 
   void savePacote() async {
 
-    _pacoteBloc.saveDays(days);
+
 
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();

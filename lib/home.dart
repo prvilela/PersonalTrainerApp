@@ -10,6 +10,7 @@ import 'package:personal_trainer/main.dart';
 import 'package:personal_trainer/pagamento.dart';
 import 'package:personal_trainer/screens/gym_screen.dart';
 import 'package:personal_trainer/screens/pacotes_screen.dart';
+import 'package:personal_trainer/screens/student_part/dadosa_alunos.dart';
 import 'package:personal_trainer/screens/student_screen.dart';
 import 'package:personal_trainer/tabs/home_tab.dart';
 import 'package:personal_trainer/tabs/gym_tab.dart';
@@ -117,7 +118,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                         labelStyle: TextStyle(fontSize: 14),
                         onTap: (){
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>StudentScreen())
+                            MaterialPageRoute(builder: (context)=>DadosAlunos())
                           );
                         }
                       ),
