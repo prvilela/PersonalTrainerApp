@@ -33,8 +33,7 @@ class TimeState extends State<Time>
   }
   
 
-  Future<void>selectTime(BuildContext context) async
-  {
+  Future<void>selectTime(BuildContext context) async {
     TimeOfDay picked = await showTimePicker(
         context: context,
         initialTime: time

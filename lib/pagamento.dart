@@ -42,12 +42,15 @@ class PagamentoState extends State<Pagamento> {
         title: Text('Controle de Contas'),
         backgroundColor: Colors.deepOrange,
         actions: <Widget>[
-         
         
         ],
       ),
 
       body: 
+      Container(
+        color: Colors.white,
+        child:
+      
         GestureDetector(
           onPanUpdate: (details){
             if (details.delta.dx < 0){
@@ -71,8 +74,7 @@ class PagamentoState extends State<Pagamento> {
                 Column(
                   children: <Widget>[
 
-
-                  Padding(
+                  Padding(              
                     padding: EdgeInsets.all(40),
                     child:
 
@@ -90,7 +92,6 @@ class PagamentoState extends State<Pagamento> {
 
                 ),
 
-
                 Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height  * 0.1,
@@ -104,6 +105,7 @@ class PagamentoState extends State<Pagamento> {
                     Container(
                       padding: EdgeInsets.all(0),
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         border: Border.all(color: Colors.orange),
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -117,6 +119,7 @@ class PagamentoState extends State<Pagamento> {
                     Container(
                       padding: EdgeInsets.all(0),
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         border: Border.all(color: Colors.orange),
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -132,11 +135,16 @@ class PagamentoState extends State<Pagamento> {
           )
 
           ],),
+          
               ],
             )
+            
         ),
   
-      bottomNavigationBar: bn,
+      
+
+    ),
+    bottomNavigationBar: bn,
     );
   }
 

@@ -123,6 +123,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
             SizedBox(height: 8.0),
 
             TextFormField(
+              readOnly: true,
               initialValue: snapshot.data["data"],
               onSaved: _aulaBloc.saveData,
               controller: controllerDate,
@@ -137,6 +138,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
             SizedBox(height: 8.0), 
 
             TextFormField(
+              readOnly: true,
               initialValue: snapshot.data["hora"],
               onSaved: _aulaBloc.saveHora,
               controller: controllerTime,
@@ -151,6 +153,7 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
             SizedBox(height: 8.0),
 
             TextFormField(
+              readOnly: true,
               initialValue: snapshot.data["academia"],
               onSaved: _aulaBloc.saveAcademia,
               controller: controllerAcademia,
@@ -233,12 +236,12 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: Colors.deepOrange[700]),
-        suffixIcon: IconButton(
+        /*suffixIcon: IconButton(
           icon: Icon(Icons.search),
           onPressed: (){
             consultarCpf(context);
           }                    
-        ),
+        ),*/
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
         ),

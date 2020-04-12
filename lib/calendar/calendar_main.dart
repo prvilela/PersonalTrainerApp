@@ -2,6 +2,7 @@
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
 import 'package:personal_trainer/home.dart';
@@ -46,6 +47,9 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     super.initState();
     
     final _selectedDay = DateTime.now();
+    var moonLanding = new DateTime.utc(2020, 4, 26, 20, 18, 04);
+    var segunda = DateTime.monday;
+
     _calendarController = CalendarController();
     _animationController = AnimationController(
       vsync: this,
@@ -55,8 +59,9 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     initializeDateFormatting();
 
     _animationController.forward();
-    _events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
+
+    _events = {   
+      moonLanding.add(Duration(days: 0)): ['A8', 'B8', 'C8', 'D8'],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
       _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
@@ -84,6 +89,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
+    print(day);
     print(day.weekday);
     setState(() {
       diaSelecionado = day;

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personal_trainer/Widget/gym_tile.dart';
-import 'package:personal_trainer/Widget/gym_tile2.dart';
+
 import 'package:personal_trainer/blocs/getPacotes_bloc.dart';
 
 import '../blocs/getGym_bloc.dart';
@@ -95,42 +95,7 @@ class GymTabState extends State<GymTab> with AutomaticKeepAliveClientMixin {
       }      
     );                 
   }
-
-  exibirListaAcademias(){
-    return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (context, AsyncSnapshot<FirebaseUser>snapshot1) {
-        if(!snapshot1.hasData){
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-            ),
-          );
-        }else {
-          return FutureBuilder<QuerySnapshot>(
-            future: Firestore.instance.collection("gym").where(
-                "id", isEqualTo: snapshot1.data.uid).getDocuments(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-                  ),
-                );
-              else
-                return ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, index) {
-                      return GymTile2(snapshot.data.documents[index]);
-                    }
-                );
-            },
-          );
-        }
-      }
-    );
-  }
-                   
+           
 
   @override
 
