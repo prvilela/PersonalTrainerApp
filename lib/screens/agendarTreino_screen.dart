@@ -43,7 +43,6 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
  
   @override
   Widget build(BuildContext context) {
-    //super.build(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

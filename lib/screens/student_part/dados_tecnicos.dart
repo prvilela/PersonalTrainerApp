@@ -29,11 +29,11 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
   GymTabState gts = new GymTabState();
 
   int campoStatus;
-  TimeState t1 = new TimeState();
-  TextEditingController academia = new TextEditingController();
-  TextEditingController plano = new TextEditingController();
-  TextEditingController data = new TextEditingController();
-  TextEditingController hora = new TextEditingController();
+  TimeState t1 = TimeState();
+  final academia = TextEditingController();
+  final plano = TextEditingController();
+  final data = TextEditingController();
+  final hora = TextEditingController();
   var retorno;
 
   bool _seg = false;
@@ -79,6 +79,25 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
               listarAcademias(context);
             }
 
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecorationPlano(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){
+            listarPlanos(context);
+          }                    
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 1.0),
@@ -162,18 +181,20 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
                   padding: EdgeInsets.all(16),
                   children: <Widget>[
                     TextFormField(
+                      readOnly: true,
                       style: _fieldStale,
                       initialValue: snapshot.data["gym"],
                       decoration: _buildDecorationGym("Academia"),
                       onSaved: _studentBloc.saveGym,
-                      //controller: academia,
+                      controller: academia,
                     ),
                     SizedBox(height: 8.0),
 
                     TextFormField(
+                      readOnly: true,
                       initialValue: snapshot.data["hora"],
                       onSaved: _studentBloc.saveHora,
-                      //controller: hora,
+                      controller: hora,
                       decoration: _buildDecorationTime("Horario:"),
                       keyboardType: TextInputType.numberWithOptions(),
                       inputFormatters: [
@@ -205,13 +226,15 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
                     SizedBox(height: 8.0),
 
                     TextFormField(
+                      readOnly: true,
                       style: _fieldStale,
                       initialValue: snapshot.data["plano"],
-                      decoration: _buildDecorationGym("Plano"),
+                      decoration: _buildDecorationPlano("Plano"),
                       onSaved: _studentBloc.savePlano,
-                      //controller: plano,
+                      controller: plano,
                     ),
                     SizedBox(height: 8.0),
+
                     Text("Dias de aula:", style: TextStyle(color: Colors.orange[700]),),
 
                     Row(
@@ -309,17 +332,6 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
       ),
     );
   }
-
-
-
-  atualizarNomeAcademia(name){
-    setState(() async {
-      retorno = name;
-      academia.text = await name;
-    });
-
-  }
-
 
 
   attCampoStatus(int value){
@@ -477,6 +489,77 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
       ],
     ).show();
   }
+
+  listarPlanos(BuildContext context) async{
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      String sid = user.uid;
+      print(sid);
+      QuerySnapshot list = await Firestore.instance.collection("pacote").where("idPersonal", isEqualTo: sid).getDocuments();
+      var pacotes = list.documents.map((doc) => doc.data['type']);
+      print('oe');
+      print(pacotes);
+      var concatenar1 = " $pacotes";
+      var concatenar2 = concatenar1.replaceAll('(','');
+      var concatenar3 = concatenar2.replaceAll(')','');
+      var concatenar4 = concatenar3.split(",");
+      exibirAlertaPacotes(concatenar4);
+    }
+
+    exibirAlertaPacotes(pacotes){
+      Color color1 = Colors.black;
+      Color color2 = Colors.deepOrange;
+      Alert(
+        context: context,
+        title: "Pacotes cadastrados",
+        content: Container(      
+            height: MediaQuery.of(context).size.height  * 0.4,
+            width: MediaQuery.of(context).size.height  * 0.3,
+            child:
+            ListView.builder(           
+              shrinkWrap: true,
+              itemCount: pacotes.length,
+              itemBuilder: (BuildContext context, int index){
+                return 
+                  FlatButton(            
+                    textColor: color1,
+                    highlightColor: Colors.orange,
+                    child: Text(pacotes[index], style: TextStyle(fontSize: 20,),),
+                    onPressed: (){
+                      var nome = pacotes[index];           
+                      plano.text = "$nome";
+                      setState(() {
+                        pacotes[index] = Colors.red;
+                        color1 = color2;
+                      });
+                    }
+                  );                      
+              }
+              
+            )
+        ),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cancelar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () { 
+                Navigator.pop(context);
+                plano.text = "";
+              },
+              color: Color.fromRGBO(189, 13, 13, 1.0),
+            ), 
+            DialogButton(
+              child: Text(
+                "Confirmar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Color.fromRGBO(30, 200, 30, 1.0)
+            )
+          ],
+      ).show();
+    }
 
 
 

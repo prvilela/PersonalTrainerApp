@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/blocs/student_bloc.dart';
 import 'package:personal_trainer/tabs/gym_tab.dart';
-import 'package:personal_trainer/tabs/student_tab.dart';
 import 'package:personal_trainer/validators/student_validators.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:personal_trainer/time.dart';
@@ -48,6 +47,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
     "domingo": false
   };
 
+  static DocumentSnapshot student;
 
   StudentScreenState(DocumentSnapshot student):
       _studentBloc = StudentBloc(student);
@@ -66,46 +66,6 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
         ),
       );
     } 
-
-    InputDecoration _buildDecorationGym(String label) {
-      return InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(color: Colors.deepOrange[700]),
-        suffixIcon: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: (){
-            listarAcademias(context);
-          }                    
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orange, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orange, width: 1.0),
-        ),
-      );
-    }
-
-    InputDecoration _buildDecorationPlano(String label) {
-      return InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(color: Colors.deepOrange[700]),
-        suffixIcon: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: (){
-            listarPlanos(context);
-          }                    
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orange, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orange, width: 1.0),
-        ),
-      );
-    }
-
-
 
 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
@@ -508,6 +468,44 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       );
     }
   }
+
+  InputDecoration _buildDecorationGym(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.deepOrange[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          onPressed: (){
+            listarAcademias(context);
+          }                    
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
+
+    InputDecoration _buildDecorationPlano(String label) {
+      return InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.yellow[700]),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.find_in_page),
+          onPressed: (){
+            listarPlanos(context);
+          }                    
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange, width: 1.0),
+        ),
+      );
+    }
 
     InputDecoration _buildDecorationDate(String label) {
       return InputDecoration(
