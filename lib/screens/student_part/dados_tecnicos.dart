@@ -34,6 +34,8 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
   final plano = TextEditingController();
   final data = TextEditingController();
   final hora = TextEditingController();
+  final quantidade = TextEditingController();
+
   var retorno;
 
   bool _seg = false;
@@ -46,6 +48,9 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
     "sabado" : false,
     "domingo": false
   };
+
+  String idPlano;
+  String idGym;
 
   Map<String, dynamic> campos;
 
@@ -183,7 +188,7 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
                     TextFormField(
                       readOnly: true,
                       style: _fieldStale,
-                      initialValue: snapshot.data["gym"],
+                      //initialValue: snapshot.data["gym"],
                       decoration: _buildDecorationGym("Academia"),
                       onSaved: _studentBloc.saveGym,
                       controller: academia,
@@ -192,7 +197,7 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
 
                     TextFormField(
                       readOnly: true,
-                      initialValue: snapshot.data["hora"],
+                      //initialValue: snapshot.data["hora"],
                       onSaved: _studentBloc.saveHora,
                       controller: hora,
                       decoration: _buildDecorationTime("Horario:"),
@@ -228,9 +233,12 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
                     TextFormField(
                       readOnly: true,
                       style: _fieldStale,
-                      initialValue: snapshot.data["plano"],
+                      //initialValue: snapshot.data["plano"],
                       decoration: _buildDecorationPlano("Plano"),
-                      onSaved: _studentBloc.savePlano,
+                      onSaved: (texto){
+                        _studentBloc.savePlano(texto);
+                        _studentBloc.saveQuanti(quantidade.text);
+                      },
                       controller: plano,
                     ),
                     SizedBox(height: 8.0),
@@ -496,16 +504,19 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
       print(sid);
       QuerySnapshot list = await Firestore.instance.collection("pacote").where("idPersonal", isEqualTo: sid).getDocuments();
       var pacotes = list.documents.map((doc) => doc.data['type']);
+      var precos = list.documents.map((doc) => doc.data["quantidade"]);
       print('oe');
       print(pacotes);
       var concatenar1 = " $pacotes";
       var concatenar2 = concatenar1.replaceAll('(','');
       var concatenar3 = concatenar2.replaceAll(')','');
       var concatenar4 = concatenar3.split(",");
-      exibirAlertaPacotes(concatenar4);
+      var aux = "$precos".replaceAll('(', '').replaceAll(')', '').split(",");
+
+      exibirAlertaPacotes(concatenar4,aux);
     }
 
-    exibirAlertaPacotes(pacotes){
+    exibirAlertaPacotes(pacotes,aux){
       Color color1 = Colors.black;
       Color color2 = Colors.deepOrange;
       Alert(
@@ -525,8 +536,10 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
                     highlightColor: Colors.orange,
                     child: Text(pacotes[index], style: TextStyle(fontSize: 20,),),
                     onPressed: (){
-                      var nome = pacotes[index];           
+                      var nome = pacotes[index];
+                      var quant = aux[index];
                       plano.text = "$nome";
+                      quantidade.text = "$quant";
                       setState(() {
                         pacotes[index] = Colors.red;
                         color1 = color2;

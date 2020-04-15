@@ -15,6 +15,7 @@ class StudentBloc extends BlocBase{
   DocumentSnapshot student;
 
   Map<String, dynamic> unsavedData;
+  Map<String, dynamic> compra;
 
   StudentBloc(this.student){
     if(student!= null){
@@ -23,19 +24,22 @@ class StudentBloc extends BlocBase{
       _createdController.add(true);
     }else{
       unsavedData = {
-        "name":null,
-        "birthday":null,
-        "gender":null,
-        "cpf":null,
-        "email":null,
-        "phone":null,
-        "goal":null,  
-        "restrictions":null,
-        "status":null,
-        "id":null,
-        "gym":null,
-        "plano":null,
-        "hora":null,
+        "name":"",
+        "birthday":"",
+        "gender":"",
+        "cpf":"",
+        "email":"",
+        "phone":"",
+        "goal":"",
+        "restrictions":"",
+        "status":"",
+        "id":"",
+        "gym":"",
+        "plano":"",
+        "hora":"",
+        "dataInicio": null,
+        "dataCobranca":null,
+        "quantidade":null,
         "days":{
           "segunda": false,
           "terca"  : false,
@@ -44,11 +48,13 @@ class StudentBloc extends BlocBase{
           "sexta"  : false,
           "sabado" : false,
           "domingo": false
-        }
+        },
+
       };
       _createdController.add(false);
     }
     _dataController.add(unsavedData);
+
   }
 
   void saveName(String text){
@@ -80,7 +86,18 @@ class StudentBloc extends BlocBase{
   }
   void saveStatus(String text){
     unsavedData["status"] = text;
+    if(text == "Ativo" && unsavedData["dataInicio"] == null){
+      saveData();
+    }else if(text == "Não Ativo"){
+      unsavedData["dataInicio"] = null;
+      unsavedData["dataCobranca"] = null;
+    }
   }
+
+  void saveQuanti(String text){
+    unsavedData["quantidade"] = text;
+  }
+
   void saveGym(String text){
     unsavedData["gym"] = text;
   }
@@ -93,6 +110,13 @@ class StudentBloc extends BlocBase{
 
   void saveHora(String text){
     unsavedData["hora"] = text;
+  }
+
+  void saveData(){
+    var now = new DateTime.now();
+    var cobranca = now.add(new Duration(days: 30));
+    unsavedData["dataInicio"] = now.toString();
+    unsavedData["dataCobranca"] = cobranca.toString();
   }
 
   Future<bool> saveStudent() async{
@@ -114,6 +138,7 @@ class StudentBloc extends BlocBase{
       return false;
     }
   }
+
 
   void deleteStudent(){
     student.reference.delete();

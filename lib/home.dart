@@ -74,7 +74,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               ),
               drawer: CustomDrawer(_pageController),
 
-              body: 
+              body:
                 GestureDetector(
                   onPanUpdate: (details){
                     if (details.delta.dx > 0){

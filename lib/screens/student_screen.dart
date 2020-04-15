@@ -36,6 +36,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
   final plano = TextEditingController();
   final data = TextEditingController();
   final hora = TextEditingController();
+  final quantidade = TextEditingController();
 
   Map<String, bool> days ={
     "segunda": false,
@@ -69,6 +70,15 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
 
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 18);
+    name.text = "";
+    birthday.text = "";
+    cpf.text = "";
+    objetivos.text ="";
+    restrictions.text ="";
+    controllerAcademia.text ="";
+    plano.text ="";
+    hora.text ="";
+    data.text = "";
 
     return Scaffold(
       key: _scaffoldKey,
@@ -119,6 +129,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
             stream: _studentBloc.outData,
             builder: (context, snapshot) {
               if(!snapshot.hasData) return Container();
+              inicializarControlers(snapshot);
               return ListView(
                 padding: EdgeInsets.all(16),
                 children: <Widget>[
@@ -126,7 +137,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["name"],
                     decoration: _buildDecoratiom("Nome"),
-                    controller: name,
+                    //controller: name,
                     onSaved: _studentBloc.saveName,
                     validator: validateName,
                   ),
@@ -135,7 +146,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["birthday"],
                     decoration: _buildDecoratiom("Data de Nascimento"),
-                    controller: birthday,
+                    //controller: birthday,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -154,7 +165,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       CpfInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("CPF"),
-                    controller: cpf,
+                    //controller: cpf,
                     onSaved: _studentBloc.saveCpf,
                     validator: validateCpf,
                   ),
@@ -208,7 +219,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     ]                      
                   ),
                   
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Radio(
@@ -227,13 +238,13 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       ),
                       Text("Não Ativo", style: TextStyle(color: Colors.deepOrange)),
                     ]                  
-                  ),
+                  ),*/
   
                   TextFormField(
                     readOnly: true,
-                    //style: _fieldStale,
-                    initialValue: snapshot.data["gym"],
-                    controller: controllerAcademia,                  
+                    style: _fieldStale,
+                    //initialValue: snapshot.data["gym"],
+                    controller: controllerAcademia,
                     decoration: _buildDecorationGym("Academia"),
                     onSaved: _studentBloc.saveGym,
                     
@@ -334,7 +345,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
                   TextFormField(
                     readOnly: true,
-                    initialValue: snapshot.data["hora"],
+                    //initialValue: snapshot.data["hora"],
                     onSaved: _studentBloc.saveHora,
                     controller: hora,
                     decoration: _buildDecorationTime("Horario:"),
@@ -343,6 +354,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                       WhitelistingTextInputFormatter.digitsOnly, 
                       LengthLimitingTextInputFormatter(4)                                                    
                     ],
+                    style: _fieldStale,
                     //validator: validateHour,
                     ),
                     SizedBox(height: 8.0),
@@ -351,7 +363,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["goal"],
                     decoration: _buildDecoratiom("Objetivos"),
-                    controller: objetivos,
+                    //controller: objetivos,
                     maxLines: 2,
                     onSaved: _studentBloc.saveGoal,
                   ),
@@ -361,7 +373,7 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     style: _fieldStale,
                     initialValue: snapshot.data["restrictions"],
                     decoration: _buildDecoratiom("Restrições"),
-                    controller: restrictions,
+                    //controller: restrictions,
                     maxLines: 2,
                     onSaved: _studentBloc.saveRestrictions,
                   ),
@@ -370,13 +382,16 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
 
                   TextFormField(
                     readOnly: true,
-                    //style: _fieldStale,
-                    initialValue: snapshot.data["plano"],
+                    style: _fieldStale,
+                    //initialValue: snapshot.data["plano"],
                     decoration: _buildDecorationPlano("Plano"),
-                    onSaved: _studentBloc.savePlano,
+                    onSaved: (texto){
+                      _studentBloc.savePlano(texto);
+                      _studentBloc.saveQuanti(quantidade.text);
+                    },
                     controller: plano,
                   ),      
-                  SizedBox(height: 8.0),                 
+                  SizedBox(height: 8.0),
 
                   FutureBuilder(
                     future: FirebaseAuth.instance.currentUser(),
@@ -405,6 +420,18 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       ),
     );
 
+  }
+
+  void inicializarControlers(AsyncSnapshot snapshot ){
+    name.text = snapshot.data["name"];
+    birthday.text = snapshot.data["birthday"];
+    cpf.text = snapshot.data["cpf"];
+    objetivos.text =snapshot.data["goal"];
+    restrictions.text =snapshot.data["restrictions"];
+    controllerAcademia.text =snapshot.data["gym"];
+    plano.text =snapshot.data["plano"];
+    hora.text =snapshot.data["hora"];
+    data.text = "";
   }
 
   attValorRadio(int value){
@@ -618,17 +645,25 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
       ).show();
     }
 
-    listarPlanos(BuildContext context) async{
-      FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      String sid = user.uid;
-      print(sid);
-      QuerySnapshot list = await Firestore.instance.collection("pacote").where("idPersonal", isEqualTo: sid).getDocuments();
-      var pacotes = list.documents.map((doc) => doc.data['type']);
-      print(pacotes);
-      exibirAlertaPacotes(pacotes);
-    }
+  listarPlanos(BuildContext context) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    String sid = user.uid;
+    print(sid);
+    QuerySnapshot list = await Firestore.instance.collection("pacote").where("idPersonal", isEqualTo: sid).getDocuments();
+    var pacotes = list.documents.map((doc) => doc.data['type']);
+    var precos = list.documents.map((doc) => doc.data["quantidade"]);
+    print('oe');
+    print(precos);
+    var concatenar1 = " $pacotes";
+    var concatenar2 = concatenar1.replaceAll('(','');
+    var concatenar3 = concatenar2.replaceAll(')','');
+    var concatenar4 = concatenar3.split(",");
+    var aux = "$precos".replaceAll('(', '').replaceAll(')', '').split(",");
 
-    exibirAlertaPacotes(pacotes){
+    exibirAlertaPacotes(concatenar4,aux);
+  }
+
+    exibirAlertaPacotes(pacotes,aux){
       Color color1 = Colors.black;
       Color color2 = Colors.deepOrange;
       Alert(
@@ -648,8 +683,10 @@ class StudentScreenState extends State<StudentScreen> with StudentValidator{
                     highlightColor: Colors.orange,
                     child: Text(pacotes[index], style: TextStyle(fontSize: 20,),),
                     onPressed: (){
-                      var nome = pacotes[index];           
+                      var nome = pacotes[index];
+                      var quant = aux[index];
                       plano.text = "$nome";
+                      quantidade.text = "$quant";
                       setState(() {
                         pacotes[index] = Colors.red;
                         color1 = color2;

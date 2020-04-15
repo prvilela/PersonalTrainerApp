@@ -27,7 +27,7 @@ class PacoteBloc extends BlocBase{
         "type":null,
         "price":null,
         "duration":null,
-
+        "quantidade": null,
       };
       _createdController.add(false);
     }
@@ -46,6 +46,10 @@ class PacoteBloc extends BlocBase{
 
   void saveDuration(String text){
     unsavedData["duration"] = text;
+  }
+
+  void saveQuantidade(String text){
+    unsavedData["quantidade"] = text;
   }
 
 

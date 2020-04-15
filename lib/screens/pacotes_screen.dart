@@ -134,10 +134,19 @@ class _PacotesScreenState extends State<PacotesScreen> {
                   TextFormField(
                     style: _fieldStale,
                     initialValue: snapshot.data["duration"],
-                    decoration: _buildDecoratiom("Duração(em minutos)"),
+                    decoration: _buildDecoratiom("Duração da aula(em minutos)"),
                     keyboardType: TextInputType.datetime,
                     //controller: name,
                     onSaved: _pacoteBloc.saveDuration,
+                  ),
+                  SizedBox(height: 8.0),
+                  TextFormField(
+                    style: _fieldStale,
+                    initialValue: snapshot.data["quantidade"],
+                    decoration: _buildDecoratiom("Duração do plano(em meses)"),
+                    keyboardType: TextInputType.datetime,
+                    //controller: name,
+                    onSaved: _pacoteBloc.saveQuantidade,
                   ),
                   SizedBox(height: 8.0),
                   FutureBuilder(

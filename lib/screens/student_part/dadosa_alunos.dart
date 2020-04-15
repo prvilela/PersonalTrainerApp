@@ -134,7 +134,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                   children: <Widget>[
                     TextFormField(
                       style: _fieldStale,
-                      initialValue: snapshot.data["name"],
+                      //initialValue: snapshot.data["name"],
                       decoration: _buildDecoratiom("Nome"),
                       controller: name,
                       validator: validateName,
@@ -142,7 +142,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                     SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields
                     TextFormField(
                       style: _fieldStale,
-                      initialValue: snapshot.data["birthday"],
+                      //initialValue: snapshot.data["birthday"],
                       decoration: _buildDecoratiom("Data de Nascimento"),
                       controller: data,
                       keyboardType: TextInputType.numberWithOptions(),
@@ -156,7 +156,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                     TextFormField(
                       style: _fieldStale,
                       keyboardType: TextInputType.numberWithOptions(),
-                      initialValue: snapshot.data["cpf"],
+                      //initialValue: snapshot.data["cpf"],
                       inputFormatters: [
                         WhitelistingTextInputFormatter.digitsOnly,
                         CpfInputFormatter(),
@@ -168,7 +168,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                     SizedBox(height: 8.0),
                     TextFormField(
                       style: _fieldStale,
-                      initialValue: snapshot.data["email"],
+                      //initialValue: snapshot.data["email"],
                       decoration: _buildDecoratiom("E-mail"),
                       validator: validateEmail,
                       controller: email,
@@ -177,7 +177,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                     TextFormField(
                       style: _fieldStale,
                       keyboardType: TextInputType.phone,
-                      initialValue: snapshot.data["phone"],
+                      //initialValue: snapshot.data["phone"],
                       inputFormatters:[
                         WhitelistingTextInputFormatter.digitsOnly,
                         TelefoneInputFormatter(digito_9: true),
