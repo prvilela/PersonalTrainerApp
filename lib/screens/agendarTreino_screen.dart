@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -416,9 +417,9 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       exibirAlertaAcademias(concatenar4);
     }
 
+    var color1 = Colors.red;
+    var color2 = Colors.green;
     exibirAlertaAcademias(names){
-      Color color1 = Colors.black;
-      Color color2 = Colors.deepOrange;
       Alert(
         context: context,
         title: "Academias cadastradas",
@@ -430,18 +431,20 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
               shrinkWrap: true,
               itemCount: names.length,
               itemBuilder: (BuildContext context, int index){
-                return 
-                  FlatButton(            
-                    textColor: color1,
+                return FlatButton(            
+                    textColor: color1, 
+                    color: color1,
+                    focusColor: color2,
+                    disabledTextColor: color2,
+                    hoverColor: color2,
+                    splashColor: color2,
+                    disabledColor: color2,
                     highlightColor: Colors.orange,
                     child: Text(names[index], style: TextStyle(fontSize: 20,),),
                     onPressed: (){
                       var nome = names[index];           
                       controllerAcademia.text = "$nome";
-                      setState(() {
-                        names[index] = Colors.red;
-                        color1 = color2;
-                      });
+
                     }
                   );                      
               }

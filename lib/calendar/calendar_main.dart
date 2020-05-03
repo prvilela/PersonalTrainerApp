@@ -1,7 +1,7 @@
 //  Copyright (c) 2019 Aleksander Woźniak
-import 'dart:ffi';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_trainer/calendar/table_calendar.dart';
@@ -26,7 +26,6 @@ class CalendarApp extends StatelessWidget {
 
 class Calendar extends StatefulWidget {
   Calendar({Key key, this.title}) : super(key: key);
-  //DateTime dia;
   final String title;
   @override
   CalendarState createState() => CalendarState();
@@ -37,6 +36,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
   Map<DateTime, List> _events;
+  Map<DateTime, List> _events2;
   List _selectedEvents;
 
   BottomNavigationClass bn = new BottomNavigationClass();
@@ -49,6 +49,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     final _selectedDay = DateTime.now();
     var moonLanding = new DateTime.utc(2020, 4, 26, 20, 18, 04);
     var segunda = DateTime.monday;
+    print(segunda);
 
     _calendarController = CalendarController();
     _animationController = AnimationController(
@@ -66,6 +67,11 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
       _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
       _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
+    };
+
+    _events2 = {   
+      moonLanding.add(Duration(days: 0)): ['A8', 'B8', 'C8', 'D8'],
+      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];
@@ -139,11 +145,22 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
                 Expanded(child: _buildEventList()),
               ]
             ),
-          ),             
+          ),   
+                    
           
       bottomNavigationBar: bn,
     );
+
   }
+
+    futuro(BuildContext context) async{
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      String sid = user.uid;
+      QuerySnapshot list = await Firestore.instance.collection("aulas").where("id", isEqualTo: sid).getDocuments();
+      var dados = list.documents.map((doc) => doc.data);
+      print(dados);
+
+    }
 
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders(){
@@ -267,6 +284,9 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   }
 
    Widget _buildEventList() {
+     //linha abaixo chama afunção "futuro", que busca as aulas individuais cadastradas
+     futuro(context);
+     //monta o calendário
     return ListView(
       children: _selectedEvents
           .map((event) => Container(

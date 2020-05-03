@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'login_bloc/facebook_login_button.dart';
 
 
+
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
