@@ -28,18 +28,29 @@ class GymTile extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16,right: 16,top: 0,bottom: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    _buildRow("Endereço: ", gym.data["location"]),
+                   Text(
+                      'Endereço',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(color: Colors.orange[700], fontSize: 16)
+                    ),
+                   Text(
+                      gym.data["rua"],
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.orange[700], fontSize: 16)
+                    ),
                     SizedBox(height: 4,),
-                    _buildRow("Telefone: ", gym.data["phone"]),
+                    _buildRow("Telefone: ", gym.data["phone"],1),
                     SizedBox(height: 4,),
-                    _buildRow("Preço: ", gym.data["preco"]),
+                    _buildRow("Preço: ", gym.data["preco"],1),
                     SizedBox(height: 4,),
-                    _buildRow("Horário Semanal: ", gym.data["horarioSemanaA"].toString()+" - "+ gym.data["horarioSemanaF"].toString()),  
+                    _buildRow("Horário Semanal: ", gym.data["horarioSemanaA"].toString()+" - "+ gym.data["horarioSemanaF"].toString(),1),
                     SizedBox(height: 4,),
-                    _buildRow("Horário de Sábado: ", gym.data["horarioSabadoA"].toString()+" - "+gym.data["horarioSabadoF"].toString()),  
+                    _buildRow("Horário de Sábado: ", gym.data["horarioSabadoA"].toString()+" - "+gym.data["horarioSabadoF"].toString(),1),
                     SizedBox(height: 4,),
-                    _buildRow("Horário de Domingo: ", gym.data["horarioDomingoA"].toString()+" - "+gym.data["horarioDomingoF"].toString()),            
+                    _buildRow("Horário de Domingo: ", gym.data["horarioDomingoA"].toString()+" - "+gym.data["horarioDomingoF"].toString(),1),
 
                     Container(
                       child: FlatButton(
@@ -65,12 +76,12 @@ class GymTile extends StatelessWidget {
       ),
     );
   }
-  Widget _buildRow(String text,String data){
+  Widget _buildRow(String text,String data, int lines){
     final _fieldStale = TextStyle(color: Colors.orange[700], fontSize: 16);
     return Row(
       children: <Widget>[
-        Text(text, style: _fieldStale,),
-        Text(data, style: _fieldStale,)
+        Text(text, style: _fieldStale,maxLines: lines,),
+        Text(data, style: _fieldStale, maxLines: lines,)
       ],
     );
   }

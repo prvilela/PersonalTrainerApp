@@ -25,6 +25,7 @@ class GymBloc extends BlocBase{
       unsavedData = {
         "name":null,
         "location":null,
+        "rua": null,
         "phone":null,
         "preco":null,
         "horarioSemanaA":null,
@@ -44,6 +45,9 @@ class GymBloc extends BlocBase{
   }
   void saveLocation(String text){
     unsavedData["location"] = text;
+  }
+  void saveRua(String text){
+    unsavedData["rua"] = text;
   }
   void savePhone(String text){
     unsavedData["phone"] = text;

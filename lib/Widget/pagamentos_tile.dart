@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 class PagamentosTile extends StatelessWidget {
 
   final DocumentSnapshot student;
+  final valor ;
   TextEditingController price = TextEditingController();
   TextEditingController quantidade = TextEditingController();
   TextEditingController total = TextEditingController();
-  PagamentosTile(this.student);
+  PagamentosTile(this.student,this.valor);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class PagamentosTile extends StatelessWidget {
                       controller: price,
 
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 20,),
                     TextFormField(
                       readOnly: true,
                       style: _fieldStale,
@@ -90,7 +91,7 @@ class PagamentosTile extends StatelessWidget {
     String uid = user.uid;
     String plano = student.data["plano"];
     String aux = plano.replaceAll(" ", "");
-    print(aux);
+    //print(aux);
     QuerySnapshot list = await Firestore.instance.collection("pacote").where("idPersonal", isEqualTo: user.uid).where("type", isEqualTo: aux).getDocuments();
     var a = list.documents.map((f){
 

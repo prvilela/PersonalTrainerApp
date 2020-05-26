@@ -39,6 +39,7 @@ class StudentBloc extends BlocBase{
         "hora":"",
         "dataInicio": null,
         "dataCobranca":null,
+        "dataPrimeiroDia":null,
         "quantidade":null,
         "days":{
           "segunda": false,
@@ -116,6 +117,7 @@ class StudentBloc extends BlocBase{
     var now = new DateTime.now();
     var cobranca = now.add(new Duration(days: 30));
     unsavedData["dataInicio"] = now.toString();
+    unsavedData["dataPrimeiroDia"] = now.toString();
     unsavedData["dataCobranca"] = cobranca.toString();
   }
 

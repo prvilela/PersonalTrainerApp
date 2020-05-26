@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:personal_trainer/Widget/cep_field.dart';
 import 'package:personal_trainer/blocs/gym_bloc.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:personal_trainer/range_slider/flutter_range_slider.dart' as frs;
@@ -126,14 +127,31 @@ class _GymScreenState extends State<GymScreen> {
                   decoration: _buildDecorationName("Nome"),
                   onSaved: _gymBloc.saveName,
                 ),
-                SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields                            
+                SizedBox(height: 8.0), //Adicionar espaçamento entre os TextFields
+                CepField(
+                  initial: snapshot.data["location"],
+                  decoration: InputDecoration(
+                    labelText: "Cep",
+                    labelStyle: TextStyle(color: Colors.deepOrange[700]),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange, width: 1.0),
+                    ),
+                  ),
 
-                TextFormField(
+                  onSaved:(address){
+                    _gymBloc.saveRua(address.place+"-"+address.district);
+                    _gymBloc.saveLocation(address.postalCode);
+                  },
+                ),
+                /*TextFormField(
                   style: _fieldStale,
                   initialValue: snapshot.data["location"],
                   decoration: _buildDecoratiom("Endereço"),
                   onSaved: _gymBloc.saveLocation,
-                ),
+                ),*/
                 SizedBox(height: 8.0),
 
                 TextFormField(
