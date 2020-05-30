@@ -36,7 +36,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
   Map<DateTime, List> _events;
-  Map<DateTime, List> _events2;
   List _selectedEvents;
 
   BottomNavigationClass bn = new BottomNavigationClass();
@@ -67,11 +66,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
       _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
       _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-    };
-
-    _events2 = {   
-      moonLanding.add(Duration(days: 0)): ['A8', 'B8', 'C8', 'D8'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];
@@ -153,14 +147,21 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   }
 
+    //Pega todos os dias e horas das aulas avulsas, para poder jogar no calendárioBuilder
     futuro(BuildContext context) async{
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
       String sid = user.uid;
       QuerySnapshot list = await Firestore.instance.collection("aulas").where("id", isEqualTo: sid).getDocuments();
-      var dados = list.documents.map((doc) => doc.data);
-      print(dados);
-
+      var lista1 = list.documents.map((doc) => doc.data['data'] + " - " +doc.data['hora']);
+      print(lista1);
+      addEntries(lista1);
     }
+
+  void addEntries(Iterable<MapEntry<DateTime, List>> entries) {
+    //for (final list in entries) {
+    //_events.update(list.key, list.value);
+  //}
+}
 
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders(){
