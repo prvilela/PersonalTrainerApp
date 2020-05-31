@@ -160,7 +160,7 @@ class _GymScreenState extends State<GymScreen> {
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly,
-                    TelefoneInputFormatter(digito_9: true),
+                    TelefoneInputFormatter(),
                   ],
                   decoration: _buildDecoratiom("Telefone"),
                   onSaved: _gymBloc.savePhone,

@@ -46,9 +46,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     super.initState();
     
     final _selectedDay = DateTime.now();
-    var moonLanding = new DateTime.utc(2020, 4, 26, 20, 18, 04);
-    var segunda = DateTime.monday;
-    print(segunda);
 
     _calendarController = CalendarController();
     _animationController = AnimationController(
@@ -61,12 +58,12 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
     _animationController.forward();
 
     _events = {   
-      moonLanding.add(Duration(days: 0)): ['A8', 'B8', 'C8', 'D8'],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
       _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
     };
+
+    futuro(context);
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
@@ -149,19 +146,19 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
     //Pega todos os dias e horas das aulas avulsas, para poder jogar no calendárioBuilder
     futuro(BuildContext context) async{
+      var agora = DateTime.now();
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
       String sid = user.uid;
       QuerySnapshot list = await Firestore.instance.collection("aulas").where("id", isEqualTo: sid).getDocuments();
       var lista1 = list.documents.map((doc) => doc.data['data'] + " - " +doc.data['hora']);
       print(lista1);
-      addEntries(lista1);
-    }
 
-  void addEntries(Iterable<MapEntry<DateTime, List>> entries) {
-    //for (final list in entries) {
-    //_events.update(list.key, list.value);
-  //}
-}
+      setState(() {
+        _events.putIfAbsent(agora, () => ['teste', 'fabio']); 
+      });
+      
+      print(_events);
+    }
 
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders(){
@@ -286,8 +283,6 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
    Widget _buildEventList() {
      //linha abaixo chama afunção "futuro", que busca as aulas individuais cadastradas
-     futuro(context);
-     //monta o calendário
     return ListView(
       children: _selectedEvents
           .map((event) => Container(

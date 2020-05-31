@@ -180,7 +180,7 @@ class _DadosAlunosState extends State<DadosAlunos> with StudentValidator {
                       //initialValue: snapshot.data["phone"],
                       inputFormatters:[
                         WhitelistingTextInputFormatter.digitsOnly,
-                        TelefoneInputFormatter(digito_9: true),
+                        TelefoneInputFormatter(),
                       ],
                       decoration: _buildDecoratiom("Celular"),
                       controller: celular,

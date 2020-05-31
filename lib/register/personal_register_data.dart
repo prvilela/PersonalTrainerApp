@@ -85,7 +85,7 @@ class PersonalDataState extends State<PersonalData>{
                     initialValue: snapshot.data["phone"],
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(digito_9: true),
+                      TelefoneInputFormatter(),
                     ],
                     decoration: _buildDecoratiom("Celular"),
                     onSaved: _personalBloc.savePhone,
