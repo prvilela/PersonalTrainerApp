@@ -416,65 +416,71 @@ class _AgendarTreinoScreenState extends State<AgendarTreinoScreen> with AulaAvul
       print(names);
       exibirAlertaAcademias(concatenar4);
     }
-
-    var color1 = Colors.red;
-    var color2 = Colors.green;
+    var color0 = Colors.white;
+    var color1 = Colors.black;
+    int _selectedIndex = 0;
     exibirAlertaAcademias(names){
-      Alert(
+      showDialog(
         context: context,
-        title: "Academias cadastradas",
-        content: Container(      
-            height: MediaQuery.of(context).size.height  * 0.4,
-            width: MediaQuery.of(context).size.height  * 0.3,
-            child:
-            ListView.builder(           
-              shrinkWrap: true,
-              itemCount: names.length,
-              itemBuilder: (BuildContext context, int index){
-                return FlatButton(            
+        builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text("Academias Cadastradas"),
+              content: Container(      
+              height: MediaQuery.of(context).size.height  * 0.4,
+              width: MediaQuery.of(context).size.height  * 0.3,
+              child:
+              ListView.builder(           
+                shrinkWrap: true,
+                itemCount: names.length,
+                itemBuilder: (BuildContext context, int index){
+                  return FlatButton(            
                     textColor: color1, 
-                    color: color1,
-                    focusColor: color2,
-                    disabledTextColor: color2,
-                    hoverColor: color2,
-                    splashColor: color2,
-                    disabledColor: color2,
+                    color: _selectedIndex != null && _selectedIndex == index
+                  ? Colors.orange
+                  : Colors.white,
                     highlightColor: Colors.orange,
-                    child: Text(names[index], style: TextStyle(fontSize: 20,),),
+                    child: Text(names[index], style: TextStyle(fontSize: 20, color: color1),),
                     onPressed: (){
                       var nome = names[index];           
                       controllerAcademia.text = "$nome";
-
+                      setState(() {
+                        _onSelected(index);
+                      });                    
                     }
                   );                      
-              }
-              
-            )
-        ),
-          buttons: [
-            DialogButton(
-              child: Text(
-                "Cancelar",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                }            
+              )
+            ),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: (){
+                  controllerAcademia.text = "";
+                  Navigator.pop(context);  
+                 },        
+                  child: Text("Cancelar", style: TextStyle(color: Colors.red),),
               ),
-              onPressed: () { 
-                Navigator.pop(context);
-                controllerAcademia.text = "";
-              },
-              color: Color.fromRGBO(189, 13, 13, 1.0),
-            ), 
-            DialogButton(
-              child: Text(
-                "Confirmar",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              color: Color.fromRGBO(30, 200, 30, 1.0)
-            )
-          ],
-      ).show();
+                FlatButton(
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: Text("Confirmar", style: TextStyle(color: Colors.green),),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
     }
 
+  _onSelected(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+
 }
-
-

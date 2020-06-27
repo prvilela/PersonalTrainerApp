@@ -153,11 +153,14 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
       var lista1 = list.documents.map((doc) => doc.data['data'] + " - " +doc.data['hora']);
       print(lista1);
 
-      setState(() {
-        _events.putIfAbsent(agora, () => ['teste', 'fabio']); 
-      });
-      
+      //funciona porem n adicona Tipo Iterable
+      _events.putIfAbsent(agora.add(Duration(days: 4)), () => ['teste', 'fabio']);
+
+
+      //var mapa2 = new Map<Iterable, Iterable>.fromIterable(lista1, value: (lista1) => lista1);
+
       print(_events);
+      //print(mapa2);
     }
 
   // More advanced TableCalendar configuration (using Builders & Styles)

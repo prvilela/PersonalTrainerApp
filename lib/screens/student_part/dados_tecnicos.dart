@@ -442,60 +442,68 @@ class _DadosTecnicosState extends State<DadosTecnicos> with StudentValidator {
     exibirAlertaAcademias(concatenar4);
   }
 
+  var color0 = Colors.white;
+  var color1 = Colors.black;
+  int _selectedIndex = 0;
   exibirAlertaAcademias(names){
-    Color color1 = Colors.black;
-    Color color2 = Colors.deepOrange;
-    Alert(
-      context: context,
-      title: "Academias cadastradas",
-      content: Container(
-          height: MediaQuery.of(context).size.height  * 0.4,
-          width: MediaQuery.of(context).size.height  * 0.3,
-          child:
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: names.length,
-              itemBuilder: (BuildContext context, int index){
-                return
-                  FlatButton(
-                      textColor: color1,
-                      highlightColor: Colors.orange,
-                      child: Text(names[index], style: TextStyle(fontSize: 20,),),
-                      onPressed: (){
-                        var nome = names[index];
-                        academia.text = "$nome";
-                        setState(() {
-                          names[index] = Colors.red;
-                          color1 = color2;
-                        });
-                      }
-                  );
-              }
-
-          )
-      ),
-      buttons: [
-        DialogButton(
-          child: Text(
-            "Cancelar",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-            academia.text = "";
-          },
-          color: Color.fromRGBO(189, 13, 13, 1.0),
-        ),
-        DialogButton(
-            child: Text(
-              "Confirmar",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+    showDialog(
+        context: context,
+        builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text("Academias Cadastradas"),
+              content: Container(      
+              height: MediaQuery.of(context).size.height  * 0.4,
+              width: MediaQuery.of(context).size.height  * 0.3,
+              child:
+              ListView.builder(           
+                shrinkWrap: true,
+                itemCount: names.length,
+                itemBuilder: (BuildContext context, int index){
+                  return FlatButton(            
+                    textColor: color1, 
+                    color: _selectedIndex != null && _selectedIndex == index
+                  ? Colors.orange
+                  : Colors.white,
+                    highlightColor: Colors.orange,
+                    child: Text(names[index], style: TextStyle(fontSize: 20, color: color1),),
+                    onPressed: (){
+                      var nome = names[index];           
+                      academia.text = "$nome";
+                      setState(() {
+                        _onSelected(index);
+                      });                    
+                    }
+                  );                      
+                }            
+              )
             ),
-            onPressed: () => Navigator.pop(context),
-            color: Color.fromRGBO(30, 200, 30, 1.0)
-        )
-      ],
-    ).show();
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: (){
+                  academia.text = "";
+                  Navigator.pop(context);  
+                 },        
+                  child: Text("Cancelar", style: TextStyle(color: Colors.red),),
+              ),
+                FlatButton(
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: Text("Confirmar", style: TextStyle(color: Colors.green),),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+  _onSelected(int index) {
+    setState(() => _selectedIndex = index);
   }
 
   listarPlanos(BuildContext context) async{

@@ -110,6 +110,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                   floatingActionButton: SpeedDial(
                     child: Icon(Icons.view_list),
                     backgroundColor: Colors.deepOrange,
+                    elevation: 0,
                     children:[
                       SpeedDialChild(
                         child: Icon(Icons.add),
@@ -170,6 +171,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                   floatingActionButton: SpeedDial(
                     child: Icon(Icons.view_list),
                     backgroundColor: Colors.deepOrange,
+                    elevation: 0,
                     children:[
                       SpeedDialChild(
                         child: Icon(Icons.add),
@@ -210,6 +212,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                 floatingActionButton: SpeedDial(
                   child: Icon(Icons.view_list),
                   backgroundColor: Colors.deepOrange,
+                  elevation: 0,
                   children: [
                     SpeedDialChild(
                         child: Icon(Icons.add),
