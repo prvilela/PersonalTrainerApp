@@ -24,7 +24,6 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -61,5 +60,12 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    //dependency for using firebase database
+    implementation 'com.google.firebase:firebase-database:16.0.6'
+    //dependency for email and password authentication
+    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-firestore:18.1.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
