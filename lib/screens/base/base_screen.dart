@@ -7,16 +7,16 @@ import 'package:apppersonaltrainer/screens/plans/plans_screen.dart';
 import 'package:apppersonaltrainer/screens/students/students_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class BaseScreen extends StatelessWidget {
+
   final PageController pageController = PageController();
   final date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (_) => PageManager(pageController),
+      create: (_)=> PageManager(pageController),
       child: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -26,19 +26,14 @@ class BaseScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text("Home"),
             ),
-            body: Consumer<UserManager>(builder: (_, userManager, __) {
-              if (date.day == 1 && userManager.user != null) {
-                userManager.user.pagamentos.clear();
-                userManager.user.saveData();
-              }
-              return Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('assets/gym.jpg'),
-                  fit: BoxFit.cover,
-                )),
-              );
-            }),
+            body: Consumer<UserManager>(
+              builder: (_,userManager,__){
+                if(date.day==1 && userManager.user != null){
+                  userManager.user.pagamentos.clear();
+                  userManager.user.saveData();
+                }
+                return Container();
+              }),
           ),
           Scaffold(
             drawer: CustomDrawer(),

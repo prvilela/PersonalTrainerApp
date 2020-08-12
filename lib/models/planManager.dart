@@ -7,12 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-class PlanManager extends ChangeNotifier {
-  StudentManager() {
+class PlanManager extends ChangeNotifier{
+
+  StudentManager(){
     _loadAllPlan();
   }
 
-  void updatePlan(UserManager userManager) {
+  void updatePlan(UserManager userManager){
     usuario = userManager.user;
     _subscription?.cancel();
     _allPlan?.clear();
@@ -23,7 +24,7 @@ class PlanManager extends ChangeNotifier {
 
   final Firestore firestore = Firestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseUser user;
+  FirebaseUser user ;
 
   User usuario;
 
@@ -31,27 +32,29 @@ class PlanManager extends ChangeNotifier {
 
   List<Plan> get plans => _allPlan;
 
-  Future<void> _loadAllPlan() async {
+
+
+  Future<void> _loadAllPlan() async{
     user = await auth.currentUser();
 
     _subscription = firestore.collection('plan').snapshots().listen((snapshot) {
-      _allPlan = snapshot.documents.map((e) => Plan.fromDocument(e)).toList();
-      _allPlan
-          .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      _allPlan = snapshot.documents.map(
+              (e) => Plan.fromDocument(e)).toList();
+      _allPlan.sort((a,b)=>a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       notifyListeners();
     });
   }
 
-  Plan findStudentByID(String planID) {
-    try {
+  Plan findStudentByID(String planID){
+    try{
       return _allPlan.firstWhere((g) => g.id == planID);
-    } catch (e) {
+    }catch (e){
       return null;
     }
   }
 
-  List<Plan> get filteredPlan {
-    final List<Plan> aux = [];
+  List<Plan> get filteredPlan{
+    final List<Plan> aux =[];
 
     aux.addAll(_allPlan.where((s) => s.idPersonal == user?.uid));
 
@@ -60,16 +63,12 @@ class PlanManager extends ChangeNotifier {
 
   List<String> get names => filteredPlan.map((g) => g.name).toList();
 
-  int quantity(String nome) {
-    return filteredPlan
-        .firstWhere((element) => element.name == nome)
-        .quantityMonths;
+  int quantity(String nome){
+    return filteredPlan.firstWhere((element) => element.name == nome).quantityMonths;
   }
 
-  num price(String nome) {
-    return filteredPlan
-        .firstWhere((element) => element.name == nome)
-        .pricePerClass;
+  num price(String nome){
+    return filteredPlan.firstWhere((element) => element.name == nome).pricePerClass;
   }
 
   @override
@@ -77,4 +76,5 @@ class PlanManager extends ChangeNotifier {
     _subscription?.cancel();
     super.dispose();
   }
+
 }
