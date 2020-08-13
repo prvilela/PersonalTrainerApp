@@ -1,4 +1,5 @@
 import 'package:apppersonaltrainer/common/custom_drawer/custom_drawer.dart';
+import 'package:apppersonaltrainer/google_auth/sign_in.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
 import 'package:apppersonaltrainer/screens/gyms/gyms_screen.dart';
@@ -30,6 +31,7 @@ class BaseScreen extends StatelessWidget {
                 userManager.user.pagamentos.clear();
                 userManager.user.saveData();
               }
+
               return Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
