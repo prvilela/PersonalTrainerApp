@@ -1,5 +1,4 @@
 import 'package:apppersonaltrainer/common/custom_drawer/custom_drawer.dart';
-import 'package:apppersonaltrainer/google_auth/sign_in.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
 import 'package:apppersonaltrainer/screens/gyms/gyms_screen.dart';
@@ -10,13 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BaseScreen extends StatelessWidget {
+
   final PageController pageController = PageController();
   final date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (_) => PageManager(pageController),
+      create: (_)=> PageManager(pageController),
       child: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -26,20 +26,14 @@ class BaseScreen extends StatelessWidget {
             appBar: AppBar(
               title: const Text("Home"),
             ),
-            body: Consumer<UserManager>(builder: (_, userManager, __) {
-              if (date.day == 1 && userManager.user != null) {
-                userManager.user.pagamentos.clear();
-                userManager.user.saveData();
-              }
-
-              return Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('images/gym.jpg'),
-                  fit: BoxFit.cover,
-                )),
-              );
-            }),
+            body: Consumer<UserManager>(
+              builder: (_,userManager,__){
+                if(date.day==1 && userManager.user != null){
+                  userManager.user.pagamentos.clear();
+                  userManager.user.saveData();
+                }
+                return Container();
+              }),
           ),
           Scaffold(
             drawer: CustomDrawer(),
