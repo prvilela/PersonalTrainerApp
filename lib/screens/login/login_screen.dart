@@ -1,11 +1,11 @@
 import 'package:apppersonaltrainer/helpers/validators.dart';
+import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/user.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
         centerTitle: true,
         actions: <Widget>[
           FlatButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.of(context).pushReplacementNamed('/signup');
             },
             child: const Text(
@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
           child: Form(
             key: formKey,
             child: Consumer<UserManager>(
-              builder: (_,userManager,child){
+              builder: (_, userManager, child) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true,
@@ -49,66 +49,91 @@ class LoginScreen extends StatelessWidget {
                       decoration: const InputDecoration(hintText: 'E-mail'),
                       keyboardType: TextInputType.emailAddress,
                       autocorrect: false,
-                      validator: (email){
-                        if(!emailValid(email)){
+                      validator: (email) {
+                        if (!emailValid(email)) {
                           return 'E-mail inválido';
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     TextFormField(
                       enabled: !userManager.loading,
                       controller: passController,
                       decoration: const InputDecoration(hintText: 'Senha'),
                       autocorrect: false,
                       obscureText: true,
-                      validator: (pass){
-                        if(pass.isEmpty || pass.length < 6) {
+                      validator: (pass) {
+                        if (pass.isEmpty || pass.length < 6) {
                           return 'Senha inválida';
                         }
                         return null;
                       },
                     ),
                     child,
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     SizedBox(
                       height: 44,
                       child: RaisedButton(
-                        onPressed:userManager.loading ? null : (){
-                          if(formKey.currentState.validate()){
-                            userManager.signIn(
-                                user:User(
-                                    email: emailController.text,
-                                    password: passController.text
-                                ),
-                                onFail: (e){
-                                  scaffoldKey.currentState.showSnackBar(
-                                      SnackBar(
-                                        content: Text('Falha ao entrar: $e'),
-                                        backgroundColor: Colors.red,
-                                      )
-                                  );
-                                },
-                                onSuccess: (){
-                                  Navigator.of(context).pop();
+                        onPressed: userManager.loading
+                            ? null
+                            : () {
+                                if (formKey.currentState.validate()) {
+                                  userManager.signIn(
+                                      user: User(
+                                          email: emailController.text,
+                                          password: passController.text),
+                                      onFail: (e) {
+                                        scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          content: Text('Falha ao entrar: $e'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      },
+                                      onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      });
                                 }
-                            );
-                          }
-                        },
+                              },
                         color: Theme.of(context).primaryColor,
-                        disabledColor: Theme.of(context).primaryColor.withAlpha(100),
+                        disabledColor:
+                            Theme.of(context).primaryColor.withAlpha(100),
                         textColor: Colors.white,
-                        child: userManager.loading ?
-                        CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
-                        ):
-                        const Text(
-                          'Entrar',
-                          style: TextStyle(
-                              fontSize: 18
-                          ),
-                        ),
+                        child: userManager.loading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : const Text(
+                                'Entrar',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                      ),
+                    ),
+                    Container(
+                      child: Row(
+                        children: [
+                          RaisedButton(
+                              child: Image.asset(
+                                "assets/google_logo.png",
+                                height: 50,
+                                width: 100,
+                              ),
+                              onPressed: () {
+                                signInWithGoogle();
+                              }),
+                          RaisedButton(
+                              child: Image.asset(
+                                "assets/face_logo2.png",
+                                height: 50,
+                                width: 100,
+                              ),
+                              onPressed: null)
+                        ],
                       ),
                     ),
                   ],
@@ -117,14 +142,9 @@ class LoginScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: FlatButton(
-                    onPressed: (){
-
-                    },
+                    onPressed: () {},
                     padding: EdgeInsets.zero,
-                    child: const Text(
-                        'Esqueci minha senha'
-                    )
-                ),
+                    child: const Text('Esqueci minha senha')),
               ),
             ),
           ),

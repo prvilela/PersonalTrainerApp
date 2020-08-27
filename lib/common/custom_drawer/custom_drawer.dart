@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:ui';
 import 'custom_drawer_header.dart';
 import 'drawer_tile.dart';
 
@@ -11,13 +11,10 @@ class CustomDrawer extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              gradient:LinearGradient(
-                colors: [
-                  const Color.fromARGB(255, 241, 236, 203),
-                  Colors.white
-                ],
+              gradient: LinearGradient(
                 begin: Alignment.topCenter,
-                end: Alignment.bottomCenter
+                end: Alignment.bottomCenter,
+                colors: [Color(0xf1eccb), Color(0xFFFFFFEE)],
               ),
             ),
           ),
@@ -25,14 +22,38 @@ class CustomDrawer extends StatelessWidget {
             children: <Widget>[
               CustomDrawerHeader(),
               const Divider(),
-              DrawerTile(icon: Icons.home, title: 'Início', page: 0,),
-              DrawerTile(icon: Icons.today, title: 'Agenda', page: 1,),
+              DrawerTile(
+                icon: Icons.home,
+                title: 'Início',
+                page: 0,
+              ),
+              DrawerTile(
+                icon: Icons.today,
+                title: 'Agenda',
+                page: 1,
+              ),
               const Divider(),
-              DrawerTile(icon: Icons.school, title: 'Alunos', page: 2,),
-              DrawerTile(icon: Icons.assignment, title: 'Planos', page: 3,),
-              DrawerTile(icon: Icons.place, title: 'Academias', page: 4,),
+              DrawerTile(
+                icon: Icons.school,
+                title: 'Alunos',
+                page: 2,
+              ),
+              DrawerTile(
+                icon: Icons.assignment,
+                title: 'Planos',
+                page: 3,
+              ),
+              DrawerTile(
+                icon: Icons.place,
+                title: 'Academias',
+                page: 4,
+              ),
               const Divider(),
-              DrawerTile(icon: Icons.timeline, title: 'Pagamentos', page: 5,),
+              DrawerTile(
+                icon: Icons.timeline,
+                title: 'Pagamentos',
+                page: 5,
+              ),
             ],
           )
         ],

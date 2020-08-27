@@ -1,3 +1,4 @@
+import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
 import 'package:flutter/material.dart';
@@ -10,17 +11,14 @@ class CustomDrawerHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(32, 24, 16, 8),
       height: 180,
       child: Consumer<UserManager>(
-        builder: (_,userManager,__){
+        builder: (_, userManager, __) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 'Personal\n        Trainer',
-                style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
               Text(
                 'Ola, ${userManager.user?.name ?? ''}',
@@ -32,22 +30,23 @@ class CustomDrawerHeader extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
-                  if(userManager.isloggedIn){
+                onTap: () {
+                  //preciso verificar o login que o usuario ta no momento e o logout
+                  getCurrentUser();
+
+                  if (userManager.isloggedIn) {
                     context.read<PageManager>().setPage(0);
                     userManager.signOut();
-                  }else{
+                  } else {
                     Navigator.of(context).pushNamed('/login');
                   }
                 },
                 child: Text(
-                  userManager.isloggedIn
-                      ? 'Sair':'Entre ou cadastre-se >',
+                  userManager.isloggedIn ? 'Sair' : 'Entre ou cadastre-se >',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold
-                  ),
+                      fontWeight: FontWeight.bold),
                 ),
               )
             ],
