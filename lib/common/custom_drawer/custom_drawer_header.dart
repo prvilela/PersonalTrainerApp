@@ -1,6 +1,7 @@
 import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
+import 'package:apppersonaltrainer/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,12 +32,12 @@ class CustomDrawerHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  //preciso verificar o login que o usuario ta no momento e o logout
-                  getCurrentUser();
-
                   if (userManager.isloggedIn) {
                     context.read<PageManager>().setPage(0);
                     userManager.signOut();
+                  }
+                  if (getCurrentUser() != null) {
+                    signOutGoogle();
                   } else {
                     Navigator.of(context).pushNamed('/login');
                   }

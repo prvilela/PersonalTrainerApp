@@ -2,6 +2,7 @@ import 'package:apppersonaltrainer/helpers/validators.dart';
 import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/user.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
+import 'package:apppersonaltrainer/screens/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -125,6 +126,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                               onPressed: () {
                                 signInWithGoogle();
+                                var user = getCurrentUser();
+                                print(user);
+                                Navigator.of(context).pushNamed('/base');
                               }),
                           RaisedButton(
                               child: Image.asset(
