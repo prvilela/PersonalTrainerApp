@@ -1,4 +1,5 @@
 import 'package:apppersonaltrainer/helpers/validators.dart';
+import 'package:apppersonaltrainer/models/facebook_sign.dart';
 import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/user.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
@@ -125,9 +126,8 @@ class LoginScreen extends StatelessWidget {
                                 width: 100,
                               ),
                               onPressed: () {
+                                getCurrentUser();
                                 signInWithGoogle();
-                                var user = getCurrentUser();
-                                print(user);
                                 Navigator.of(context).pushNamed('/base');
                               }),
                           RaisedButton(
@@ -136,7 +136,9 @@ class LoginScreen extends StatelessWidget {
                                 height: 50,
                                 width: 100,
                               ),
-                              onPressed: null)
+                              onPressed: () {
+                                LoginFace();
+                              })
                         ],
                       ),
                     ),

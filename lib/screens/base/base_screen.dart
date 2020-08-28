@@ -27,13 +27,12 @@ class BaseScreen extends StatelessWidget {
               title: const Text("Home"),
             ),
             body: Consumer<UserManager>(builder: (_, userManager, __) {
-              var user = getCurrentUser();
               if (date.day == 1 && userManager.user != null) {
                 userManager.user.pagamentos.clear();
                 userManager.user.saveData();
               }
               return Container(
-                child: Text('$user'),
+                child: Text('texto'),
               );
             }),
           ),
