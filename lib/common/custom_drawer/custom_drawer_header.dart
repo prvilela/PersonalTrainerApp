@@ -35,8 +35,8 @@ class CustomDrawerHeader extends StatelessWidget {
                   if (userManager.isloggedIn) {
                     context.read<PageManager>().setPage(0);
                     userManager.signOut();
+                    //signOutGoogle();
                   } else {
-                    signOutGoogle();
                     Navigator.of(context).pushNamed('/login');
                   }
                 },

@@ -12,6 +12,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -117,27 +118,31 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
+                      margin: const EdgeInsets.only(top: 20.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          RaisedButton(
+                          FlatButton(
+                              color: Colors.white,
                               child: Image.asset(
                                 "assets/google_logo.png",
-                                height: 50,
-                                width: 100,
+                                height: 40,
+                                width: 90,
                               ),
                               onPressed: () {
                                 getCurrentUser();
                                 signInWithGoogle();
                                 Navigator.of(context).pushNamed('/base');
                               }),
-                          RaisedButton(
+                          FlatButton(
+                              color: Colors.white,
                               child: Image.asset(
                                 "assets/face_logo2.png",
-                                height: 50,
-                                width: 100,
+                                height: 40,
+                                width: 90,
                               ),
                               onPressed: () {
-                                LoginFace();
+                                authService.signInwithFacebook();
                               })
                         ],
                       ),

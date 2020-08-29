@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "828981996967-2quma1uvm50f5sp928g6su4pkdedvvb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apppersonaltrainer",
+            "certificate_hash": "ca4c1d93c2b4a405e5bdd99d1123b2100a057f2a"
+          }
+        },
+        {
           "client_id": "828981996967-h1c6h0eftj1bga9jph7kca2l486eglrt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

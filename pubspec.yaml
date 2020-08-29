@@ -33,14 +33,13 @@ dependencies:
   cloud_firestore: ^0.13.7
   dio: ^3.0.9
   firebase_auth: ^0.15.4
-  flutter_facebook_login: ^1.1.1
+  flutter_facebook_login: ^3.0.0
   firebase_storage: ^3.1.6
   flutter_signin_button: ^1.0.0
   flutter_speed_dial: ^1.2.1
   google_sign_in: ^4.1.1 
   intl: ^0.16.1
-  provider: ^4.1.2
-  
+  provider: ^4.1.2  
   
 
 dev_dependencies:
