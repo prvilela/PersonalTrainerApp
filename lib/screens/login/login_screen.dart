@@ -12,7 +12,6 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                                 width: 90,
                               ),
                               onPressed: () {
-                                authService.signInwithFacebook();
+                                runApp(MyFace());
                               })
                         ],
                       ),

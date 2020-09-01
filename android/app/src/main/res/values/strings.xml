@@ -1,5 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name">Facebook Auth.</string>
-<string name="facebook_app_id">facebook_app_id</string>
-<string name="fb_login_protocol_scheme">fb_login_protocol_scheme</string>
+    <string name="app_name">Personaltrainer</string>
+
+    <!-- Replace "000000000000" with your Facebook App ID here. -->
+    <string name="facebook_app_id">2278847835759513</string>
+
+    <!--
+      Replace "000000000000" with your Facebook App ID here.
+      **NOTE**: The scheme needs to start with `fb` and then your ID.
+    -->
+    <string name="fb_login_protocol_scheme">fb2278847835759513</string>
 </resources>
