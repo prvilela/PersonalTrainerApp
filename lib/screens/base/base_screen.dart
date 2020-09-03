@@ -32,8 +32,13 @@ class BaseScreen extends StatelessWidget {
                 userManager.user.saveData();
               }
               return Container(
-                child: Text('texto'),
-              );
+                  height: double.infinity,
+                  child: FittedBox(
+                    child: Image.asset(
+                      'assets/gym.jpg',
+                    ),
+                    fit: BoxFit.fitHeight,
+                  ));
             }),
           ),
           Scaffold(

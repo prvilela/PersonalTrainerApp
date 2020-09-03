@@ -1,6 +1,7 @@
 import 'package:apppersonaltrainer/models/google_sign.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
+import 'package:apppersonaltrainer/screens/login/login_screen.dart';
 import 'package:apppersonaltrainer/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
