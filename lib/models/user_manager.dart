@@ -6,10 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
-class UserManager extends ChangeNotifier{
-
-  UserManager(){
-    _loadCurrentUser();
+class UserManager extends ChangeNotifier {
+  UserManager() {
+    loadCurrentUser();
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -23,40 +22,42 @@ class UserManager extends ChangeNotifier{
   bool get loading => _loading;
   bool get isloggedIn => user != null;
 
-  Future<void> signIn({User user, Function onFail, Function onSuccess}) async{
+  Future<void> signIn({User user, Function onFail, Function onSuccess}) async {
     loading = true;
     try {
       final AuthResult authResult = await auth.signInWithEmailAndPassword(
-          email: user.email,
-          password: user.password
-      );
+          email: user.email, password: user.password);
 
-      await _loadCurrentUser(firebaseUser: authResult.user);
+      await loadCurrentUser(firebaseUser: authResult.user);
 
       onSuccess();
-    } on PlatformException catch(e){
+    } on PlatformException catch (e) {
       onFail(getErrorString(e.code));
     }
     loading = false;
   }
 
-  set loading(bool value){
+  set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  Future<void> _loadCurrentUser({FirebaseUser firebaseUser})async{
+  Future<void> loadCurrentUser({FirebaseUser firebaseUser}) async {
     final FirebaseUser currentUser = firebaseUser ?? await auth.currentUser();
-    if(currentUser != null){
-      _subscription = firestore.collection('users')
-          .document(currentUser.uid).snapshots().listen((event) {
-            user = User.fromDocument(event);
-            notifyListeners();
+    print('$currentUser topppppppppppppppppp');
+    if (currentUser != null) {
+      _subscription = firestore
+          .collection('users')
+          .document(currentUser.uid)
+          .snapshots()
+          .listen((event) {
+        user = User.fromDocument(event);
+        notifyListeners();
       });
     }
   }
 
-  Future<void> signUp({User user, Function onFail, Function onSuccess}) async{
+  Future<void> signUp({User user, Function onFail, Function onSuccess}) async {
     loading = true;
     try {
       final AuthResult authResult = await auth.createUserWithEmailAndPassword(
@@ -68,13 +69,13 @@ class UserManager extends ChangeNotifier{
       await user.saveData();
 
       onSuccess();
-    }on PlatformException catch(e){
+    } on PlatformException catch (e) {
       onFail(getErrorString(e.code));
     }
     loading = false;
   }
 
-  void signOut(){
+  void signOut() {
     auth.signOut();
     user = null;
     notifyListeners();
@@ -85,5 +86,4 @@ class UserManager extends ChangeNotifier{
     _subscription?.cancel();
     super.dispose();
   }
-
 }

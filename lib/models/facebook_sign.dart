@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
-bool isLoggedIn = false;
+bool isLoggedInFace = false;
 Map userProfile;
 final facebookLogin = FacebookLogin();
 
@@ -20,22 +19,22 @@ loginWithFB() async {
       print(
           'aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
       userProfile = profile;
-      isLoggedIn = true;
+      isLoggedInFace = true;
       break;
     case FacebookLoginStatus.cancelledByUser:
-      isLoggedIn = false;
+      isLoggedInFace = false;
       break;
     case FacebookLoginStatus.error:
-      isLoggedIn = false;
+      isLoggedInFace = false;
       break;
   }
 }
 
 _logout() {
   facebookLogin.logOut();
-  isLoggedIn = false;
+  isLoggedInFace = false;
 }
 
 loginStatus() {
-  return isLoggedIn;
+  return isLoggedInFace;
 }

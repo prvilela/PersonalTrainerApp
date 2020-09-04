@@ -14,6 +14,7 @@ class CustomDrawerHeader extends StatelessWidget {
       height: 180,
       child: Consumer<UserManager>(
         builder: (_, userManager, __) {
+          print(userManager.loadCurrentUser());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
