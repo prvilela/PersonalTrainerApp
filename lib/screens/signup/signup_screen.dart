@@ -93,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
                             return null;
                           }
                         },
-                        onSaved: (day) => user.day = day as int,
+                        onSaved: (day) => user.day = int.parse(day),
                       ),
                       const SizedBox(height: 16,),
                       TextFormField(
