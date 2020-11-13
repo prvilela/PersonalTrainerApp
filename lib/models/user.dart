@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class User extends ChangeNotifier{
 
-  User({this.id, this.name, this.email, this.password, this.coef, this.phone, this.day, this.pagamentos});
+  User({this.id, this.name, this.email, this.password, this.coef, this.phone, this.day, this.pagamentos, this.atualizado});
 
   User.fromDocument(DocumentSnapshot document){
     id = document.documentID;
@@ -13,6 +13,7 @@ class User extends ChangeNotifier{
     phone = document.data['phone'] as String;
     day = document.data['day'] as int;
     pagamentos = (document.data['pagamentos'] as List).map((e) => e as num).toList();
+    atualizado = document.data['atualizado'] as int;
   }
 
   String id;
@@ -23,6 +24,7 @@ class User extends ChangeNotifier{
   String phone;
   int day;
   List<num> pagamentos;
+  int atualizado;
 
   String confirmPassword;
 
@@ -41,7 +43,8 @@ class User extends ChangeNotifier{
       "coed": coef,
       "phone": phone,
       "day": day,
-      "pagamentos": pagamentos
+      "pagamentos": pagamentos ?? [0],
+      "atualizado": atualizado ?? 0
     };
   }
 

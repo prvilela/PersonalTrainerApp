@@ -1,6 +1,7 @@
 import 'package:apppersonaltrainer/common/custom_drawer/custom_drawer.dart';
 import 'package:apppersonaltrainer/models/page_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
+import 'package:apppersonaltrainer/screens/calendar/calendar_screen.dart';
 import 'package:apppersonaltrainer/screens/gyms/gyms_screen.dart';
 import 'package:apppersonaltrainer/screens/pagamentos/pagamentos_screen.dart';
 import 'package:apppersonaltrainer/screens/plans/plans_screen.dart';
@@ -35,12 +36,7 @@ class BaseScreen extends StatelessWidget {
                 return Container();
               }),
           ),
-          Scaffold(
-            drawer: CustomDrawer(),
-            appBar: AppBar(
-              title: const Text("Agenda"),
-            ),
-          ),
+          CalendarScreen(),
           StudentsScreen(),
           PlansScreen(),
           GymsScreen(),

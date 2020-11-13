@@ -36,9 +36,10 @@ class PagamentosScreen extends StatelessWidget {
         builder: (_,userManager,__){
           int m = date.month;
           num total=0;
-          for(num i in userManager.user.pagamentos){
+          for(num i in userManager.user?.pagamentos){
             total+=i;
           }
+
           priceController.text = total.toStringAsFixed(2);
           if(date.day>= userManager.user.day-5 && date.day <= userManager.user.day+2){
             return Column(

@@ -57,6 +57,70 @@ class StudentManager extends ChangeNotifier{
     return filteredStudentByMonth;
   }
 
+  List<Student> filteredStudentByWeekday(int day){
+    final List<Student> filteredStudent = [];
+    switch(day){
+      case 1:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.seg
+                && s.idPersonal == user.uid
+          )
+        );
+        break;
+      case 2:
+        filteredStudent.addAll(_allStudent.where(
+          (s) => s.days.ter
+          && s.idPersonal == user.uid
+         )
+        );
+        break;
+      case 3:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.quar
+                && s.idPersonal == user.uid
+        )
+        );
+        break;
+      case 4:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.quin
+                && s.idPersonal == user.uid
+        )
+        );
+        break;
+      case 5:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.sex
+                && s.idPersonal == user.uid
+        )
+        );
+        break;
+      case 6:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.sab
+                && s.idPersonal == user.uid
+        )
+        );
+        break;
+      case 7:
+        filteredStudent.addAll(_allStudent.where(
+                (s) => s.days.dom
+                && s.idPersonal == user.uid
+        )
+        );
+        break;
+      default:
+    }
+
+    filteredStudent.sort((a,b){
+      List<String> c  = [a.days.horario, b.days.horario];
+      c.sort();
+      if(c[0] == b.days.horario) return 1;
+      else return -1;
+    });
+    return filteredStudent;
+  }
+
   List<Student> get filteredStudent{
     final List<Student> aux =[];
     final List<Student> filteredStudent = [];

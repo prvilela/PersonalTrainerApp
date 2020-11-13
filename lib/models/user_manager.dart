@@ -51,6 +51,19 @@ class UserManager extends ChangeNotifier{
       _subscription = firestore.collection('users')
           .document(currentUser.uid).snapshots().listen((event) {
             user = User.fromDocument(event);
+            final date = DateTime.now();
+            if(user.atualizado == 1){
+              if(date.day == 1){
+                user.pagamentos = [0];
+                user.atualizado = 0;
+                user.saveData();
+              }
+            }else{
+              if(date.day == 2){
+                user.atualizado = 1;
+                user.saveData();
+              }
+            }
             notifyListeners();
       });
     }
@@ -62,9 +75,10 @@ class UserManager extends ChangeNotifier{
       final AuthResult authResult = await auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
 
+      user.pagamentos = [0];
+      user.atualizado = 1;
       user.id = authResult.user.uid;
       this.user = user;
-
       await user.saveData();
 
       onSuccess();

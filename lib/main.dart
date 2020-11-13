@@ -1,3 +1,4 @@
+import 'package:apppersonaltrainer/models/calendar_manager.dart';
 import 'package:apppersonaltrainer/models/gym.dart';
 import 'package:apppersonaltrainer/models/student.dart';
 import 'package:apppersonaltrainer/models/student_manager.dart';
@@ -27,6 +28,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_)=>UserManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_)=>CalendarManager(),
           lazy: false,
         ),
         ChangeNotifierProxyProvider<UserManager,StudentManager>(

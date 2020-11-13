@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 
 class GymManager extends ChangeNotifier{
 
-  StudentManager(){
+  GymManager(){
     _loadAllGym();
   }
 
