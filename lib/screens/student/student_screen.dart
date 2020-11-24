@@ -4,19 +4,24 @@ import 'package:apppersonaltrainer/helpers/validators.dart';
 import 'package:apppersonaltrainer/models/gym_manager.dart';
 import 'package:apppersonaltrainer/models/planManager.dart';
 import 'package:apppersonaltrainer/models/student.dart';
+import 'package:apppersonaltrainer/models/student_manager.dart';
 import 'package:apppersonaltrainer/models/user_manager.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:day_night_time_picker/lib/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'components/choose_dialog.dart';
 
 class StudentScreen extends StatelessWidget {
   StudentScreen(Student s)
       : editing = s != null,
         student = s != null ? s : Student();
+
+  TimeOfDay _time = TimeOfDay.now().replacing(minute: 30);
+  bool iosStyle = true;
 
   final Student student;
   final bool editing;
@@ -29,6 +34,10 @@ class StudentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onTimeChanged(TimeOfDay newTime) {
+      _time = newTime;
+    }
+
     gym.text = student.gym;
     plan.text = student.plano;
     return ChangeNotifierProvider.value(
@@ -81,7 +90,7 @@ class StudentScreen extends StatelessWidget {
                             hintText: 'CPF', border: InputBorder.none),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          //WhitelistingTextInputFormatter.digitsOnly,
                           CpfInputFormatter()
                         ],
                         style: TextStyle(
@@ -295,8 +304,8 @@ class StudentScreen extends StatelessWidget {
                           return null;
                         },
                       ),
-                      TextFormField(
-                        initialValue: student.days.horario,
+                      //TextFormField(
+                      /*            initialValue: student.days.horario,
                         onSaved: (text) => student.days.horario = text,
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600),
@@ -327,7 +336,33 @@ class StudentScreen extends StatelessWidget {
                             }
                             return null;
                           }
+                        }, */
+                      //),
+                      FlatButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          //add função para verificar horarios disponiveis aqui
+                          Navigator.of(context).push(
+                            showPicker(
+                              context: context,
+                              value: _time,
+                              onChange: onTimeChanged,
+                              minuteInterval: MinuteInterval.FIVE,
+                              disableHour: false,
+                              disableMinute: false,
+                              minMinute: 0,
+                              maxMinute: 59,
+                              // Optional onChange to receive value as DateTime
+                              onChangeDateTime: (DateTime dateTime) {
+                                print(dateTime);
+                              },
+                            ),
+                          );
                         },
+                        child: Text(
+                          "Open time picker",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                       Text(
                         'Dias:',
@@ -407,9 +442,7 @@ class StudentScreen extends StatelessWidget {
                               onPressed: () async {
                                 if (user.isloggedIn) {
                                   //&& verificar dia e horario - ideia inicial
-                                  if (formKey.currentState.validate() &&
-                                      validateHorarioDia(student.days.horario,
-                                          student.days.sab)) {
+                                  if (formKey.currentState.validate()) {
                                     formKey.currentState.save();
                                     FirebaseUser user = await FirebaseAuth
                                         .instance
@@ -450,9 +483,5 @@ class StudentScreen extends StatelessWidget {
             )),
       ),
     );
-  }
-
-  bool validateHorarioDia(time, day) {
-    return true;
   }
 }

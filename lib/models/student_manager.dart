@@ -9,14 +9,14 @@ import 'package:flutter/cupertino.dart';
 
 class StudentManager extends ChangeNotifier {
   StudentManager() {
-    _loadAllStudents();
+    loadAllStudents();
   }
 
   void updateStudent(UserManager userManager) {
     usuario = userManager.user;
     _subscription?.cancel();
     _allStudent?.clear();
-    _loadAllStudents();
+    loadAllStudents();
   }
 
   StreamSubscription _subscription;
@@ -128,9 +128,8 @@ class StudentManager extends ChangeNotifier {
     return filteredStudent;
   }
 
-  Future<void> _loadAllStudents() async {
+  Future<void> loadAllStudents() async {
     user = await auth.currentUser();
-
     _subscription =
         firestore.collection('student').snapshots().listen((snapshot) {
       _allStudent =
