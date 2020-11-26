@@ -90,7 +90,7 @@ class StudentScreen extends StatelessWidget {
                             hintText: 'CPF', border: InputBorder.none),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          //WhitelistingTextInputFormatter.digitsOnly,
+                          WhitelistingTextInputFormatter.digitsOnly,
                           CpfInputFormatter()
                         ],
                         style: TextStyle(
