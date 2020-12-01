@@ -9,13 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-class GymManager extends ChangeNotifier{
-
-  GymManager(){
+class GymManager extends ChangeNotifier {
+  GymManager() {
     _loadAllGym();
   }
 
-  void updateGym(UserManager userManager){
+  void updateGym(UserManager userManager) {
     usuario = userManager.user;
     _subscription?.cancel();
     _allGym?.clear();
@@ -26,7 +25,7 @@ class GymManager extends ChangeNotifier{
 
   final Firestore firestore = Firestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseUser user ;
+  FirebaseUser user;
 
   User usuario;
   Address address;
@@ -35,28 +34,27 @@ class GymManager extends ChangeNotifier{
 
   List<Gym> get gyms => _allGym;
 
-
-  Future<void> _loadAllGym() async{
+  Future<void> _loadAllGym() async {
     user = await auth.currentUser();
 
     _subscription = firestore.collection('gym').snapshots().listen((snapshot) {
-      _allGym = snapshot.documents.map(
-              (e) => Gym.fromDocument(e)).toList();
-      _allGym.sort((a,b)=>a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      _allGym = snapshot.documents.map((e) => Gym.fromDocument(e)).toList();
+      _allGym
+          .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       notifyListeners();
     });
   }
 
-  Gym findStudentByID(String gymID){
-    try{
+  Gym findStudentByID(String gymID) {
+    try {
       return _allGym.firstWhere((g) => g.id == gymID);
-    }catch (e){
+    } catch (e) {
       return null;
     }
   }
 
-  List<Gym> get filteredGym{
-    final List<Gym> aux =[];
+  List<Gym> get filteredGym {
+    final List<Gym> aux = [];
 
     aux.addAll(_allGym.where((s) => s.idPersonal == user?.uid));
 
@@ -70,7 +68,4 @@ class GymManager extends ChangeNotifier{
     _subscription?.cancel();
     super.dispose();
   }
-
-
-
 }

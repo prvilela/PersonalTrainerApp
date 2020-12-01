@@ -1,25 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'agendamento.dart';
 
-class Student extends ChangeNotifier{
-
-  Student({this.id, this.idPersonal, this.name, this.birthday, this.gender,
-      this.cpf, this.email, this.phone, this.goal, this.restriction, this.status,
-      this.gym, this.plano, this.mesIni, this.quant, this.days, this.quantityMonths}){
-   if(this.days == null){
-     this.days = Agendamento();
-   }
-   if(this.gender == null){
-     this.gender = 'Masculino';
-   }
-   if(this.status == null){
-     this.status = 'Ativo';
-   }
+class Student extends ChangeNotifier {
+  Student(
+      {this.id,
+      this.idPersonal,
+      this.name,
+      this.birthday,
+      this.gender,
+      this.cpf,
+      this.email,
+      this.phone,
+      this.goal,
+      this.restriction,
+      this.status,
+      this.gym,
+      this.plano,
+      this.mesIni,
+      this.quant,
+      this.days,
+      this.quantityMonths}) {
+    if (this.days == null) {
+      this.days = Agendamento();
+    }
+    if (this.gender == null) {
+      this.gender = 'Masculino';
+    }
+    if (this.status == null) {
+      this.status = 'Ativo';
+    }
   }
 
-  Student.fromDocument(DocumentSnapshot snapshot){
+  Student.fromDocument(DocumentSnapshot snapshot) {
     id = snapshot.documentID;
     idPersonal = snapshot['idPersonal'] as String;
     name = snapshot['name'] as String;
@@ -57,13 +72,16 @@ class Student extends ChangeNotifier{
   int quantityMonths;
   Agendamento days = Agendamento();
 
+  String hora;
+  List dias;
+
   final Firestore firestore = Firestore.instance;
 
   DocumentReference get firestoreRef => firestore.document('student/$id');
 
   bool _loading = false;
   bool get loading => _loading;
-  set loading(bool value){
+  set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
@@ -72,59 +90,66 @@ class Student extends ChangeNotifier{
 
   Agendamento get selectedDay => _selectedDay;
 
-  set selectedDay(Agendamento value){
+  set selectedDay(Agendamento value) {
     _selectedDay = value;
     notifyListeners();
   }
 
-  Student clone(){
+  Student clone() {
     return Student(
-      id: id,
-      email: email,
-      days: days,
-      birthday: birthday,
-      cpf: cpf,
-      mesIni: mesIni,
-      gender: gender,
-      goal: goal,
-      gym: gym,
-      idPersonal: idPersonal,
-      name: name,
-      phone: phone,
-      plano: plano,
-      quant: quant,
-      quantityMonths: quantityMonths,
-      restriction: restriction,
-      status: status
-    );
+        id: id,
+        email: email,
+        days: days,
+        birthday: birthday,
+        cpf: cpf,
+        mesIni: mesIni,
+        gender: gender,
+        goal: goal,
+        gym: gym,
+        idPersonal: idPersonal,
+        name: name,
+        phone: phone,
+        plano: plano,
+        quant: quant,
+        quantityMonths: quantityMonths,
+        restriction: restriction,
+        status: status);
   }
 
-  void updateGender(String sexo){
-    if(sexo.contains('Mas')){
+  void updateGender(String sexo) {
+    if (sexo.contains('Mas')) {
       gender = 'Masculino';
       notifyListeners();
-    }else if(sexo.contains('Fem')){
+    } else if (sexo.contains('Fem')) {
       gender = 'Feminino';
       notifyListeners();
-    }else{
+    } else {
       gender = 'Outro';
       notifyListeners();
     }
-
   }
 
-  void updateStatus(String ativo){
-    if(ativo == 'Ativo'){
+  void updateTime(TimeOfDay time) {
+    time = time;
+    hora = time.toString();
+    notifyListeners();
+
+    //chechHorario();
+  }
+
+  void updateStatus(String ativo) {
+    if (ativo == 'Ativo') {
       status = 'Ativo';
       notifyListeners();
-    }else{
+    } else {
       status = 'Não Ativo';
       notifyListeners();
     }
   }
 
-  void updateDays(String ativo){
-    switch(ativo){
+  void updateDays(String ativo) {
+    days.horario = hora;
+    switch (ativo) {
       case 'Dom':
         days.dom = !days.dom;
         break;
@@ -145,13 +170,23 @@ class Student extends ChangeNotifier{
         break;
       case 'Sab':
         days.sab = !days.sab;
+        break;
     }
+    dias = [
+      days.dom,
+      days.seg,
+      days.ter,
+      days.quar,
+      days.quin,
+      days.sex,
+      days.sab
+    ];
     notifyListeners();
+    //chechHorario();
   }
 
-  void save()async{
-
-    final Map<String,dynamic> data = {
+  void save() async {
+    final Map<String, dynamic> data = {
       'email': email,
       'days': days.toMap(),
       'birthday': birthday,
@@ -164,24 +199,25 @@ class Student extends ChangeNotifier{
       'name': name,
       'phone': phone,
       'plano': plano,
-      'quant': quant??0,
-      'quantityMonths':quantityMonths,
+      'quant': quant ?? 0,
+      'quantityMonths': quantityMonths,
       'restriction': restriction,
       'status': status
     };
 
-    if(id == null){
+    if (id == null) {
       final doc = await firestore.collection('student').add(data);
       id = doc.documentID;
     } else {
       await firestoreRef.updateData(data);
     }
-
   }
 
-  void remove(){
+  void remove() {
     firestoreRef.delete();
   }
+
+  void checkHorario() {}
 
   @override
   String toString() {

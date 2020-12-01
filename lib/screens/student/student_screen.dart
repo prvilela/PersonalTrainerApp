@@ -23,6 +23,7 @@ class StudentScreen extends StatelessWidget {
   TimeOfDay _time = TimeOfDay.now().replacing(minute: 30);
   bool iosStyle = true;
 
+  var horarioSelecionado = 'Selecione o horário';
   final Student student;
   final bool editing;
 
@@ -354,13 +355,18 @@ class StudentScreen extends StatelessWidget {
                               maxMinute: 59,
                               // Optional onChange to receive value as DateTime
                               onChangeDateTime: (DateTime dateTime) {
-                                print(dateTime);
+                                horarioSelecionado = _time.toString();
+                                horarioSelecionado.replaceAll(
+                                    new RegExp(r'[a-zA-Z]'), '');
+                                (context as Element).markNeedsBuild();
+
+                                student.updateTime(_time);
                               },
                             ),
                           );
                         },
                         child: Text(
-                          "Open time picker",
+                          horarioSelecionado,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -441,7 +447,6 @@ class StudentScreen extends StatelessWidget {
                             child: RaisedButton(
                               onPressed: () async {
                                 if (user.isloggedIn) {
-                                  //&& verificar dia e horario - ideia inicial
                                   if (formKey.currentState.validate()) {
                                     formKey.currentState.save();
                                     FirebaseUser user = await FirebaseAuth
