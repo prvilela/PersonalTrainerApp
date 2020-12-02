@@ -20,10 +20,17 @@ class StudentScreen extends StatelessWidget {
       : editing = s != null,
         student = s != null ? s : Student();
 
-  TimeOfDay _time = TimeOfDay.now().replacing(minute: 30);
+  TimeOfDay _time = TimeOfDay.now().replacing(minute: 00);
   bool iosStyle = true;
 
-  var horarioSelecionado = 'Selecione o horário';
+  var horarioSeg = 'Selecione o horário';
+  var horarioTer = 'Selecione o horário';
+  var horarioQua = 'Selecione o horário';
+  var horarioQui = 'Selecione o horário';
+  var horarioSex = 'Selecione o horário';
+  var horarioSab = 'Selecione o horário';
+  var horarioDom = 'Selecione o horário';
+
   final Student student;
   final bool editing;
 
@@ -339,37 +346,7 @@ class StudentScreen extends StatelessWidget {
                           }
                         }, */
                       //),
-                      FlatButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          //add função para verificar horarios disponiveis aqui
-                          Navigator.of(context).push(
-                            showPicker(
-                              context: context,
-                              value: _time,
-                              onChange: onTimeChanged,
-                              minuteInterval: MinuteInterval.FIVE,
-                              disableHour: false,
-                              disableMinute: false,
-                              minMinute: 0,
-                              maxMinute: 59,
-                              // Optional onChange to receive value as DateTime
-                              onChangeDateTime: (DateTime dateTime) {
-                                horarioSelecionado = _time.toString();
-                                horarioSelecionado.replaceAll(
-                                    new RegExp(r'[a-zA-Z]'), '');
-                                (context as Element).markNeedsBuild();
 
-                                student.updateTime(_time);
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(
-                          horarioSelecionado,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
                       Text(
                         'Dias:',
                         style: TextStyle(
@@ -378,62 +355,257 @@ class StudentScreen extends StatelessWidget {
                       const SizedBox(
                         height: 4,
                       ),
+
                       Consumer<Student>(
                         builder: (_, s, __) {
-                          return Row(children: <Widget>[
-                            CustomCheckButton(
-                              value: 'Dom',
-                              onTap: student.updateDays,
-                              isChecked: student.days.dom,
+                          return Column(children: <Widget>[
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Dom',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.dom,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    student
+                                        .verificarDomingo(); //return time pra montar no relogio
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: true,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioDom = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioDom,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Seg',
-                                onTap: student.updateDays,
-                                isChecked: student.days.seg,
-                              ),
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Seg',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.seg,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioSeg = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioSeg,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Ter',
-                                onTap: student.updateDays,
-                                isChecked: student.days.ter,
-                              ),
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Ter',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.ter,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioTer = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioTer,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Quar',
-                                onTap: student.updateDays,
-                                isChecked: student.days.quar,
-                              ),
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Quar',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.quar,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioQua = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioQua,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Quin',
-                                onTap: student.updateDays,
-                                isChecked: student.days.quin,
-                              ),
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Quin',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.quin,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioQui = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioQui,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Sex',
-                                onTap: student.updateDays,
-                                isChecked: student.days.sex,
-                              ),
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Sex',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.sex,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioSex = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioSex,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CustomCheckButton(
-                                value: 'Sab',
-                                onTap: student.updateDays,
-                                isChecked: student.days.sab,
-                              ),
-                            )
+                            Row(
+                              children: [
+                                CustomCheckButton(
+                                  value: 'Sab',
+                                  onTap: student.updateDays,
+                                  isChecked: student.days.sab,
+                                ),
+                                FlatButton(
+                                  color: Theme.of(context).accentColor,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      showPicker(
+                                        context: context,
+                                        value: _time,
+                                        onChange: onTimeChanged,
+                                        minuteInterval: MinuteInterval.FIVE,
+                                        disableHour: false,
+                                        disableMinute: false,
+                                        minMinute: 0,
+                                        maxMinute: 59,
+                                        onChangeDateTime: (DateTime dateTime) {
+                                          horarioDom = _time.toString();
+                                          (context as Element).markNeedsBuild();
+                                          //student.updateTime(_time);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    horarioDom,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ]);
                         },
                       ),

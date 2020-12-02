@@ -133,9 +133,19 @@ class Student extends ChangeNotifier {
     time = time;
     hora = time.toString();
     notifyListeners();
-
     //chechHorario();
   }
+
+  void verificarSegunda() {
+    //horarLivreSeg = query pra consultar horarios livres da segunda;
+    //return horarioLivreSeg;
+  }
+  void verificarTerca() {}
+  void verificarQuarta() {}
+  void verificarQuinta() {}
+  void verificarSexta() {}
+  void verificarSabado() {}
+  void verificarDomingo() {}
 
   void updateStatus(String ativo) {
     if (ativo == 'Ativo') {
