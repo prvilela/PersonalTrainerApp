@@ -1,3 +1,4 @@
+import 'package:apppersonaltrainer/models/student_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,17 +136,6 @@ class Student extends ChangeNotifier {
     notifyListeners();
     //chechHorario();
   }
-
-  void verificarSegunda() {
-    //horarLivreSeg = query pra consultar horarios livres da segunda;
-    //return horarioLivreSeg;
-  }
-  void verificarTerca() {}
-  void verificarQuarta() {}
-  void verificarQuinta() {}
-  void verificarSexta() {}
-  void verificarSabado() {}
-  void verificarDomingo() {}
 
   void updateStatus(String ativo) {
     if (ativo == 'Ativo') {

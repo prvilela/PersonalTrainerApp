@@ -20,7 +20,6 @@ class CalendarScreen extends StatelessWidget {
           final students = studentManager
               .filteredStudentByWeekday(calendarManager.diaSemana);
           if (students != []) {
-            print('not null students');
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -48,7 +47,6 @@ class CalendarScreen extends StatelessWidget {
               ],
             );
           } else {
-            print('null students');
             return Text('NO alunos;');
           }
         },

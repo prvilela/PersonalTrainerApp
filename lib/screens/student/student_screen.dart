@@ -356,21 +356,23 @@ class StudentScreen extends StatelessWidget {
                         height: 4,
                       ),
 
-                      Consumer<Student>(
-                        builder: (_, s, __) {
+                      Consumer2<Student, StudentManager>(
+                        builder: (_, s, studentManager, __) {
                           return Column(children: <Widget>[
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Dom',
+                                  value: 'Domingo',
                                   onTap: student.updateDays,
                                   isChecked: student.days.dom,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
-                                    student
-                                        .verificarDomingo(); //return time pra montar no relogio
+                                    final studentsDom = studentManager
+                                        .filteredStudentByWeekday(7);
+                                    print(studentsDom);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -397,15 +399,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Seg',
+                                  value: 'Segunda',
                                   onTap: student.updateDays,
                                   isChecked: student.days.seg,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsSeg = studentManager
+                                        .filteredStudentByWeekday(1);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -432,15 +437,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Ter',
+                                  value: 'Terça',
                                   onTap: student.updateDays,
                                   isChecked: student.days.ter,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsTer = studentManager
+                                        .filteredStudentByWeekday(2);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -467,15 +475,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Quar',
+                                  value: 'Quarta',
                                   onTap: student.updateDays,
                                   isChecked: student.days.quar,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsQua = studentManager
+                                        .filteredStudentByWeekday(3);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -502,15 +513,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Quin',
+                                  value: 'Quinta',
                                   onTap: student.updateDays,
                                   isChecked: student.days.quin,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsQui = studentManager
+                                        .filteredStudentByWeekday(4);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -537,15 +551,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Sex',
+                                  value: 'Sexta',
                                   onTap: student.updateDays,
                                   isChecked: student.days.sex,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsSex = studentManager
+                                        .filteredStudentByWeekday(5);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
@@ -572,15 +589,18 @@ class StudentScreen extends StatelessWidget {
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Sab',
+                                  value: 'Sabado',
                                   onTap: student.updateDays,
                                   isChecked: student.days.sab,
                                 ),
                                 FlatButton(
                                   color: Theme.of(context).accentColor,
                                   onPressed: () {
+                                    final studentsDom = studentManager
+                                        .filteredStudentByWeekday(6);
                                     Navigator.of(context).push(
                                       showPicker(
                                         context: context,
