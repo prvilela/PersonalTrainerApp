@@ -31,7 +31,14 @@ class BaseScreen extends StatelessWidget {
                 userManager.user.pagamentos.clear();
                 userManager.user.saveData();
               }
-              return Container();
+              return Container(
+                  height: double.infinity,
+                  child: FittedBox(
+                    child: Image.asset(
+                      'assets/gym_background.jpg',
+                    ),
+                    fit: BoxFit.fitHeight,
+                  ));
             }),
           ),
           CalendarScreen(),
