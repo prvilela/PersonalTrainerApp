@@ -47,7 +47,13 @@ class CalendarScreen extends StatelessWidget {
               ],
             );
           } else {
-            return Text('NO alunos;');
+            return Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('Nenhum Aluno!')],
+              ),
+            );
           }
         },
       ),

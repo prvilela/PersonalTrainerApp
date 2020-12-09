@@ -146,11 +146,15 @@ class LoginScreen extends StatelessWidget {
                                   height: 40,
                                   width: 90,
                                 ),
-                                onPressed: () {
-                                  //getCurrentUser();
-                                  //signInWithGoogle();
-                                  Navigator.of(context).pushNamed('/base');
-                                }),
+                                onPressed: userManager.loading
+                                    ? null
+                                    : () {
+                                        userManager.signInWithGoogle();
+                                        //getCurrentUser();
+                                        //signInWithGoogle();
+                                        Navigator.of(context)
+                                            .pushNamed('/base');
+                                      }),
                             FlatButton(
                                 color: Colors.white,
                                 child: Image.asset(

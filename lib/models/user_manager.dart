@@ -2,17 +2,30 @@ import 'package:apppersonaltrainer/helpers/firebase_errors.dart';
 import 'package:apppersonaltrainer/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
-class UserManager extends ChangeNotifier{
-
-  UserManager(){
+class UserManager extends ChangeNotifier {
+  UserManager() {
     _loadCurrentUser();
   }
 
+  User _userFromFirebase(FirebaseUser user) {
+    if (user == null) {
+      return null;
+    }
+    return User(
+      id: user.uid,
+      email: user.email,
+      name: user.displayName,
+    );
+  }
+
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   final Firestore firestore = Firestore.instance;
 
   StreamSubscription _subscription;
@@ -23,53 +36,54 @@ class UserManager extends ChangeNotifier{
   bool get loading => _loading;
   bool get isloggedIn => user != null;
 
-  Future<void> signIn({User user, Function onFail, Function onSuccess}) async{
+  Future<void> signIn({User user, Function onFail, Function onSuccess}) async {
     loading = true;
     try {
       final AuthResult authResult = await auth.signInWithEmailAndPassword(
-          email: user.email,
-          password: user.password
-      );
+          email: user.email, password: user.password);
 
       await _loadCurrentUser(firebaseUser: authResult.user);
 
       onSuccess();
-    } on PlatformException catch(e){
+    } on PlatformException catch (e) {
       onFail(getErrorString(e.code));
     }
     loading = false;
   }
 
-  set loading(bool value){
+  set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  Future<void> _loadCurrentUser({FirebaseUser firebaseUser})async{
+  Future<void> _loadCurrentUser({FirebaseUser firebaseUser}) async {
     final FirebaseUser currentUser = firebaseUser ?? await auth.currentUser();
-    if(currentUser != null){
-      _subscription = firestore.collection('users')
-          .document(currentUser.uid).snapshots().listen((event) {
-            user = User.fromDocument(event);
-            final date = DateTime.now();
-            if(user.atualizado == 1){
-              if(date.day == 1){
-                user.pagamentos = [0];
-                user.atualizado = 0;
-                user.saveData();
-              }
-            }else{
-              if(date.day == 2){
-                user.atualizado = 1;
-                user.saveData();
-              }
-            }
-            notifyListeners();
+    if (currentUser != null) {
+      _subscription = firestore
+          .collection('users')
+          .document(currentUser.uid)
+          .snapshots()
+          .listen((event) {
+        user = User.fromDocument(event);
+        final date = DateTime.now();
+        if (user.atualizado == 1) {
+          if (date.day == 1) {
+            user.pagamentos = [0];
+            user.atualizado = 0;
+            user.saveData();
+          }
+        } else {
+          if (date.day == 2) {
+            user.atualizado = 1;
+            user.saveData();
+          }
+        }
+        notifyListeners();
       });
     }
   }
 
-  Future<void> signUp({User user, Function onFail, Function onSuccess}) async{
+  Future<void> signUp({User user, Function onFail, Function onSuccess}) async {
     loading = true;
     try {
       final AuthResult authResult = await auth.createUserWithEmailAndPassword(
@@ -82,13 +96,13 @@ class UserManager extends ChangeNotifier{
       await user.saveData();
 
       onSuccess();
-    }on PlatformException catch(e){
+    } on PlatformException catch (e) {
       onFail(getErrorString(e.code));
     }
     loading = false;
   }
 
-  void signOut(){
+  void signOut() {
     auth.signOut();
     user = null;
     notifyListeners();
@@ -100,4 +114,28 @@ class UserManager extends ChangeNotifier{
     super.dispose();
   }
 
+  Future<User> signInWithGoogle() async {
+    final googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final authResult = await auth.signInWithCredential(credential);
+    print(authResult);
+    user = _userFromFirebase(authResult.user);
+    notifyListeners();
+    return _userFromFirebase(authResult.user);
+  }
+
+  void signOutGoogle() async {
+    return auth.signOut();
+    user = null;
+    notifyListeners();
+  }
+
+  Future<User> currentUser() async {
+    final user = await auth.currentUser();
+    return _userFromFirebase(user);
+  }
 }
