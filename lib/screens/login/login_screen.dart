@@ -150,8 +150,6 @@ class LoginScreen extends StatelessWidget {
                                     ? null
                                     : () {
                                         userManager.signInWithGoogle();
-                                        //getCurrentUser();
-                                        //signInWithGoogle();
                                         Navigator.of(context)
                                             .pushNamed('/base');
                                       }),
@@ -162,10 +160,13 @@ class LoginScreen extends StatelessWidget {
                                   height: 40,
                                   width: 90,
                                 ),
-                                onPressed: () {
-                                  //loginWithFB();
-                                  Navigator.of(context).pushNamed('/base');
-                                })
+                                onPressed: userManager.loading
+                                    ? null
+                                    : () {
+                                        userManager.loginWithFacebook();
+                                        Navigator.of(context)
+                                            .pushNamed('/base');
+                                      }),
                           ],
                         ),
                       ),

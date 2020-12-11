@@ -2,8 +2,8 @@ import 'package:apppersonaltrainer/helpers/firebase_errors.dart';
 import 'package:apppersonaltrainer/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -26,6 +26,7 @@ class UserManager extends ChangeNotifier {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  var facebookLogin = new FacebookLogin();
   final Firestore firestore = Firestore.instance;
 
   StreamSubscription _subscription;
@@ -114,6 +115,7 @@ class UserManager extends ChangeNotifier {
     super.dispose();
   }
 
+  //google
   Future<User> signInWithGoogle() async {
     final googleUser = await googleSignIn.signIn();
     final googleAuth = await googleUser.authentication;
@@ -137,5 +139,26 @@ class UserManager extends ChangeNotifier {
   Future<User> currentUser() async {
     final user = await auth.currentUser();
     return _userFromFirebase(user);
+  }
+
+  //facebook
+  Future<User> loginWithFacebook() async {
+    final facebookLogin = new FacebookLogin();
+    final FacebookLoginResult facebookLoginResult =
+        await facebookLogin.logIn(['email', 'public_profile']);
+
+    FacebookAccessToken facebookAccessToken = facebookLoginResult.accessToken;
+    AuthCredential authCredential = FacebookAuthProvider.getCredential(
+        accessToken: facebookAccessToken.token);
+    FirebaseUser fbUser;
+    fbUser = (await auth.signInWithCredential(authCredential)).user;
+    user = _userFromFirebase(fbUser);
+    notifyListeners();
+    return _userFromFirebase(fbUser);
+  }
+
+  void facebookLogout() {
+    facebookLogin.logOut();
+    FirebaseAuth.instance.signOut();
   }
 }
