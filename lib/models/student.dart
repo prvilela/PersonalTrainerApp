@@ -148,7 +148,6 @@ class Student extends ChangeNotifier {
   }
 
   void updateDays(String ativo) {
-    days.horario = hora;
     switch (ativo) {
       case 'Dom':
         days.dom = !days.dom;
@@ -219,8 +218,4 @@ class Student extends ChangeNotifier {
 
   void checkHorario() {}
 
-  @override
-  String toString() {
-    return 'Student{id: $id, idPersonal: $idPersonal, name: $name, birthday: $birthday, gender: $gender, cpf: $cpf, email: $email, phone: $phone, goal: $goal, restriction: $restriction, status: $status, gym: $gym, plano: $plano, mesIni: $mesIni, quant: $quant, quantityMonths: $quantityMonths}';
-  }
 }

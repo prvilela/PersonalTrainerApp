@@ -81,7 +81,20 @@ class PagamentosScreen extends StatelessWidget {
             ],
           );
         } else {
-          return Container();
+          return Container(
+            child: Card(
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: TextFormField(
+                  readOnly: true,
+                  style: _fieldStale,
+                  decoration: _buildDecoratiom("Recebido do mês:"),
+                  controller: priceController,
+                ),
+              ),
+            ),
+          );
         }
       }),
     );

@@ -8,12 +8,19 @@ class Agendamento {
     sex = map['sex'] as bool;
     sab = map['sab'] as bool;
     dom = map['dom'] as bool;
-    horario = map['horario'] as String;
+    horarioDom = map['horarioDom'] as String;
+    horarioSeg = map['horarioSeg'] as String;
+    horarioTer = map['horarioTer'] as String;
+    horarioQuar = map['horarioQuar'] as String;
+    horarioQuin = map['horarioQuin'] as String;
+    horarioSex = map['horarioSex'] as String;
+    horarioSab = map['horarioSab'] as String;
   }
 
 
   Agendamento({this.dom,this.quar,this.quin,this.sab,this.seg,this.sex,this.ter,
-    this.horario}){
+    this.horarioDom, this.horarioSab, this.horarioSex, this.horarioQuar,
+    this.horarioTer, this.horarioSeg, this.horarioQuin}){
     this.dom = this.dom != null ? this.dom : false;
     this.seg = this.seg != null ? this.seg : false;
     this.ter = this.ter != null ? this.ter : false;
@@ -30,7 +37,14 @@ class Agendamento {
   bool sex;
   bool sab;
   bool dom;
-  String horario;
+  String horarioDom;
+  String horarioSeg;
+  String horarioTer;
+  String horarioQuar;
+  String horarioQuin;
+  String horarioSex;
+  String horarioSab;
+
 
   Agendamento clone(){
     return Agendamento(
@@ -41,7 +55,13 @@ class Agendamento {
       seg: seg,
       sex: sex,
       ter: ter,
-      horario: horario
+      horarioDom: horarioDom,
+      horarioSeg: horarioSeg,
+      horarioTer: horarioTer,
+      horarioQuar: horarioQuar,
+      horarioSex: horarioSex,
+      horarioSab: horarioSab,
+      horarioQuin: horarioQuin,
     );
   }
 
@@ -54,12 +74,16 @@ class Agendamento {
       'seg': seg,
       'sex': sex,
       'ter': ter,
-      'horario': horario
+      'horarioDom': horarioDom,
+      'horarioSeg': horarioSeg,
+      'horarioTer': horarioTer,
+      'horarioQuar': horarioQuar,
+      'horarioQuin': horarioQuin,
+      'horarioSex': horarioSex,
+      'horarioSab': horarioSab,
+
     };
   }
 
-  @override
-  String toString() {
-    return 'Agendamento{seg: $seg, ter: $ter, quar: $quar, quin: $quin, sex: $sex, sab: $sab, dom: $dom, horario: $horario}';
-  }
+
 }
