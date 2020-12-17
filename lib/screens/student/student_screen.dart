@@ -371,7 +371,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.dom,
                                 ),
-                                TimeDayWeek(student: student,value: 'dom',),
+                                TimeDayWeek(student: student,value: 'Dom', initial: student.days.horarioDom,),
 
                               ],
                             ),
@@ -383,7 +383,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.seg,
                                 ),
-                                TimeDayWeek(student: student,value: 'seg',),
+                                TimeDayWeek(student: student,value: 'Seg',initial: student.days.horarioSeg,),
                               ],
                             ),
                             Row(
@@ -394,7 +394,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.ter,
                                 ),
-                                TimeDayWeek(student: student,value: 'ter',),
+                                TimeDayWeek(student: student,value: 'Ter',initial: student.days.horarioTer,),
                               ],
                             ),
                             Row(
@@ -405,7 +405,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.quar,
                                 ),
-                                TimeDayWeek(student: student,value: 'quar',),
+                                TimeDayWeek(student: student,value: 'Quar',initial: student.days.horarioQuar),
                               ],
                             ),
                             Row(
@@ -416,7 +416,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.quin,
                                 ),
-                                TimeDayWeek(student: student,value: 'quin',),
+                                TimeDayWeek(student: student,value: 'Quin',initial: student.days.horarioQuin),
                               ],
                             ),
                             Row(
@@ -427,7 +427,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.sex,
                                 ),
-                                TimeDayWeek(student: student,value: 'sex',),
+                                TimeDayWeek(student: student,value: 'Sex',initial: student.days.horarioSex),
                               ],
                             ),
                             Row(
@@ -438,7 +438,7 @@ class StudentScreen extends StatelessWidget {
                                   onTap: student.updateDays,
                                   isChecked: student.days.sab,
                                 ),
-                                TimeDayWeek(student: student,value: 'sab',),
+                                TimeDayWeek(student: student,value: 'Sab',initial: student.days.horarioSab),
                               ],
                             ),
                           ]);
@@ -456,6 +456,7 @@ class StudentScreen extends StatelessWidget {
                                 if (user.isloggedIn) {
                                   if (formKey.currentState.validate()) {
                                     formKey.currentState.save();
+                                    student.plano = plan.text;
                                     FirebaseUser user = await FirebaseAuth
                                         .instance
                                         .currentUser();
