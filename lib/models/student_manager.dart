@@ -61,42 +61,91 @@ class StudentManager extends ChangeNotifier {
       case 1:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.seg && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioSeg, b.days.horarioSeg];
+          c.sort();
+          if (c[0] == b.days.horarioSeg)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 2:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.ter && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioTer, b.days.horarioTer];
+          c.sort();
+          if (c[0] == b.days.horarioTer)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 3:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.quar && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioQuar, b.days.horarioQuar];
+          c.sort();
+          if (c[0] == b.days.horarioQuar)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 4:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.quin && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioQuin, b.days.horarioQuin];
+          c.sort();
+          if (c[0] == b.days.horarioQuin)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 5:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.sex && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioSex, b.days.horarioSex];
+          c.sort();
+          if (c[0] == b.days.horarioSex)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 6:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.sab && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioSab, b.days.horarioSab];
+          c.sort();
+          if (c[0] == b.days.horarioSab)
+            return 1;
+          else
+            return -1;
+        });
         break;
       case 7:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.dom && s.idPersonal == user.uid));
+        filteredStudent.sort((a, b) {
+          List<String> c = [a.days.horarioDom, b.days.horarioDom];
+          c.sort();
+          if (c[0] == b.days.horarioDom)
+            return 1;
+          else
+            return -1;
+        });
         break;
       default:
     }
 
-    filteredStudent.sort((a, b) {
-      List<String> c = [a.days.horario, b.days.horario];
-      c.sort();
-      if (c[0] == b.days.horario)
-        return 1;
-      else
-        return -1;
-    });
+
     return filteredStudent;
   }
 

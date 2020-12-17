@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'components/choose_dialog.dart';
+import 'components/time_day_week.dart';
 
 class StudentScreen extends StatelessWidget {
   StudentScreen(Student s)
@@ -36,6 +37,7 @@ class StudentScreen extends StatelessWidget {
 
   final plan = TextEditingController();
   final gym = TextEditingController();
+  final donController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -358,272 +360,85 @@ class StudentScreen extends StatelessWidget {
 
                       Consumer2<Student, StudentManager>(
                         builder: (_, s, studentManager, __) {
-                          return Column(children: <Widget>[
+                          return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Domingo',
+                                  value: 'Dom',
                                   onTap: student.updateDays,
                                   isChecked: student.days.dom,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsDom = studentManager
-                                        .filteredStudentByWeekday(7);
-                                    print(studentsDom);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: true,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioDom = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioDom,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'dom',),
+
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Segunda',
+                                  value: 'Seg',
                                   onTap: student.updateDays,
                                   isChecked: student.days.seg,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsSeg = studentManager
-                                        .filteredStudentByWeekday(1);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioSeg = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioSeg,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'seg',),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Terça',
+                                  value: 'Ter',
                                   onTap: student.updateDays,
                                   isChecked: student.days.ter,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsTer = studentManager
-                                        .filteredStudentByWeekday(2);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioTer = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioTer,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'ter',),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Quarta',
+                                  value: 'Quar',
                                   onTap: student.updateDays,
                                   isChecked: student.days.quar,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsQua = studentManager
-                                        .filteredStudentByWeekday(3);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioQua = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioQua,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'quar',),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Quinta',
+                                  value: 'Quin',
                                   onTap: student.updateDays,
                                   isChecked: student.days.quin,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsQui = studentManager
-                                        .filteredStudentByWeekday(4);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioQui = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioQui,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'quin',),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Sexta',
+                                  value: 'Sex',
                                   onTap: student.updateDays,
                                   isChecked: student.days.sex,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsSex = studentManager
-                                        .filteredStudentByWeekday(5);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioSex = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioSex,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'sex',),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomCheckButton(
-                                  value: 'Sabado',
+                                  value: 'Sab',
                                   onTap: student.updateDays,
                                   isChecked: student.days.sab,
                                 ),
-                                FlatButton(
-                                  color: Theme.of(context).accentColor,
-                                  onPressed: () {
-                                    final studentsDom = studentManager
-                                        .filteredStudentByWeekday(6);
-                                    Navigator.of(context).push(
-                                      showPicker(
-                                        context: context,
-                                        value: _time,
-                                        onChange: onTimeChanged,
-                                        minuteInterval: MinuteInterval.FIVE,
-                                        disableHour: false,
-                                        disableMinute: false,
-                                        minMinute: 0,
-                                        maxMinute: 59,
-                                        onChangeDateTime: (DateTime dateTime) {
-                                          horarioDom = _time.toString();
-                                          (context as Element).markNeedsBuild();
-                                          //student.updateTime(_time);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    horarioDom,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                                TimeDayWeek(student: student,value: 'sab',),
                               ],
                             ),
                           ]);

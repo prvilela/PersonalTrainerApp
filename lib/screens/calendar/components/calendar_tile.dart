@@ -25,8 +25,6 @@ class CalendarTile extends StatelessWidget {
                 SizedBox(height: 4,),
                 BuildRow(text: "Academia: ", data: student.gym,),
                 SizedBox(height: 4,),
-                BuildRow(text: "Horario ", data: student.days.horario,),
-                SizedBox(height: 4,),
               ],
             ),
           ),
