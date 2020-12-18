@@ -1,5 +1,5 @@
 class Times {
-  List<String> times(){
+  List<String> times() {
     List<String> times = List<String>();
     times.add("5:00");
     times.add("5:30");

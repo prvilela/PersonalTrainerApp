@@ -1,4 +1,5 @@
 import 'package:apppersonaltrainer/common/custom_drawer/custom_drawer.dart';
+import 'package:apppersonaltrainer/models/agendamento.dart';
 import 'package:apppersonaltrainer/models/calendar_manager.dart';
 import 'package:apppersonaltrainer/models/student_manager.dart';
 import 'package:apppersonaltrainer/screens/calendar/components/calendar_tile.dart';
@@ -42,7 +43,8 @@ class CalendarScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: students.length,
                     itemBuilder: (context, index) {
-                      return CalendarTile(students[index]);
+                      //print(calendarManager.dia); //working
+                      return CalendarTile(students[index], calendarManager.dia);
                     }),
               ],
             );

@@ -37,7 +37,7 @@ class BaseScreen extends StatelessWidget {
                     child: Image.asset(
                       'assets/gym_background.jpg',
                     ),
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.cover,
                   ));
             }),
           ),
