@@ -363,85 +363,115 @@ class StudentScreen extends StatelessWidget {
                           return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Dom',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.dom,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Dom',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.dom,
+                                    ),
+                                    TimeDayWeek(
+                                      student: student,
+                                      value: 'Dom',
+                                      initial: student.days.horarioDom,
+                                    ),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Dom', initial: student.days.horarioDom,),
-
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Seg',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.seg,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Seg',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.seg,
+                                    ),
+                                    TimeDayWeek(
+                                      student: student,
+                                      value: 'Seg',
+                                      initial: student.days.horarioSeg,
+                                    ),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Seg',initial: student.days.horarioSeg,),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Ter',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.ter,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Ter',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.ter,
+                                    ),
+                                    TimeDayWeek(
+                                      student: student,
+                                      value: 'Ter',
+                                      initial: student.days.horarioTer,
+                                    ),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Ter',initial: student.days.horarioTer,),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Quar',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.quar,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Quar',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.quar,
+                                    ),
+                                    TimeDayWeek(
+                                        student: student,
+                                        value: 'Quar',
+                                        initial: student.days.horarioQuar),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Quar',initial: student.days.horarioQuar),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Quin',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.quin,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Quin',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.quin,
+                                    ),
+                                    TimeDayWeek(
+                                        student: student,
+                                        value: 'Quin',
+                                        initial: student.days.horarioQuin),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Quin',initial: student.days.horarioQuin),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Sex',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.sex,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Sex',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.sex,
+                                    ),
+                                    TimeDayWeek(
+                                        student: student,
+                                        value: 'Sex',
+                                        initial: student.days.horarioSex),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Sex',initial: student.days.horarioSex),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomCheckButton(
-                                  value: 'Sab',
-                                  onTap: student.updateDays,
-                                  isChecked: student.days.sab,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomCheckButton(
+                                      value: 'Sab',
+                                      onTap: student.updateDays,
+                                      isChecked: student.days.sab,
+                                    ),
+                                    TimeDayWeek(
+                                        student: student,
+                                        value: 'Sab',
+                                        initial: student.days.horarioSab),
+                                  ],
                                 ),
-                                TimeDayWeek(student: student,value: 'Sab',initial: student.days.horarioSab),
-                              ],
-                            ),
-                          ]);
+                              ]);
                         },
                       ),
                       const SizedBox(

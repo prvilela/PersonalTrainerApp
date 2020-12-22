@@ -6,8 +6,7 @@ import 'package:apppersonaltrainer/models/student_manager.dart';
 import './choose_dialog.dart';
 
 class TimeDayWeek extends StatelessWidget {
-
-  TimeDayWeek({ this.student, this.value, this.initial});
+  TimeDayWeek({this.student, this.value, this.initial});
 
   final Student student;
   final String value;
@@ -16,7 +15,7 @@ class TimeDayWeek extends StatelessWidget {
 
   Times times = Times();
 
-  void salvar(String text){
+  void salvar(String text) {
     switch (value) {
       case 'Dom':
         student.days.horarioDom = text;
@@ -45,6 +44,7 @@ class TimeDayWeek extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     hora.text = initial ?? '';
+    var dia = value.toString();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -60,19 +60,78 @@ class TimeDayWeek extends StatelessWidget {
                 return IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () async {
+                      print(dia);
+                      switch (dia) {
+                        case 'Dom':
+                          print('Domingou');
+                          final domingoHorario =
+                              studentManager.filteredStudentByWeekday(7);
+                          for (var user in domingoHorario) {
+                            print(user.days.horarioDom);
+                          }
+                          break;
+                        case 'Seg':
+                          print('Segundou');
+                          final segundaHorario =
+                              studentManager.filteredStudentByWeekday(1);
+                          for (var user in segundaHorario) {
+                            print(user.days.horarioSeg);
+                          }
+                          break;
+                        case 'Ter':
+                          print('Terçou');
+                          final tercaHorario =
+                              studentManager.filteredStudentByWeekday(2);
+                          for (var user in tercaHorario) {
+                            print(user.days.horarioTer);
+                          }
+                          break;
+                        case 'Quar':
+                          print('Quartou');
+                          final quartaHorario =
+                              studentManager.filteredStudentByWeekday(3);
+                          for (var user in quartaHorario) {
+                            print(user.days.horarioQuar);
+                          }
+                          break;
+                        case 'Quin':
+                          print('Quintou');
+                          final quintaHorario =
+                              studentManager.filteredStudentByWeekday(4);
+                          for (var user in quintaHorario) {
+                            print(user.days.horarioQuin);
+                          }
+                          break;
+                        case 'Sex':
+                          print('Sextou');
+                          final sextaHorario =
+                              studentManager.filteredStudentByWeekday(5);
+                          for (var user in sextaHorario) {
+                            print(user.days.horarioSex);
+                          }
+                          break;
+                        case 'Sab':
+                          print('Sabadou');
+                          final sabadoHorario =
+                              studentManager.filteredStudentByWeekday(6);
+                          for (var user in sabadoHorario) {
+                            print(user.days.horarioSab);
+                          }
+                          break;
+                      }
+
                       final text = await showDialog(
                           context: context,
                           builder: (_) => ChooseDialog(
-                            titulo: "Horarios Disponiveis",
-                            names: times.times(),
-                          ));
+                                titulo: "Horarios Disponiveis",
+                                names: times.times(),
+                              ));
                       hora.text = text;
                     });
               },
             ),
           ),
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
         ),
       ),
     );
