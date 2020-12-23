@@ -50,6 +50,14 @@ class PlanManager extends ChangeNotifier {
     }
   }
 
+  Plan findPlanByName(String planName) {
+    try {
+      return _allPlan.firstWhere((g) => g.name == planName);
+    } catch (e) {
+      return null;
+    }
+  }
+
   List<Plan> get filteredPlan {
     final List<Plan> aux = [];
 

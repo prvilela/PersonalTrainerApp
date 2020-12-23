@@ -1,3 +1,4 @@
+import 'package:apppersonaltrainer/models/planManager.dart';
 import 'package:apppersonaltrainer/models/times.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,7 @@ class TimeDayWeek extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List listaHorario = times.times();
     hora.text = initial ?? '';
     var dia = value.toString();
     return Expanded(
@@ -55,8 +57,8 @@ class TimeDayWeek extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Horario',
             border: InputBorder.none,
-            suffixIcon: Consumer<StudentManager>(
-              builder: (_, studentManager, __) {
+            suffixIcon: Consumer2<StudentManager, PlanManager>(
+              builder: (_, studentManager, planManager, __) {
                 return IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () async {
@@ -68,6 +70,11 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(7);
                           for (var user in domingoHorario) {
                             print(user.days.horarioDom);
+                            //só ta retornando um plano em qlq caso
+                            //precisa retornar duração e remover da lista junto com o remove de baixo!!!
+                            var plan = planManager.findPlanByName(user.plano);
+                            print(plan);
+                            // Remove o horario marcado da agenda: listaHorario.remove(user.days.horarioDom);
                           }
                           break;
                         case 'Seg':
@@ -76,6 +83,9 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(1);
                           for (var user in segundaHorario) {
                             print(user.days.horarioSeg);
+                            var plan = planManager.findPlanByName(user.plano);
+                            print(plan);
+                            //listaHorario.remove(user.days.horarioSeg);
                           }
                           break;
                         case 'Ter':
@@ -84,6 +94,9 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(2);
                           for (var user in tercaHorario) {
                             print(user.days.horarioTer);
+                            var plan = planManager.findPlanByName(user.plano);
+                            print(plan);
+                            //listaHorario.remove(user.days.horarioTer);
                           }
                           break;
                         case 'Quar':
@@ -92,6 +105,8 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(3);
                           for (var user in quartaHorario) {
                             print(user.days.horarioQuar);
+                            var plan = planManager.findPlanByName(user.plano);
+                            print(plan);
                           }
                           break;
                         case 'Quin':
@@ -124,7 +139,7 @@ class TimeDayWeek extends StatelessWidget {
                           context: context,
                           builder: (_) => ChooseDialog(
                                 titulo: "Horarios Disponiveis",
-                                names: times.times(),
+                                names: listaHorario,
                               ));
                       hora.text = text;
                     });
