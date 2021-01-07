@@ -70,11 +70,12 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(7);
                           for (var user in domingoHorario) {
                             print(user.days.horarioDom);
-                            //só ta retornando um plano em qlq caso
-                            //precisa retornar duração e remover da lista junto com o remove de baixo!!!
                             var plan = planManager.findPlanByName(user.plano);
                             print(plan);
-                            // Remove o horario marcado da agenda: listaHorario.remove(user.days.horarioDom);
+
+                            //só dar uma query com os horários do dia no banco e remover do listaHorario!!!!!!
+                            List impro = ['12:00'];
+                            listaHorario = impro;
                           }
                           break;
                         case 'Seg':
@@ -141,6 +142,7 @@ class TimeDayWeek extends StatelessWidget {
                                 titulo: "Horarios Disponiveis",
                                 names: listaHorario,
                               ));
+                      print(listaHorario);
                       hora.text = text;
                     });
               },
