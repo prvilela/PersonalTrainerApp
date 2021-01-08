@@ -1,3 +1,4 @@
+import 'package:apppersonaltrainer/models/calendar_manager.dart';
 import 'package:apppersonaltrainer/models/planManager.dart';
 import 'package:apppersonaltrainer/models/times.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +58,8 @@ class TimeDayWeek extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Horario',
             border: InputBorder.none,
-            suffixIcon: Consumer2<StudentManager, PlanManager>(
-              builder: (_, studentManager, planManager, __) {
+            suffixIcon: Consumer3<StudentManager, PlanManager, CalendarManager>(
+              builder: (_, studentManager, planManager, calendarManager, __) {
                 return IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () async {
@@ -71,11 +72,16 @@ class TimeDayWeek extends StatelessWidget {
                           for (var user in domingoHorario) {
                             print(user.days.horarioDom);
                             var plan = planManager.findPlanByName(user.plano);
-                            print(plan);
 
-                            //só dar uma query com os horários do dia no banco e remover do listaHorario!!!!!!
-                            List impro = ['12:00'];
-                            listaHorario = impro;
+                            //BUSCA TODOS OS ALUNOS DE UM DIA DA SEMANA E DPS RETIRA UM POR UM DOS HORARIOS DISPONIVEIS
+                            final studentsD =
+                                studentManager.filteredStudentByWeekday(7);
+                            print(studentsD);
+
+                            for (var i = 0; i < studentsD.length; i++) {
+                              listaHorario.remove(studentsD[i].days.horarioDom);
+                              print(studentsD[i].days.horarioDom);
+                            }
                           }
                           break;
                         case 'Seg':
@@ -85,8 +91,15 @@ class TimeDayWeek extends StatelessWidget {
                           for (var user in segundaHorario) {
                             print(user.days.horarioSeg);
                             var plan = planManager.findPlanByName(user.plano);
-                            print(plan);
-                            //listaHorario.remove(user.days.horarioSeg);
+
+                            final studentsS =
+                                studentManager.filteredStudentByWeekday(1);
+                            print(studentsS);
+
+                            for (var i = 0; i < studentsS.length; i++) {
+                              listaHorario.remove(studentsS[i].days.horarioSeg);
+                              print(studentsS[i].days.horarioSeg);
+                            }
                           }
                           break;
                         case 'Ter':
@@ -96,8 +109,15 @@ class TimeDayWeek extends StatelessWidget {
                           for (var user in tercaHorario) {
                             print(user.days.horarioTer);
                             var plan = planManager.findPlanByName(user.plano);
-                            print(plan);
-                            //listaHorario.remove(user.days.horarioTer);
+
+                            final studentsT =
+                                studentManager.filteredStudentByWeekday(2);
+                            print(studentsT);
+
+                            for (var i = 0; i < studentsT.length; i++) {
+                              listaHorario.remove(studentsT[i].days.horarioTer);
+                              print(studentsT[i].days.horarioTer);
+                            }
                           }
                           break;
                         case 'Quar':
@@ -107,7 +127,16 @@ class TimeDayWeek extends StatelessWidget {
                           for (var user in quartaHorario) {
                             print(user.days.horarioQuar);
                             var plan = planManager.findPlanByName(user.plano);
-                            print(plan);
+
+                            final studentsQ =
+                                studentManager.filteredStudentByWeekday(3);
+                            print(studentsQ);
+
+                            for (var i = 0; i < studentsQ.length; i++) {
+                              listaHorario
+                                  .remove(studentsQ[i].days.horarioQuar);
+                              print(studentsQ[i].days.horarioQuar);
+                            }
                           }
                           break;
                         case 'Quin':
@@ -116,6 +145,16 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(4);
                           for (var user in quintaHorario) {
                             print(user.days.horarioQuin);
+
+                            final studentsQuin =
+                                studentManager.filteredStudentByWeekday(4);
+                            print(studentsQuin);
+
+                            for (var i = 0; i < studentsQuin.length; i++) {
+                              listaHorario
+                                  .remove(studentsQuin[i].days.horarioQuin);
+                              print(studentsQuin[i].days.horarioQuin);
+                            }
                           }
                           break;
                         case 'Sex':
@@ -124,6 +163,16 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(5);
                           for (var user in sextaHorario) {
                             print(user.days.horarioSex);
+
+                            final studentsSex =
+                                studentManager.filteredStudentByWeekday(5);
+                            print(studentsSex);
+
+                            for (var i = 0; i < studentsSex.length; i++) {
+                              listaHorario
+                                  .remove(studentsSex[i].days.horarioSex);
+                              print(studentsSex[i].days.horarioSex);
+                            }
                           }
                           break;
                         case 'Sab':
@@ -132,6 +181,16 @@ class TimeDayWeek extends StatelessWidget {
                               studentManager.filteredStudentByWeekday(6);
                           for (var user in sabadoHorario) {
                             print(user.days.horarioSab);
+
+                            final studentsSab =
+                                studentManager.filteredStudentByWeekday(6);
+                            print(studentsSab);
+
+                            for (var i = 0; i < studentsSab.length; i++) {
+                              listaHorario
+                                  .remove(studentsSab[i].days.horarioSab);
+                              print(studentsSab[i].days.horarioSab);
+                            }
                           }
                           break;
                       }
