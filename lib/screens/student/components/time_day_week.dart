@@ -66,131 +66,102 @@ class TimeDayWeek extends StatelessWidget {
                       print(dia);
                       switch (dia) {
                         case 'Dom':
-                          print('Domingou');
-                          final domingoHorario =
+                          //BUSCA TODOS OS ALUNOS DE UM DIA DA SEMANA E DPS RETIRA UM POR UM DOS HORARIOS DISPONIVEIS
+                          final studentsD =
                               studentManager.filteredStudentByWeekday(7);
-                          for (var user in domingoHorario) {
-                            print(user.days.horarioDom);
-                            var plan = planManager.findPlanByName(user.plano);
 
-                            //BUSCA TODOS OS ALUNOS DE UM DIA DA SEMANA E DPS RETIRA UM POR UM DOS HORARIOS DISPONIVEIS
-                            final studentsD =
-                                studentManager.filteredStudentByWeekday(7);
-                            print(studentsD);
-
-                            for (var i = 0; i < studentsD.length; i++) {
-                              listaHorario.remove(studentsD[i].days.horarioDom);
-                              print(studentsD[i].days.horarioDom);
-                            }
+                          for (var i = 0; i < studentsD.length; i++) {
+                            listaHorario.remove(studentsD[i].days.horarioDom);
+                            print(studentsD[i].days.horarioDom);
+                            var planoAluno =
+                                planManager.findPlanByName(studentsD[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Seg':
-                          print('Segundou');
-                          final segundaHorario =
+                          final studentsS =
                               studentManager.filteredStudentByWeekday(1);
-                          for (var user in segundaHorario) {
-                            print(user.days.horarioSeg);
-                            var plan = planManager.findPlanByName(user.plano);
 
-                            final studentsS =
-                                studentManager.filteredStudentByWeekday(1);
-                            print(studentsS);
-
-                            for (var i = 0; i < studentsS.length; i++) {
-                              listaHorario.remove(studentsS[i].days.horarioSeg);
-                              print(studentsS[i].days.horarioSeg);
-                            }
+                          for (var i = 0; i < studentsS.length; i++) {
+                            listaHorario.remove(studentsS[i].days.horarioSeg);
+                            print(studentsS[i].days.horarioSeg);
+                            var planoAluno =
+                                planManager.findPlanByName(studentsS[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Ter':
-                          print('Terçou');
-                          final tercaHorario =
+                          final studentsT =
                               studentManager.filteredStudentByWeekday(2);
-                          for (var user in tercaHorario) {
-                            print(user.days.horarioTer);
-                            var plan = planManager.findPlanByName(user.plano);
 
-                            final studentsT =
-                                studentManager.filteredStudentByWeekday(2);
-                            print(studentsT);
-
-                            for (var i = 0; i < studentsT.length; i++) {
-                              listaHorario.remove(studentsT[i].days.horarioTer);
-                              print(studentsT[i].days.horarioTer);
-                            }
+                          for (var i = 0; i < studentsT.length; i++) {
+                            listaHorario.remove(studentsT[i].days.horarioTer);
+                            print(studentsT[i].days.horarioTer);
+                            var planoAluno =
+                                planManager.findPlanByName(studentsT[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Quar':
-                          print('Quartou');
-                          final quartaHorario =
+                          final studentsQ =
                               studentManager.filteredStudentByWeekday(3);
-                          for (var user in quartaHorario) {
-                            print(user.days.horarioQuar);
-                            var plan = planManager.findPlanByName(user.plano);
 
-                            final studentsQ =
-                                studentManager.filteredStudentByWeekday(3);
-                            print(studentsQ);
-
-                            for (var i = 0; i < studentsQ.length; i++) {
-                              listaHorario
-                                  .remove(studentsQ[i].days.horarioQuar);
-                              print(studentsQ[i].days.horarioQuar);
-                            }
+                          for (var i = 0; i < studentsQ.length; i++) {
+                            listaHorario.remove(studentsQ[i].days.horarioQuar);
+                            print(studentsQ[i].days.horarioQuar);
+                            var planoAluno =
+                                planManager.findPlanByName(studentsQ[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Quin':
-                          print('Quintou');
-                          final quintaHorario =
+                          final studentsQuin =
                               studentManager.filteredStudentByWeekday(4);
-                          for (var user in quintaHorario) {
-                            print(user.days.horarioQuin);
 
-                            final studentsQuin =
-                                studentManager.filteredStudentByWeekday(4);
-                            print(studentsQuin);
-
-                            for (var i = 0; i < studentsQuin.length; i++) {
-                              listaHorario
-                                  .remove(studentsQuin[i].days.horarioQuin);
-                              print(studentsQuin[i].days.horarioQuin);
-                            }
+                          for (var i = 0; i < studentsQuin.length; i++) {
+                            listaHorario
+                                .remove(studentsQuin[i].days.horarioQuin);
+                            print(studentsQuin[i].days.horarioQuin);
+                            var planoAluno = planManager
+                                .findPlanByName(studentsQuin[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Sex':
-                          print('Sextou');
-                          final sextaHorario =
+                          final studentsSex =
                               studentManager.filteredStudentByWeekday(5);
-                          for (var user in sextaHorario) {
-                            print(user.days.horarioSex);
 
-                            final studentsSex =
-                                studentManager.filteredStudentByWeekday(5);
-                            print(studentsSex);
-
-                            for (var i = 0; i < studentsSex.length; i++) {
-                              listaHorario
-                                  .remove(studentsSex[i].days.horarioSex);
-                              print(studentsSex[i].days.horarioSex);
-                            }
+                          for (var i = 0; i < studentsSex.length; i++) {
+                            listaHorario.remove(studentsSex[i].days.horarioSex);
+                            print(studentsSex[i].days.horarioSex);
+                            var planoAluno = planManager
+                                .findPlanByName(studentsSex[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
+
                         case 'Sab':
-                          print('Sabadou');
-                          final sabadoHorario =
+                          final studentsSab =
                               studentManager.filteredStudentByWeekday(6);
-                          for (var user in sabadoHorario) {
-                            print(user.days.horarioSab);
 
-                            final studentsSab =
-                                studentManager.filteredStudentByWeekday(6);
-                            print(studentsSab);
-
-                            for (var i = 0; i < studentsSab.length; i++) {
-                              listaHorario
-                                  .remove(studentsSab[i].days.horarioSab);
-                              print(studentsSab[i].days.horarioSab);
-                            }
+                          for (var i = 0; i < studentsSab.length; i++) {
+                            listaHorario.remove(studentsSab[i].days.horarioSab);
+                            print(studentsSab[i].days.horarioSab);
+                            var planoAluno = planManager
+                                .findPlanByName(studentsSab[i].plano);
+                            print(planoAluno.duration);
+                            print('-------- // --------');
                           }
                           break;
                       }
