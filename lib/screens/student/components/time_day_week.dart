@@ -69,14 +69,26 @@ class TimeDayWeek extends StatelessWidget {
                           //BUSCA TODOS OS ALUNOS DE UM DIA DA SEMANA E DPS RETIRA UM POR UM DOS HORARIOS DISPONIVEIS
                           final studentsD =
                               studentManager.filteredStudentByWeekday(7);
-
+                          int fixedTIme = 30;
                           for (var i = 0; i < studentsD.length; i++) {
                             listaHorario.remove(studentsD[i].days.horarioDom);
                             print(studentsD[i].days.horarioDom);
                             var planoAluno =
                                 planManager.findPlanByName(studentsD[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30);
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsD[i].days.horarioDom;
+                            print(tt);
+                            for (int x = 0; x < quo; x++) {
+                              //falta remover os proximos horarios da agenda conforme o valor da variavel quo
+                              //caso a variabel remain seja diferente de zero, remover mais um horario da agenda
+                              //variavel fixedTime está setada como 30, para ser usada nos passos acima
+                            }
                           }
                           break;
 
@@ -182,5 +194,10 @@ class TimeDayWeek extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  quotient(int x, int y) {
+    int q = x ~/ y;
+    return q;
   }
 }
