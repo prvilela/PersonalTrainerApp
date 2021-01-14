@@ -1,6 +1,7 @@
 import 'package:apppersonaltrainer/models/calendar_manager.dart';
 import 'package:apppersonaltrainer/models/planManager.dart';
 import 'package:apppersonaltrainer/models/times.dart';
+import 'package:apppersonaltrainer/time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:apppersonaltrainer/models/student.dart';
@@ -66,28 +67,49 @@ class TimeDayWeek extends StatelessWidget {
                       print(dia);
                       switch (dia) {
                         case 'Dom':
-                          //BUSCA TODOS OS ALUNOS DE UM DIA DA SEMANA E DPS RETIRA UM POR UM DOS HORARIOS DISPONIVEIS
                           final studentsD =
                               studentManager.filteredStudentByWeekday(7);
-                          int fixedTIme = 30;
                           for (var i = 0; i < studentsD.length; i++) {
+                            print('aqui vai o hor domingo abaixo:');
                             listaHorario.remove(studentsD[i].days.horarioDom);
-                            print(studentsD[i].days.horarioDom);
+                            print(studentsD[i].days.horarioDom.toString());
                             var planoAluno =
                                 planManager.findPlanByName(studentsD[i].plano);
                             print(planoAluno.duration);
                             print(
                                 '-------- // --------'); //quo -> quociente e remain -> resto
-                            var quo = quotient(planoAluno.duration, 30);
+                            var quo = quotient(planoAluno.duration, 30) - 1;
                             var remain = planoAluno.duration.remainder(30);
                             print(quo);
                             print(remain);
                             var tt = studentsD[i].days.horarioDom;
                             print(tt);
-                            for (int x = 0; x < quo; x++) {
-                              //falta remover os proximos horarios da agenda conforme o valor da variavel quo
-                              //caso a variabel remain seja diferente de zero, remover mais um horario da agenda
-                              //variavel fixedTime está setada como 30, para ser usada nos passos acima
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
                             }
                           }
                           break;
@@ -95,85 +117,289 @@ class TimeDayWeek extends StatelessWidget {
                         case 'Seg':
                           final studentsS =
                               studentManager.filteredStudentByWeekday(1);
-
                           for (var i = 0; i < studentsS.length; i++) {
+                            print('aqui vai o hor segunda abaixo:');
                             listaHorario.remove(studentsS[i].days.horarioSeg);
-                            print(studentsS[i].days.horarioSeg);
+                            print(studentsS[i].days.horarioSeg.toString());
                             var planoAluno =
                                 planManager.findPlanByName(studentsS[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsS[i].days.horarioSeg;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
 
                         case 'Ter':
                           final studentsT =
                               studentManager.filteredStudentByWeekday(2);
-
                           for (var i = 0; i < studentsT.length; i++) {
+                            print('aqui vai o hor terça abaixo:');
                             listaHorario.remove(studentsT[i].days.horarioTer);
-                            print(studentsT[i].days.horarioTer);
+                            print(studentsT[i].days.horarioTer.toString());
                             var planoAluno =
                                 planManager.findPlanByName(studentsT[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsT[i].days.horarioTer;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
 
                         case 'Quar':
                           final studentsQ =
                               studentManager.filteredStudentByWeekday(3);
-
                           for (var i = 0; i < studentsQ.length; i++) {
+                            print('aqui vai o hor quarta abaixo:');
                             listaHorario.remove(studentsQ[i].days.horarioQuar);
-                            print(studentsQ[i].days.horarioQuar);
+                            print(studentsQ[i].days.horarioQuar.toString());
                             var planoAluno =
                                 planManager.findPlanByName(studentsQ[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsQ[i].days.horarioQuar;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
 
                         case 'Quin':
                           final studentsQuin =
                               studentManager.filteredStudentByWeekday(4);
-
                           for (var i = 0; i < studentsQuin.length; i++) {
+                            print('aqui vai o hor quinta abaixo:');
                             listaHorario
                                 .remove(studentsQuin[i].days.horarioQuin);
-                            print(studentsQuin[i].days.horarioQuin);
+                            print(studentsQuin[i].days.horarioQuin.toString());
                             var planoAluno = planManager
                                 .findPlanByName(studentsQuin[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsQuin[i].days.horarioQuin;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
 
                         case 'Sex':
                           final studentsSex =
                               studentManager.filteredStudentByWeekday(5);
-
                           for (var i = 0; i < studentsSex.length; i++) {
+                            print('aqui vai o hor domingo abaixo:');
                             listaHorario.remove(studentsSex[i].days.horarioSex);
-                            print(studentsSex[i].days.horarioSex);
+                            print(studentsSex[i].days.horarioSex.toString());
                             var planoAluno = planManager
                                 .findPlanByName(studentsSex[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsSex[i].days.horarioSex;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
 
                         case 'Sab':
                           final studentsSab =
                               studentManager.filteredStudentByWeekday(6);
-
                           for (var i = 0; i < studentsSab.length; i++) {
+                            print('aqui vai o hor domingo abaixo:');
                             listaHorario.remove(studentsSab[i].days.horarioSab);
-                            print(studentsSab[i].days.horarioSab);
+                            print(studentsSab[i].days.horarioSab.toString());
                             var planoAluno = planManager
                                 .findPlanByName(studentsSab[i].plano);
                             print(planoAluno.duration);
-                            print('-------- // --------');
+                            print(
+                                '-------- // --------'); //quo -> quociente e remain -> resto
+                            var quo = quotient(planoAluno.duration, 30) - 1;
+                            var remain = planoAluno.duration.remainder(30);
+                            print(quo);
+                            print(remain);
+                            var tt = studentsSab[i].days.horarioSab;
+                            print(tt);
+                            if (tt.isNotEmpty) {
+                              var timeSplited = tt.split(':');
+                              int hora = int.parse(timeSplited[0]);
+                              int min = int.parse(timeSplited[1]);
+                              print(hora);
+                              print(min);
+
+                              for (int x = 0; x < quo; x++) {
+                                min = min + 30;
+                                if (min == 60) {
+                                  hora = hora + 1;
+                                  min = 00;
+                                }
+
+                                var proximoHorario;
+                                if (min == 0) {
+                                  proximoHorario =
+                                      hora.toString() + ':0' + min.toString();
+                                  print(proximoHorario);
+                                } else {
+                                  proximoHorario =
+                                      hora.toString() + ':' + min.toString();
+                                  print(proximoHorario);
+                                }
+                                listaHorario.remove(proximoHorario);
+                              }
+                            }
                           }
                           break;
                       }
