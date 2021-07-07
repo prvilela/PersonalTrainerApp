@@ -62,84 +62,93 @@ class StudentManager extends ChangeNotifier {
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.seg && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioSeg, b.days.horarioSeg];
-          c.sort();
-          if (c[0] == b.days.horarioSeg)
-            return 1;
-          else
+          //List<String> c = [a.days.horarioSeg, b.days.horarioSeg];
+          //c.sort();
+          List<String> primeiro = a.days.horarioSeg.split(":");
+          List<String> segundo = b.days.horarioSeg.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 2:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.ter && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioTer, b.days.horarioTer];
-          c.sort();
-          if (c[0] == b.days.horarioTer)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioTer.split(":");
+          List<String> segundo = b.days.horarioTer.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 3:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.quar && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioQuar, b.days.horarioQuar];
-          c.sort();
-          if (c[0] == b.days.horarioQuar)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioQuar.split(":");
+          List<String> segundo = b.days.horarioQuar.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 4:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.quin && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioQuin, b.days.horarioQuin];
-          c.sort();
-          if (c[0] == b.days.horarioQuin)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioQuin.split(":");
+          List<String> segundo = b.days.horarioQuin.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 5:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.sex && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioSex, b.days.horarioSex];
-          c.sort();
-          if (c[0] == b.days.horarioSex)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioSex.split(":");
+          List<String> segundo = b.days.horarioSex.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 6:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.sab && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioSab, b.days.horarioSab];
-          c.sort();
-          if (c[0] == b.days.horarioSab)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioSab.split(":");
+          List<String> segundo = b.days.horarioSab.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       case 7:
         filteredStudent.addAll(
             _allStudent.where((s) => s.days.dom && s.idPersonal == user.uid));
         filteredStudent.sort((a, b) {
-          List<String> c = [a.days.horarioDom, b.days.horarioDom];
-          c.sort();
-          if (c[0] == b.days.horarioDom)
-            return 1;
-          else
+          List<String> primeiro = a.days.horarioDom.split(":");
+          List<String> segundo = b.days.horarioDom.split(":");
+          if (int.parse(primeiro[0]) < int.parse(segundo[0]) ||
+              (int.parse(primeiro[0]) == int.parse(segundo[0]) && int.parse(primeiro[1]) < int.parse(segundo[1])))
             return -1;
+          else
+            return 1;
         });
         break;
       default:

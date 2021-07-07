@@ -6,7 +6,7 @@ class PageManager{
 
   final PageController _pageController;
 
-  int page = 0;
+  int page;
 
   void setPage(int value){
     if(page==value) return;

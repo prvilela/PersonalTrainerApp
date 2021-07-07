@@ -412,6 +412,7 @@ class TimeDayWeek extends StatelessWidget {
                               ));
                       print(listaHorario);
                       hora.text = text;
+                      salvar(hora.text);
                     });
               },
             ),

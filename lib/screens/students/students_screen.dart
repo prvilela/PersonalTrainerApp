@@ -99,7 +99,7 @@ class StudentsScreen extends StatelessWidget {
                   label: "Adicionar um aluno",
                   labelStyle: TextStyle(fontSize: 14),
                   onTap: (){
-                    Navigator.of(context).pushNamed('/edit_student');
+                    Navigator.of(context).pushNamed('/create_student');
                   }
               ),
               SpeedDialChild(

@@ -1,6 +1,7 @@
 import 'package:apppersonaltrainer/common/custom_drawer/custom_drawer.dart';
 import 'package:apppersonaltrainer/models/agendamento.dart';
 import 'package:apppersonaltrainer/models/calendar_manager.dart';
+import 'package:apppersonaltrainer/models/planManager.dart';
 import 'package:apppersonaltrainer/models/student_manager.dart';
 import 'package:apppersonaltrainer/screens/calendar/components/calendar_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ class CalendarScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Consumer2<CalendarManager, StudentManager>(
-        builder: (_, calendarManager, studentManager, __) {
+      body: Consumer3<CalendarManager, StudentManager, PlanManager>(
+        builder: (_, calendarManager, studentManager, planManager, __) {
           final students = studentManager
               .filteredStudentByWeekday(calendarManager.diaSemana);
           if (students != []) {
@@ -44,7 +45,7 @@ class CalendarScreen extends StatelessWidget {
                     itemCount: students.length,
                     itemBuilder: (context, index) {
                       //print(calendarManager.dia); //working
-                      return CalendarTile(students[index], calendarManager.dia);
+                      return CalendarTile(students[index], calendarManager.dia, planManager);
                     }),
               ],
             );
